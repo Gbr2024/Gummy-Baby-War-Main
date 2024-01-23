@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f225c057e113e41b15e0476efb0f81, type: 3}
+  m_Name: UMP-45
+  m_EditorClassIdentifier: 
+  WeaponImage: {fileID: 21300000, guid: 6ef1b2da72423ec4f9eebd9c6f964c62, type: 3}
+  WeaponName: Ump-45
+  WeaponHandPosition:
+    Position: {x: 0.194, y: -0.056, z: -0.043}
+    Rotation: {x: 0, y: 90, z: 90}
+  WeaponSlotPosition:
+    Position: {x: 0.081, y: 0.268, z: -0.268}
+    Rotation: {x: 89.50387, y: 131.02998, z: 130.80664}
+  WeaponSlot2Position:
+    Position: {x: -0.123, y: 0.258, z: -0.319}
+    Rotation: {x: 89.50387, y: 131.02998, z: 130.80664}
+  WeaponType: 0
+  WeaponIndex: 1
+  AmmoType: .45 ACP
+  FireType: 1
+  BulletShell: {fileID: 5071080458251141131, guid: 6f8d1af24905d6244a5d39128f7f63ac, type: 3}
+  BulletEjectingSpeed: 5
+  BulletHole: {fileID: 1656306796784816, guid: be8106f2316bd8a40906da5c26f225ed, type: 3}
+  CrossHairSpread: 5
+  RecoilDuration: 0.05
+  VerticalRecoil: 0.08
+  HorizontalRecoil: 0.03
+  WeaponSpread: 0.1
+  FireRate: 0.095
+  MagSize: 30
+  Range: 200
+  FireSound: {fileID: 8300000, guid: bfb0a564be143e14180c36d1904e01d6, type: 3}
+  MagOutSound: {fileID: 8300000, guid: e7eec80bb1c05f5428550d15f82e9f7f, type: 3}
+  MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}
+  BoltSound: {fileID: 0}

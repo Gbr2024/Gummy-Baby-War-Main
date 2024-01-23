@@ -1,0 +1,196 @@
+using UnityEngine;
+using DG.Tweening;
+
+namespace WeirdBrothers.ThirdPersonController
+{
+    public enum WeaponSlot
+    {
+        None,
+        First,
+        Second
+    }
+
+    public class WBWeapon : MonoBehaviour, IItemImage, IItemName
+    {
+        [Header("Weawpon Data")]
+        [Space]
+        public WBWeaponData Data;
+
+        public WeaponSlot WeaponSlot;
+
+        [Space]
+        public Transform LeftHandRef;
+
+        [SerializeField]
+        private Transform _shellSpawnPoint;
+
+        [SerializeField]
+        private ParticleSystem _muzzelFlash;
+
+        private int _currentAmmo;
+        public int CurrentAmmo => _currentAmmo;
+
+        private AudioSource _audioSource;
+        private float _nextFire;
+        private int _index;
+        private Vector3 _directionToTarget;
+        private RaycastHit _hit;
+
+        [SerializeField] private Bullet[] pool;
+        private int poolIndex = 0;
+        bool isfiring = false;
+
+        [Header("Cylinder")]
+        [Space]
+        [SerializeField] Transform Cylinder;
+        [SerializeField] float CylinderRotation;
+
+        private void Start()
+        {
+            _audioSource = GetComponent<AudioSource>();
+            _currentAmmo = Data.MagSize;
+            _directionToTarget = Vector3.zero;
+            _hit = new RaycastHit();
+            Setpool();
+        }
+
+        private void FixedUpdate()
+        {
+            if(isfiring)
+            {
+                FireBullet();
+            }
+        }
+
+        public void setfiring(bool b)
+        {
+            isfiring = b;
+        }
+
+        private void Setpool()
+        {
+
+            pool = new Bullet[Data.MagSize+ (int)Data.MagSize/2];
+            for (int i = 0; i < Data.MagSize + ((int)Data.MagSize / 2); i++)
+            {
+                pool[i] = Instantiate(Data.bullet).GetComponent<Bullet>();
+                pool[i].gameObject.SetActive(false);
+            }
+        }
+
+        public void RemoveRigidBody()
+        {
+            Destroy(GetComponent<Rigidbody>());
+        }
+
+        public Sprite GetItemImage()
+        {
+            return Data.WeaponImage;
+        }
+
+        public string GetItemName()
+        {
+            return Data.WeaponName;
+        }
+
+        public void Fire(Vector3 hitPoint, LayerMask DamageLayer)
+        {
+            if (Time.time > _nextFire)
+            {
+                if (_currentAmmo > 0)
+                {
+                    _nextFire = Time.time + Data.FireRate;
+                    _currentAmmo--;
+                    _audioSource.PlayOneShotAudioClip(Data.FireSound);
+                    OnCaseOut();
+                    _muzzelFlash.Play();
+
+                    if (hitPoint != Vector3.zero)
+                    {
+                        _directionToTarget = hitPoint - _muzzelFlash.transform.position;
+                        if (Physics.Raycast(_muzzelFlash.transform.position,
+                            CalculatelateSpread(Data.WeaponSpread, _directionToTarget), out _hit,
+                            Data.Range, DamageLayer))
+                        {
+                            OnTargetHit(_hit);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void FireBullet()
+        {
+            if (Time.time > _nextFire)
+            {
+                pool[poolIndex].gameObject.SetActive(false);
+                _nextFire = Time.time + Data.FireRate;
+                pool[poolIndex].transform.position = _muzzelFlash.transform.position;
+                pool[poolIndex].transform.forward = transform.forward;
+                pool[poolIndex].gameObject.SetActive(true);
+                poolIndex++;
+                if (poolIndex >= pool.Length) poolIndex = 0;
+
+                if (Cylinder != null)
+                {
+                    //Debug.LogError(Cylinder.localEulerAngles.z);
+                    Cylinder.DOLocalRotate(new Vector3(Cylinder.localEulerAngles.x, Cylinder.localEulerAngles.y, Cylinder.localEulerAngles.z - CylinderRotation), Data.FireRate*.8f); 
+                }
+            }
+        }
+
+        private void OnTargetHit(RaycastHit hit)
+        {
+            if (hit.transform.gameObject.GetComponent<IDamageable>() != null)
+            {
+
+            }
+            else
+            {
+                GameObject bulletHole = Instantiate(Data.BulletHole, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(-Vector3.forward, hit.normal));
+                bulletHole.transform.SetParent(hit.transform);
+                Destroy(bulletHole, 10);
+            }
+        }
+
+        private Vector3 CalculatelateSpread(float inaccuracy, Vector3 direction)
+        {
+            if (inaccuracy == 0)
+                return direction;
+            direction.x += Random.Range(-inaccuracy, inaccuracy);
+            direction.y += Random.Range(-inaccuracy, inaccuracy);
+            direction.z += Random.Range(-inaccuracy, inaccuracy);
+            return direction;
+        }
+
+        public void AddAmmo(int ammount)
+        {
+            _currentAmmo += ammount;
+        }
+
+        public void MagIn()
+        {
+            _audioSource.PlayOneShotAudioClip(Data.MagInSound);
+        }
+
+        public void MagOut()
+        {
+            _audioSource.PlayOneShotAudioClip(Data.MagOutSound);
+        }
+
+        public void Bolt()
+        {
+            _audioSource.PlayOneShotAudioClip(Data.BoltSound);
+        }
+
+        private void OnCaseOut()
+        {
+            GameObject ejectedCase = Instantiate(Data.BulletShell, _shellSpawnPoint.position, _shellSpawnPoint.rotation);
+            Rigidbody caseRigidbody = ejectedCase.GetComponent<Rigidbody>();
+            caseRigidbody.velocity = _shellSpawnPoint.TransformDirection(-Vector3.left * Data.BulletEjectingSpeed);
+            caseRigidbody.AddTorque(Random.Range(-0.5f, 0.5f), Random.Range(0.2f, 0.3f), Random.Range(-0.5f, 0.5f));
+            caseRigidbody.AddForce(0, Random.Range(2f, 4f), 0, ForceMode.Impulse);
+            Destroy(ejectedCase, 5f);
+        }
+    }
+}

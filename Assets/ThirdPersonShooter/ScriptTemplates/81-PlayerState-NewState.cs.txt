@@ -1,0 +1,19 @@
+﻿using UnityEngine;
+
+namespace WeirdBrothers.ThirdPersonController
+{
+	public struct #SCRIPTNAME# : IState
+	{
+		private WBPlayerContext _context;
+	
+		public #SCRIPTNAME#(WBPlayerContext context)
+		{
+			_context = context;
+		}
+	
+		public void Execute()
+		{
+			#NOTRIM#
+		}
+	}
+}

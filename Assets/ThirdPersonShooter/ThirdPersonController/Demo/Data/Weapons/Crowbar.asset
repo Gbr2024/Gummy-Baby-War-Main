@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f225c057e113e41b15e0476efb0f81, type: 3}
+  m_Name: Crowbar
+  m_EditorClassIdentifier: 
+  WeaponImage: {fileID: 21300000, guid: a470222102a991548b5b833d84add4c4, type: 3}
+  WeaponName: CrawBar
+  WeaponHandPosition:
+    Position: {x: 0.121, y: -0.028, z: 0.027}
+    Rotation: {x: 10, y: 90, z: 88}
+  WeaponSlotPosition:
+    Position: {x: -0.022380946, y: 0.09210792, z: -0.14819667}
+    Rotation: {x: 359.03674, y: 277.5173, z: 358.1419}
+  WeaponSlot2Position:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0}
+  WeaponType: 2
+  WeaponIndex: 0
+  AmmoType: 
+  FireType: 0
+  BulletShell: {fileID: 0}
+  BulletEjectingSpeed: 0
+  BulletHole: {fileID: 0}
+  CrossHairSpread: 0
+  RecoilDuration: 0
+  VerticalRecoil: 0
+  HorizontalRecoil: 0
+  WeaponSpread: 0
+  Damage: 0
+  FireRate: 0
+  MagSize: 0
+  Range: 1.2
+  FireSound: {fileID: 0}
+  MagOutSound: {fileID: 0}
+  MagInSound: {fileID: 0}
+  BoltSound: {fileID: 0}
