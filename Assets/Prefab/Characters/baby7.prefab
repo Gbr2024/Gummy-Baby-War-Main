@@ -2602,7 +2602,7 @@ MonoBehaviour:
     Drag: 0
     AngularDrag: 0.05
   _groundCheckerData:
-    GroundChecker: {fileID: 0}
+    GroundChecker: {fileID: 398010093969852646}
     Radius: 0.1
     Layer:
       serializedVersion: 2

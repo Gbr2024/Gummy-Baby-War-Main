@@ -42,9 +42,6 @@ namespace UnityStandardAssets.CrossPlatformInput
             CrossPlatformInputManager.SetAxisNegative(Name);
         }
 
-        public void Update()
-        {
-
-        }
+        
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Networking;
 using WeirdBrothers.ThirdPersonController;
 
 public class PlayerCreator : NetworkBehaviour
@@ -24,7 +23,20 @@ public class PlayerCreator : NetworkBehaviour
         //SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId,PlayerPrefs.GetInt("CharacterIndex", 0));
         //GameObject go = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)], Vector3.zero, Quaternion.identity);
         //go.GetComponent<NetworkObject>().Spawn(true);
+        
+        if(IsOwner)OnClientConnectedServerRpc();
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void OnClientConnectedServerRpc()
+    {
+        Debug.LogError("Being Called " + NetworkManager.Singleton.ConnectedClients.Count );
+        if(!LobbyManager.Instance.GameSceneHasLoaded && NetworkManager.Singleton.ConnectedClients.Count>=2)
+        {
+            Loader.LoadNetwork(Loader.Gamescenes[Random.Range(0, Loader.Gamescenes.Length)]);
+        }
+    }
+
 
     [ServerRpc(RequireOwnership = false)]
     void SpawnPlayerServerRpc(ulong id,int charindex,int weaponIndex)
@@ -47,6 +59,5 @@ public class PlayerCreator : NetworkBehaviour
     internal void SpawnObject()
     {
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId,Random.Range(0,7), PlayerPrefs.GetInt("WeaponIndex", 0));
-
     }
 }

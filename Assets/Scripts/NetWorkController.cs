@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
-using Unity.Networking.Transport;
 
 public class NetWorkController : NetworkManager
 {
