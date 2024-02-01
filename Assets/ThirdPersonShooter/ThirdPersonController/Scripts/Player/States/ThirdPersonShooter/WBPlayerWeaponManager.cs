@@ -25,7 +25,7 @@ namespace WeirdBrothers.ThirdPersonController
             if (Physics.Raycast(_context.PlayerCamera.transform.position,
                                 _context.PlayerCamera.transform.forward,
                                 out _hit,
-                                 _context.CurrentWeapon.Data.Range,
+                                 Mathf.Infinity,
                                  _context.Data.DamageLayer))
             {
                 _aimPoint = _hit.point;
@@ -76,7 +76,10 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void OnFire(Vector3 hitPoint)
         {
-            _context.CurrentWeapon.Fire(hitPoint, _context.Data.DamageLayer);
+            //_context.CurrentWeapon.Fire(hitPoint, _context.Data.DamageLayer);
+            
+            _context.ShooterController.FireInAll(hitPoint, _context.Data.DamageLayer);
+            //_context.CurrentWeapon.FireBullet(hitPoint, layertoDamage);
             if (_context.CurrentWeapon.CurrentAmmo > 0)
             {
                 _context.CrossHair.CrossHairSpread += _context.CurrentWeapon.Data.CrossHairSpread;

@@ -16,8 +16,8 @@ MonoBehaviour:
   StopAnimTime: 0.15
   AllowPlayerMovement: 0.05
   DesireRotationSpeed: 2
-  MoveSpeed: 4
+  MoveSpeed: 6
   JumpForce: 5
   DamageLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 27649

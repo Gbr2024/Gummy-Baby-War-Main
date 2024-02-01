@@ -32,8 +32,8 @@ public class WBButtonTouchHandler : MonoBehaviour, IPointerDownHandler, IPointer
     {
         if (!_isPressed)
             return;        
-        WBTouchLook.TouchDist.x = eventData.delta.x;
-        WBTouchLook.TouchDist.y = eventData.delta.y;
+
+       
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -44,6 +44,6 @@ public class WBButtonTouchHandler : MonoBehaviour, IPointerDownHandler, IPointer
     {
         if (!_isPressed)
             return;
-        WBTouchLook.TouchDist = Vector2.zero;
+       
     }
 }

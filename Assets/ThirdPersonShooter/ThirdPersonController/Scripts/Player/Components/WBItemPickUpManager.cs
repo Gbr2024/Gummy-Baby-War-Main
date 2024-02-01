@@ -6,8 +6,11 @@ namespace WeirdBrothers.ThirdPersonController
     {
         public void OnItemPickUp(WBPlayerContext context)
         {
+            
+
             if (context.CurrentPickUpItem.CompareTag("Weapon"))
             {
+               // Debug.LogError(context.WeaponHandler);
                 context.WeaponHandler.OnWeaponPickUP(context);
             }
             else if (context.CurrentPickUpItem.CompareTag("Ammo"))

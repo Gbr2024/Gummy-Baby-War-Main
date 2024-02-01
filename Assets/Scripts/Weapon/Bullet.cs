@@ -7,17 +7,22 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private float damage;
+    internal int damage;
+    [SerializeField] internal ulong PlayerID;
     [SerializeField] private float range;
     [SerializeField] private Rigidbody rb;
     [SerializeField] TrailRenderer trail;
     [SerializeField] GameObject HitEffect;
     [SerializeField] GameObject Body;
     [SerializeField] bool DisableBody;
+    Transform aimpoint;
+
+    [SerializeField] private float customGravity;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        aimpoint = GameObject.Find("AimPoint").transform;
     }
     private void Start()
     {
@@ -25,20 +30,30 @@ public class Bullet : MonoBehaviour
     }
     public void SetupBullet(float damage, float range)
     {
-        this.damage = damage;
+        this.damage =(int)damage;
         this.range = range;
     }
 
-    private void OnEnable()
+
+
+    internal void moveBullet(Vector3 point,Quaternion RottoUSe)
     {
-        trail.Clear();
-        rb = GetComponent<Rigidbody>();
-        rb.angularDrag = 0;
-        rb.drag = 0;
-        rb.velocity = Vector3.zero;
-        if(DisableBody)Body.SetActive(true);
-        rb.AddForce(transform.forward * range, ForceMode.Impulse);
-        trail.enabled = true;
+       
+        if (point != Vector3.zero)
+        {
+            float distanceToHit = range;
+            // Adjust the force based on the distance and slowing distance
+            float adjustedForce = Mathf.Clamp(distanceToHit, 0f, 1f) * range;
+
+            transform.LookAt(point);
+            // Apply the force to the rigidbody
+            rb.AddForce(transform.forward * adjustedForce, ForceMode.Impulse);
+        }
+        else
+        {
+            transform.rotation = RottoUSe;
+            rb.AddForce(transform.forward * range, ForceMode.Impulse);
+        }
     }
 
 
@@ -57,6 +72,24 @@ public class Bullet : MonoBehaviour
     private void Sleep()
     {
         gameObject.SetActive(false);
+    }
+
+    internal void resetBullet()
+    {
+        trail.Clear();
+        if (rb == null) rb = GetComponent<Rigidbody>();
+        if (aimpoint == null) aimpoint = GameObject.Find("AimPoint").transform;
+        rb.angularDrag = 0;
+        rb.drag = 0;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        if (DisableBody) Body.SetActive(true);
+        trail.enabled = true;
+    }
+
+    private void FixedUpdate()
+    {
+        if (trail.enabled) rb.AddForce(Vector3.up * customGravity, ForceMode.Acceleration);
     }
 }
 

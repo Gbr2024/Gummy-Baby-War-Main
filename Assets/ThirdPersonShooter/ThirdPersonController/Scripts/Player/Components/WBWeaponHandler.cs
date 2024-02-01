@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 
 namespace WeirdBrothers.ThirdPersonController
 {
@@ -11,7 +12,7 @@ namespace WeirdBrothers.ThirdPersonController
             WBWeapon currentPickUpWeapon = context.CurrentPickUpItem.GetComponent<WBWeapon>();
             WBWeaponData data = currentPickUpWeapon.Data;
             WBWeapon[] weapons = context.Transform.GetComponentsInChildren<WBWeapon>();
-
+           // Debug.LogError("OnWeapon SetUp");
             if (data.WeaponType == WBWeaponType.Primary)
             {
                 List<WBWeapon> primarayWeapons = new List<WBWeapon>();
@@ -194,17 +195,19 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void EquipWeapon(WBWeapon currentPickUpWeapon, WBWeaponPositionData data, Transform parent, WeaponSlot slot, WBPlayerContext context)
         {
+            Debug.LogError("On Equip");
             currentPickUpWeapon.transform.SetParent(parent);
-            currentPickUpWeapon.RemoveRigidBody();
+            //currentPickUpWeapon.RemoveRigidBody();
             currentPickUpWeapon.WeaponSlot = slot;
             currentPickUpWeapon.gameObject.layer = LayerMask.NameToLayer("Weapon");
-
+            if(context.CurrentWeapon==null)context.CurrentWeapon = currentPickUpWeapon;
             currentPickUpWeapon.transform.localPosition = data.Position;
             currentPickUpWeapon.transform.localRotation = Quaternion.Euler(data.Rotation);
             context.CurrentPickUpItem = null;
+            //if(context.ShooterController.IsLocalPlayer)
             WBUIActions.ShowItemPickUp?.Invoke(false, null, "");
 
-            var index = 0;
+            var index = 1;
             if (currentPickUpWeapon.Data.WeaponType == WBWeaponType.Primary)
             {
                 if (slot == WeaponSlot.First)
@@ -228,13 +231,20 @@ namespace WeirdBrothers.ThirdPersonController
             var weaponImage = currentPickUpWeapon.gameObject.GetItemImage();
             var currentAmmo = currentPickUpWeapon.CurrentAmmo;
             var totalAmmo = context.Inventory.GetAmmo(currentPickUpWeapon.Data.AmmoType);
-
             WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
 
+
+            // if (context.ShooterController.IsLocalPlayer)
+
+            //Debug.LogError(context.Animator);
+            //Debug.LogError(currentPickUpWeapon.Data.WeaponIndex);
             if (parent.GetInstanceID() == context.WeaponSlots.RightHandReference.GetInstanceID())
             {
+                Debug.LogError("Here");
                 context.SetAnimator(currentPickUpWeapon.Data.WeaponIndex);
             }
+
+            //OnWeaponSwitch(context, 1);
         }
 
         private void DropWeapon(WBPlayerContext context, Transform weaponToDrop)
@@ -247,32 +257,47 @@ namespace WeirdBrothers.ThirdPersonController
 
         public void OnWeaponSwitch(WBPlayerContext context, int index)
         {
+           
             var currentWeapon = GetCurrentWeapon(context);
             if (currentWeapon != null)
             {
+                Debug.LogError("1");
                 if (index == 1 && currentWeapon.WeaponSlot == WeaponSlot.First)
                 {
+                    Debug.LogError("1.1");
+                    Debug.LogError(currentWeapon);
+                    Debug.LogError(currentWeapon.Data.WeaponSlotPosition);
+                    Debug.LogError(context.WeaponSlots.PrimarySlot1);
+                    Debug.LogError(currentWeapon.WeaponSlot);
+                    Debug.LogError(context);
+
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlotPosition,
                                 context.WeaponSlots.PrimarySlot1, currentWeapon.WeaponSlot, context);
+                    Debug.LogError("1.1-");
                 }
                 else if (index == 2 && currentWeapon.WeaponSlot == WeaponSlot.Second)
                 {
+                    Debug.LogError("1.2");
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlot2Position,
                                 context.WeaponSlots.PrimarySlot2, currentWeapon.WeaponSlot, context);
+                    Debug.LogError("1.2-");
                 }
                 else if (index == 3 && currentWeapon.Data.WeaponType == WBWeaponType.Secondary)
                 {
+                    Debug.LogError("1.3");
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlotPosition,
                                 context.WeaponSlots.SecondarySlot, currentWeapon.WeaponSlot, context);
                 }
                 else if (index == 4 && currentWeapon.Data.WeaponType == WBWeaponType.Melee)
                 {
+                    Debug.LogError("1.4");
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlotPosition,
                                 context.WeaponSlots.MeleeSlot, currentWeapon.WeaponSlot, context);
                 }
             }
             else
             {
+                Debug.LogError("2");
                 if (index == 1 &&
                     context.WeaponSlots.PrimarySlot1.GetActiveChildTransform() != null)
                 {
@@ -330,7 +355,7 @@ namespace WeirdBrothers.ThirdPersonController
             int bulletsToDeduct = totalAmmo >= bulletsToLoad ? bulletsToLoad : totalAmmo;
 
             context.CurrentWeapon.AddAmmo(bulletsToDeduct);
-            totalAmmo -= bulletsToDeduct;
+            //totalAmmo -= bulletsToDeduct;
             context.Inventory.UpdateItem(new WBItem
             {
                 ItemName = context.CurrentWeapon.Data.AmmoType,

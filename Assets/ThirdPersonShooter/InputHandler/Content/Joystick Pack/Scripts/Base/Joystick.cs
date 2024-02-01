@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -40,6 +41,10 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     private Vector2 input = Vector2.zero;
 
+    Color BgColor;
+    Color HanlderColor;
+
+
     protected virtual void Start()
     {
         HandleRange = handleRange;
@@ -55,10 +60,20 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchorMax = center;
         handle.pivot = center;
         handle.anchoredPosition = Vector2.zero;
+        BgColor = background.GetComponent<Image>().color;
+        HanlderColor = handle.GetComponent<Image>().color;
+        BgColor.a = .2f;
+        HanlderColor.a = .1f;
+        background.GetComponent<Image>().color = BgColor;
+        handle.GetComponent<Image>().color = HanlderColor;
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        BgColor.a = 1f;
+        HanlderColor.a = 1f;
+        background.GetComponent<Image>().color = BgColor;
+        handle.GetComponent<Image>().color = HanlderColor;
         OnDrag(eventData);
     }
 
@@ -131,8 +146,14 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
+        BgColor.a = .2f;
+        HanlderColor.a = .1f;
+        background.GetComponent<Image>().color = BgColor;
+        handle.GetComponent<Image>().color = HanlderColor;
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
+        
+
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)

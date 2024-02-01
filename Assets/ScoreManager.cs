@@ -8,7 +8,7 @@ using System;
 
 public class ScoreManager : NetworkBehaviour
 {
-    [SerializeField] TMP_Text RedTeamScore, BlueTeamScore,WinnerTitle,TimerLabel,Mykills;
+    [SerializeField] TMP_Text RedTeamScore, BlueTeamScore,WinnerTitle,TimerLabel;
     [SerializeField] GameObject WinnerAnnouncementPanel;
     [SerializeField] float TimerClock = 600f;
     const int WinThreshold = 5;
@@ -18,13 +18,13 @@ public class ScoreManager : NetworkBehaviour
 
     private void Awake()
     {
-        if(NetworkManager.Singleton.IsServer)
-        {
-            GetComponent<NetworkObject>().Spawn();
-        }
+        //if(NetworkManager.Singleton.IsServer)
+        //{
+        //    GetComponent<NetworkObject>().Spawn();
+        //}
     }
 
-    [ServerRpc]
+    [ServerRpc (RequireOwnership =false)]
     public void SetTeamScoreScoreServerRpc(int score, bool isRed = true)
     {
         if (isRed)
@@ -33,15 +33,16 @@ public class ScoreManager : NetworkBehaviour
             BlueScore += score;
         UpdateTeamScoresClientRpc(RedScore,BlueScore);
         LookForWinner();
+
     }
 
     private void LookForWinner()
     {
-        if (RedScore>WinThreshold)
+        if (RedScore>=WinThreshold)
         {
             ShowWinnerClientRpc();
         }
-        else if(BlueScore > WinThreshold)
+        else if(BlueScore >= WinThreshold)
         {
             ShowWinnerClientRpc(false);
         }
@@ -50,7 +51,7 @@ public class ScoreManager : NetworkBehaviour
     [ClientRpc]
     private void ShowWinnerClientRpc(bool isRedteamWon=true)
     {
-        WinnerAnnouncementPanel.SetActive(true);
+       WinnerAnnouncementPanel.SetActive(true);
        if (isRedteamWon)
         {
             WinnerTitle.text = "Red Team Victory";
@@ -88,12 +89,11 @@ public class ScoreManager : NetworkBehaviour
     {
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        TimerLabel.text = minutes.ToString("00") + seconds.ToString("00");
+        TimerLabel.text = minutes.ToString("00")+":" + seconds.ToString("00");
     }
 
-    [ClientRpc]
-    public void UpdateMykillsClientRpc(int kills)
+    public void CloseTheGame()
     {
-        Mykills.text = kills.ToString();
+        LobbyManager.Instance.Getout();
     }
 }

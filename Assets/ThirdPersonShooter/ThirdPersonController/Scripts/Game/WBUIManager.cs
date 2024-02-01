@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 namespace WeirdBrothers.ThirdPersonController
 {
@@ -14,26 +15,35 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] private WBItemUI _primaryWeaponUI2;
         [SerializeField] private WBItemUI _secondaryWeaponUI;
         [SerializeField] private WBItemUI _meleeWeaponUI;
+        [SerializeField] private Slider HealthBar;
+        [SerializeField] TMP_Text MyKills;
 
         [Header("Weapon Icons")]
         [SerializeField] private GameObject _weaponPanels;
 
         private void OnEnable()
         {
+           // if (!IsOwner) return;
             WBUIActions.ShowItemPickUp += ShowItemPickUp;
             WBUIActions.SetPrimaryWeaponUI += SetPrimaryWeaponUI;
             WBUIActions.SetWeaponUI += SetWeaponUI;
+            WBUIActions.UpdateHealth += UpdateHealth;
+            WBUIActions.UpdatelocalScore += UpdateMykills;
         }
 
         private void OnDisable()
         {
+           
             WBUIActions.ShowItemPickUp -= ShowItemPickUp;
             WBUIActions.SetPrimaryWeaponUI -= SetPrimaryWeaponUI;
             WBUIActions.SetWeaponUI -= SetWeaponUI;
+            WBUIActions.UpdateHealth -= UpdateHealth;
+            WBUIActions.UpdatelocalScore -= UpdateMykills;
         }
 
         private void Start()
         {
+           
             _itemPickUpUI.UIPanel.SetActive(false);
             _primaryWeaponUI1.UIPanel.SetActive(false);
             _primaryWeaponUI2.UIPanel.SetActive(false);
@@ -44,6 +54,7 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void ShowItemPickUp(bool state, Sprite itemSprite, string itemName)
         {
+           
             _itemPickUpUI.UIPanel.SetActive(state);
             _itemPickUpUI.ItemImage.sprite = itemSprite;
             _itemPickUpUI.ItemText.text = itemName;
@@ -51,6 +62,7 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void SetPrimaryWeaponUI(int index, Sprite weaponImage, int currentAmmo, int totalAmmo)
         {
+           
             if (index == 1)
             {
                 if (!_primaryWeaponUI1.UIPanel.activeSelf)
@@ -86,10 +98,22 @@ namespace WeirdBrothers.ThirdPersonController
                 }
                 _meleeWeaponUI.ItemImage.sprite = weaponImage;
             }
+
+        }
+
+        private void UpdateHealth(float val)
+        {
+            HealthBar.value = val;
+        }
+
+        private void UpdateMykills(int Val)
+        {
+            MyKills.text = Val.ToString("00");
         }
 
         private void SetWeaponUI(bool state)
         {
+            //if (!IsOwner) return;
             _weaponPanels.SetActive(state);
         }
     }

@@ -17,9 +17,16 @@ namespace WeirdBrothers.ThirdPersonController
                 return;
             if (_context.CurrentWeapon.Data.WeaponType == WBWeaponType.Melee)
                 return;
-            
-            _context.WeaponIK.Spine.LookAt(_context.WeaponIK.LookAt);
-            _context.WeaponIK.Spine.Rotate(_context.WeaponIK.SpineRotation);
+            if(_context.ShooterController.IsOwner)
+            {
+                _context.WeaponIK.Spine.LookAt(_context.WeaponIK.LookAt);
+                _context.WeaponIK.Spine.Rotate(_context.WeaponIK.SpineRotation);
+            }
+            else if(_context.RpcLookPos!=Vector3.zero)
+            {
+                _context.WeaponIK.Spine.LookAt(_context.RpcLookPos);
+                _context.WeaponIK.Spine.Rotate(_context.RpcSpineRotation);
+            }
         }
     }
 }

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f225c057e113e41b15e0476efb0f81, type: 3}
   m_Name: CorkGun
   m_EditorClassIdentifier: 
-  WeaponImage: {fileID: 21300000, guid: 3814beda5d572db40913568c2b33be39, type: 3}
+  WeaponImage: {fileID: 21300000, guid: d5db87b0c47837d4bb84c7851ce1cd7e, type: 3}
   WeaponName: test
   WeaponHandPosition:
-    Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0}
+    Position: {x: 0, y: 0, z: 0.2}
+    Rotation: {x: -23.7, y: 35, z: 90}
   WeaponSlotPosition:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
@@ -24,23 +24,23 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 0
-  AmmoType: 
-  FireType: 0
+  WeaponIndex: 1
+  AmmoType: CorkAmmo
+  FireType: 1
   bullet: {fileID: 3184629018253203977, guid: 27c9aacc87feb6b49996ea22d82b58eb, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
   BulletHole: {fileID: 0}
   CrossHairSpread: 0.5
   RecoilDuration: 0.1
-  VerticalRecoil: 0.1
+  VerticalRecoil: 0.015
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 20
-  FireRate: 1
+  FireRate: 0.5
   MagSize: 10
   Range: 75
-  FireSound: {fileID: 8300000, guid: 6c63ba9fdde50bc47990b546f2e5702d, type: 3}
+  FireSound: {fileID: 8300000, guid: 316d7780dc4bc704b98bf8a53f08c6f8, type: 3}
   MagOutSound: {fileID: 8300000, guid: e7eec80bb1c05f5428550d15f82e9f7f, type: 3}
   MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}
   BoltSound: {fileID: 0}

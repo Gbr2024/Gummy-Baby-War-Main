@@ -23,6 +23,19 @@ public class WBInputHandler : NetworkBehaviour
 
     private FixedJoystick _joystick;
 
+    private void Awake()
+    {
+      
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        if (!IsOwner)
+            enabled = false;
+    }
+
+
     private IEnumerator Start()
     {
         // Check if the client has control before setting up input
@@ -61,6 +74,7 @@ public class WBInputHandler : NetworkBehaviour
     {
         get
         {
+            if (TryGetComponent<HealthManager>(out HealthManager healthManager)) if (healthManager.isDead) return 0;
             // Check if the client has control before returning input
             if (HasControl && _inputType == InputType.PC)
                 return Input.GetAxis("Horizontal");
@@ -75,6 +89,7 @@ public class WBInputHandler : NetworkBehaviour
     {
         get
         {
+            if (TryGetComponent<HealthManager>(out HealthManager healthManager)) if (healthManager.isDead) return 0;
             // Check if the client has control before returning input
             if (HasControl && _inputType == InputType.PC)
                 return Input.GetAxis("Vertical");
@@ -129,6 +144,8 @@ public class WBInputHandler : NetworkBehaviour
         return false;
     }
 
+    float touchx;
+    float touchy;
     // Delegate method to handle axis input (e.g., mouse or touch)
     private float HandleAxisInputDelegate(string axisName)
     {
@@ -137,7 +154,13 @@ public class WBInputHandler : NetworkBehaviour
             case "Mouse X":
                 if (Input.touchCount > 0)
                 {
-                    return WBTouchLook.TouchDist.x * _touchSensitivity;
+                    if (WBTouchLook.TouchDist.x != touchx)
+                    {
+                        touchx = WBTouchLook.TouchDist.x;
+                        return WBTouchLook.TouchDist.x * _touchSensitivity;
+                    }
+                    else
+                        return 0;
                 }
                 else
                 {
@@ -147,7 +170,14 @@ public class WBInputHandler : NetworkBehaviour
             case "Mouse Y":
                 if (Input.touchCount > 0)
                 {
-                    return WBTouchLook.TouchDist.y * _touchSensitivity;
+                    if (WBTouchLook.TouchDist.y != touchy)
+                    {
+                        touchy = WBTouchLook.TouchDist.y;
+                        return WBTouchLook.TouchDist.y * _touchSensitivity;
+                    }
+                    else
+                        return 0;
+                    
                 }
                 else
                 {

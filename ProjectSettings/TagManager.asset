@@ -7,6 +7,7 @@ TagManager:
   - Weapon
   - BodyParts
   - FxTemporaire
+  - Ammo
   layers:
   - Default
   - TransparentFX
@@ -16,13 +17,13 @@ TagManager:
   - UI
   - Ground
   - Overlay
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Weapon
+  - RedBullet
+  - RedTeamPlayer
+  - RedBodyPart
+  - BlueBullet
+  - BlueTeamPlayer
+  - BlueBodyPart
   - 
   - 
   - 

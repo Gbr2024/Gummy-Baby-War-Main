@@ -29,6 +29,9 @@ namespace WeirdBrothers.ThirdPersonController
         private WBCharacterController _controller;
         public WBCharacterController Controller => _controller;
 
+        private WBThirdPersonController _ShooterController;
+        public WBThirdPersonController ShooterController => _ShooterController;
+
         private WBInputHandler _input;
         public WBInputHandler Input => _input;
 
@@ -52,13 +55,18 @@ namespace WeirdBrothers.ThirdPersonController
 
         private WBWeaponSlots _weaponSlots;
         public WBWeaponSlots WeaponSlots => _weaponSlots;
+        public HealthManager health;
+
+        //Netcode Code 
+        public Vector3 RpcLookPos;
+        public Vector3 RpcSpineRotation;
 
         //public properties        
         [HideInInspector] public Transform CurrentPickUpItem;
         [HideInInspector] public WBWeapon CurrentWeapon;
         [HideInInspector] public float RecoilTime;
         [HideInInspector] public float Speed;
-        
+
         public void SetData(Transform transform)
         {
             _animator = new WBThirdPersonAnimator(transform);
@@ -68,9 +76,14 @@ namespace WeirdBrothers.ThirdPersonController
             _pickUpManager = new WBItemPickUpManager();
             _playerCamera = Camera.main;
             _inventory = new WBPlayerInventory();
+            health = transform.GetComponent<HealthManager>();
             _transform = transform;
             _weaponHandler = new WBWeaponHandler();
             _weaponSlots = GetWeaponSlots(transform);
+            if(transform.TryGetComponent<WBThirdPersonController>(out WBThirdPersonController Controller))
+            {
+                _ShooterController = Controller;
+            }
         }
 
         private WBWeaponSlots GetWeaponSlots(Transform transform)
@@ -170,8 +183,8 @@ namespace WeirdBrothers.ThirdPersonController
                 var weaponImage = weapon.gameObject.GetItemImage();
                 var currentAmmo = weapon.CurrentAmmo;
                 var totalAmmo = Inventory.GetAmmo(weapon.Data.AmmoType);
-
-                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
+                if(ShooterController.IsOwner)
+                    WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
             });
         }
 
@@ -182,7 +195,10 @@ namespace WeirdBrothers.ThirdPersonController
 
         internal void setcamera(CinemachineVirtualCamera cam)
         {
-            _camera=cam;
+            _camera = cam;
+            Debug.LogError("camera has set");
         }
+
+        
     }
 }

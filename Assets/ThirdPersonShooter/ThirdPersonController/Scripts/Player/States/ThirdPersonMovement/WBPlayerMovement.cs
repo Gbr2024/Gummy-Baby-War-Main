@@ -31,7 +31,7 @@ namespace WeirdBrothers.ThirdPersonController
             _forward = _context.PlayerCamera.transform.forward;
             _forward.y = 0f;
             _context.Speed = _speed;
-            _context.Transform.rotation = Quaternion.Lerp(_context.Transform.rotation,
+            _context.Transform.rotation = Quaternion.Slerp(_context.Transform.rotation,
                                                         Quaternion.LookRotation(_forward),
                                                         _context.Data.DesireRotationSpeed);
 
@@ -60,4 +60,6 @@ namespace WeirdBrothers.ThirdPersonController
             _context.Controller.Move(_desiredMoveDirection * _context.Data.MoveSpeed);
         }
     }
+
+    
 }

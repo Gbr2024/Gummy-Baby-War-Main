@@ -26,6 +26,10 @@ public static class Loader {
 
         SceneManager.LoadScene(Scene.LoadingScene.ToString());
     }
+    public static void Load(int i) {
+
+        SceneManager.LoadScene(i);
+    }
 
     public static void LoadNetwork(string targetScene) {
         NetworkManager.Singleton.SceneManager.LoadScene(targetScene, LoadSceneMode.Single);

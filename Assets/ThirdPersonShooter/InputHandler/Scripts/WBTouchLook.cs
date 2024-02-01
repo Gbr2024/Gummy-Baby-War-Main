@@ -1,48 +1,23 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WBTouchLook : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class WBTouchLook : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    [HideInInspector]
-    public static Vector2 TouchDist;
+    private static Vector2 touchDist;
+    public static Vector2 TouchDist { get { return touchDist; } }
 
-    [SerializeField] private Vector2 _pointerOld;
-    [SerializeField] private int _pointerId;
-    [SerializeField] private bool _pressed;
-    [SerializeField] private float smoothnessFactor=.5f;
-
-    private void Update()
+    public void OnDrag(PointerEventData eventData)
     {
-        if (_pressed)
-        {
-            if (_pointerId >= 0 && _pointerId < Input.touches.Length)
-            {
-                Vector2 currentTouchPosition = Input.touches[_pointerId].position;
-                TouchDist = Vector2.Lerp(TouchDist, currentTouchPosition - _pointerOld, Time.deltaTime * smoothnessFactor);
-                _pointerOld = currentTouchPosition;
-            }
-            else
-            {
-                Vector2 currentMousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                TouchDist = Vector2.Lerp(TouchDist, currentMousePosition - _pointerOld, Time.deltaTime * smoothnessFactor);
-                _pointerOld = currentMousePosition;
-            }
-        }
-        else
-        {
-            TouchDist = new Vector2();
-        }
+        touchDist.x = eventData.delta.x;
+        touchDist.y = eventData.delta.y;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _pressed = true;
-        _pointerId = eventData.pointerId;
-        _pointerOld = eventData.position;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _pressed = false;
+        touchDist = Vector2.zero;
     }
 }

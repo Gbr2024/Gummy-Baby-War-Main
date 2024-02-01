@@ -17,6 +17,7 @@ namespace WeirdBrothers.ThirdPersonController
         public WBWeaponData Data;
 
         public WeaponSlot WeaponSlot;
+        internal ulong id;
 
         [Space]
         public Transform LeftHandRef;
@@ -36,6 +37,8 @@ namespace WeirdBrothers.ThirdPersonController
         private Vector3 _directionToTarget;
         private RaycastHit _hit;
 
+        internal Transform GetMuzzleFlah { get { return _muzzelFlash.transform;} }
+
         [SerializeField] private Bullet[] pool;
         private int poolIndex = 0;
         bool isfiring = false;
@@ -45,21 +48,25 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] Transform Cylinder;
         [SerializeField] float CylinderRotation;
 
+       
+
+
         private void Start()
         {
             _audioSource = GetComponent<AudioSource>();
             _currentAmmo = Data.MagSize;
             _directionToTarget = Vector3.zero;
             _hit = new RaycastHit();
-            Setpool();
+            //Setpool();
         }
+        
 
         private void FixedUpdate()
         {
-            if(isfiring)
-            {
-                FireBullet();
-            }
+            //if(isfiring)
+            //{
+            //    FireBullet();
+            //}
         }
 
         public void setfiring(bool b)
@@ -67,14 +74,17 @@ namespace WeirdBrothers.ThirdPersonController
             isfiring = b;
         }
 
-        private void Setpool()
+        internal void Setpool(int layer,ulong ID)
         {
-
+            id = ID;
             pool = new Bullet[Data.MagSize+ (int)Data.MagSize/2];
             for (int i = 0; i < Data.MagSize + ((int)Data.MagSize / 2); i++)
             {
                 pool[i] = Instantiate(Data.bullet).GetComponent<Bullet>();
+                pool[i].gameObject.layer = layer;
                 pool[i].gameObject.SetActive(false);
+                pool[i].PlayerID = id;
+                pool[i].damage =(int) Data.Damage;
             }
         }
 
@@ -119,20 +129,30 @@ namespace WeirdBrothers.ThirdPersonController
             }
         }
 
-        public void FireBullet()
+
+        public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos)
         {
+            
             if (Time.time > _nextFire)
             {
+                _currentAmmo--;
                 pool[poolIndex].gameObject.SetActive(false);
+                pool[poolIndex].resetBullet();
                 _nextFire = Time.time + Data.FireRate;
-                pool[poolIndex].transform.position = _muzzelFlash.transform.position;
+                _audioSource.PlayOneShotAudioClip(Data.FireSound);
+                pool[poolIndex].transform.position =pos;
                 pool[poolIndex].transform.forward = transform.forward;
                 pool[poolIndex].gameObject.SetActive(true);
+                pool[poolIndex].moveBullet(hitPoint, RotationToUse);
                 poolIndex++;
+                
                 if (poolIndex >= pool.Length) poolIndex = 0;
 
                 if (Cylinder != null)
                 {
+                    WBUIActions.SetPrimaryWeaponUI?.Invoke(_index,Data.WeaponImage,
+                    CurrentAmmo,
+                    30);
                     //Debug.LogError(Cylinder.localEulerAngles.z);
                     Cylinder.DOLocalRotate(new Vector3(Cylinder.localEulerAngles.x, Cylinder.localEulerAngles.y, Cylinder.localEulerAngles.z - CylinderRotation), Data.FireRate*.8f); 
                 }
@@ -192,5 +212,13 @@ namespace WeirdBrothers.ThirdPersonController
             caseRigidbody.AddForce(0, Random.Range(2f, 4f), 0, ForceMode.Impulse);
             Destroy(ejectedCase, 5f);
         }
+
+
+       
+
+
+       
+
+       
     }
 }

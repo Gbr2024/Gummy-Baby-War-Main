@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
+    public static SelectionManager Instance;
     // Start is called before the first frame update
     [SerializeField] CharactersData characterData;
     [SerializeField] WeaponsData weaponData;
@@ -17,7 +18,13 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] Button[] Controls;
     [SerializeField] bool moving = false;
     int CharacterIndex, WeaponIndex,ColorIndex;
-    
+
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {

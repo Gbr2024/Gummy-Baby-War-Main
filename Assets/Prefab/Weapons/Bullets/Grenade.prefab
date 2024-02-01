@@ -180,9 +180,6 @@ GameObject:
   - component: {fileID: 4416225141524912330}
   - component: {fileID: 4950966430255830284}
   - component: {fileID: -7480381029990493496}
-  - component: {fileID: 1091384121386017022}
-  - component: {fileID: -3957525273097904554}
-  - component: {fileID: -3873287781550835960}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -215,9 +212,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3006464928331788967}
   serializedVersion: 4
-  m_Mass: 0.35
+  m_Mass: 0.2
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.025
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -246,13 +243,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393cd702b2194104a885fb921d001e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  range: 20
+  PlayerID: 0
+  range: 75
   rb: {fileID: 0}
   trail: {fileID: 4950966430255830284}
   HitEffect: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
   Body: {fileID: 258882722790385675}
   DisableBody: 1
+  customGravity: 5
 --- !u!96 &4950966430255830284
 TrailRenderer:
   serializedVersion: 3
@@ -389,68 +387,6 @@ CapsuleCollider:
   m_Height: 0.3038826
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.020748883}
---- !u!114 &1091384121386017022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3006464928331788967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  Interpolate: 1
-  SlerpPosition: 0
---- !u!114 &-3957525273097904554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3006464928331788967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-3873287781550835960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3006464928331788967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!1 &6935650907327277789
 GameObject:
   m_ObjectHideFlags: 0

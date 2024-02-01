@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using Unity.Netcode;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -94,6 +95,8 @@ namespace WeirdBrothers.CharacterController
                 return _rigidBodies[0];
             }
         }
+
+        
 
         private void GetRigidBody()
         {
@@ -192,9 +195,17 @@ namespace WeirdBrothers.CharacterController
 
         private void Awake()
         {
+           
             if (_colliderData.EnableCollider)
                 GetCollider();
             GetRigidBody();
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            //if (!IsOwner)
+            //    enabled = false;
         }
 
         private void FixedUpdate()

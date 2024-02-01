@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
-public class RagdollController : MonoBehaviour
+public class RagdollController : NetworkBehaviour
 {
     private Animator animator;
     [SerializeField] private List<Rigidbody> rigidbodies=new();
@@ -10,6 +12,17 @@ public class RagdollController : MonoBehaviour
     public KeyCode toggleKey = KeyCode.Space;
 
     [SerializeField]private bool ragdollActive = false;
+    private void Awake()
+    {
+       
+    }
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        
+
+    }
+
 
     void Start()
     {
@@ -23,19 +36,9 @@ public class RagdollController : MonoBehaviour
         SetRagdollState(false);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(toggleKey))
-        {
-            ToggleRagdoll();
-        }
-        if(Input.GetMouseButtonDown(1))
-        {
-            ToggleRagdoll();
-        }
-    }
+    
 
-    void ToggleRagdoll()
+    internal void ToggleRagdoll()
     {
         ragdollActive = !ragdollActive;
         GetComponent<Rigidbody>().isKinematic = ragdollActive;
@@ -53,6 +56,27 @@ public class RagdollController : MonoBehaviour
         }
     }
 
+    internal void SetToAll(bool b)
+    {
+        SetRagdollServerRpc(NetworkObject.OwnerClientId,b);
+    }
+
+    
+
+    [ServerRpc(RequireOwnership =false)]
+    void SetRagdollServerRpc(ulong id,bool b)
+    {
+        SetRagdollClientRpc(id,b);
+    }
+
+    [ClientRpc]
+    void SetRagdollClientRpc(ulong id,bool b)
+    {
+        if (NetworkObject.OwnerClientId == id)
+            SetRagdollState(b);
+    }
+
+    
     void SetRagdollState(bool active)
     {
         // Set the animator and colliders state
@@ -68,6 +92,7 @@ public class RagdollController : MonoBehaviour
             col.enabled = active;
         }
         ResetRigidbodyVelocities();
+
     }
 
     void ResetRigidbodyVelocities()
@@ -79,12 +104,19 @@ public class RagdollController : MonoBehaviour
         }
     }
 
+
+   
+
+    
+
+
+
     // Apply force to the ragdoll
     private void OnCollisionEnter(Collision collision)
     {
        
-        if (collision.gameObject.tag=="Weapon")
-            ToggleRagdoll();
+        //if (collision.gameObject.tag=="Weapon")
+        //    ToggleRagdoll();
     }
 
 

@@ -947,8 +947,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2921554929370929741}
   - component: {fileID: 9109478498523660343}
-  - component: {fileID: 3387212453308546976}
   - component: {fileID: 94961467746765608}
+  - component: {fileID: 3387212453308546976}
   - component: {fileID: 6585470676434305145}
   - component: {fileID: 1486668655547234970}
   - component: {fileID: 3600619973649619204}
@@ -959,6 +959,8 @@ GameObject:
   - component: {fileID: 2731627020945153076}
   - component: {fileID: 1701573015065736024}
   - component: {fileID: 3632306489568975620}
+  - component: {fileID: 1427115996257869441}
+  - component: {fileID: 8339291390945669627}
   m_Layer: 0
   m_Name: baby2
   m_TagString: Untagged
@@ -975,7 +977,7 @@ Transform:
   m_GameObject: {fileID: 2576237203139215607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 129, y: 2.5, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1005,6 +1007,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &94961467746765608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2576237203139215607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 447075958
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 1
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &3387212453308546976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,26 +1043,6 @@ MonoBehaviour:
   colliders: []
   toggleKey: 32
   ragdollActive: 0
---- !u!114 &94961467746765608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2576237203139215607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3907420839
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 1
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &6585470676434305145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,7 +1073,7 @@ MonoBehaviour:
     Height: 2
     Center: {x: 0, y: 1, z: 0}
   _rigidBodyData:
-    Mass: 50
+    Mass: 90
     Drag: 0
     AngularDrag: 0.05
   _groundCheckerData:
@@ -1096,7 +1098,7 @@ MonoBehaviour:
     _data: {fileID: 11400000, guid: 08ca3acc91fb6eb459403a0940abf9cf, type: 2}
     _weaponIK:
       LookAt: {fileID: 0}
-      Spine: {fileID: 0}
+      Spine: {fileID: 5136636059489074610}
       SpineRotation: {x: 0, y: 0, z: 0}
     _crossHairSetting:
       CrossHair: {fileID: 0}
@@ -1104,6 +1106,9 @@ MonoBehaviour:
       MinSpread: 0
       MaxSpread: 0
     _camera: {fileID: 0}
+    health: {fileID: 0}
+    RpcLookPos: {x: 0, y: 0, z: 0}
+    RpcSpineRotation: {x: 0, y: 0, z: 0}
     CurrentPickUpItem: {fileID: 0}
     CurrentWeapon: {fileID: 0}
     RecoilTime: 0
@@ -1137,7 +1142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660c7b6431eab554ca2f7ba0f8320e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _footSteps: {fileID: 8300000, guid: 6200bb530c65064479d49f84a7cf0229, type: 3}
+  _footSteps: {fileID: 8300000, guid: 1a88f429c4a7b734f9c4254f0c654cea, type: 3}
 --- !u!82 &7163925277895404584
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1290,7 +1295,7 @@ MonoBehaviour:
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
   Interpolate: 1
-  SlerpPosition: 0
+  SlerpPosition: 1
 --- !u!114 &1701573015065736024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,6 +1329,39 @@ MonoBehaviour:
     TriggerNameHash: 1014295797
     TransitionIndex: 0
   m_Animator: {fileID: 9109478498523660343}
+--- !u!114 &1427115996257869441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2576237203139215607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f080ecd27b1be2f46abc7fd6c58221c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHealth: 0
+  ragdollController: {fileID: 3387212453308546976}
+  controller: {fileID: 3600619973649619204}
+--- !u!114 &8339291390945669627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2576237203139215607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b73ed8663820149ba18e46959a1599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkinColor:
+    m_InternalValue: 0
+  SpineIK:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  SpineRot:
+    m_InternalValue: {x: 0, y: 0, z: 0}
 --- !u!1 &2648098786220981125
 GameObject:
   m_ObjectHideFlags: 0

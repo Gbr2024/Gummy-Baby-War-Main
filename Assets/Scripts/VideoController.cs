@@ -19,7 +19,7 @@ public class VideoController : MonoBehaviour
         videoPlayer.loopPointReached += EndReached;
     }
 
-    void EndReached(UnityEngine.Video.VideoPlayer vp)
+    public void EndReached(UnityEngine.Video.VideoPlayer vp)
     {
         if(index==0)
         {
@@ -31,7 +31,9 @@ public class VideoController : MonoBehaviour
         }
         else
         {
+            videoPlayer.frame = (long)videoPlayer.frameCount - 1;
             //RTObject.SetActive(false);
+            SkipButton.SetActive(true);
         }
         // Do something when the video finishes
         Debug.Log("Video has ended!");
@@ -39,6 +41,13 @@ public class VideoController : MonoBehaviour
 
     public void LoadLevel(int i)
     {
+        videoPlayer.frame = (long)videoPlayer.frameCount - 1;
+        StartCoroutine(loadLevel(i));
+    }
+
+    public IEnumerator loadLevel(int i)
+    {
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadSceneAsync(i);
     }
 
