@@ -24,6 +24,9 @@ namespace WeirdBrothers.ThirdPersonController
 
         [SerializeField]
         private Transform _shellSpawnPoint;
+        
+        [SerializeField]
+        private Transform ScopeView;
 
         [SerializeField]
         private ParticleSystem _muzzelFlash;
@@ -31,6 +34,7 @@ namespace WeirdBrothers.ThirdPersonController
         private int _currentAmmo;
         public int CurrentAmmo => _currentAmmo;
 
+        public SmoothFollow CamController;
         private AudioSource _audioSource;
         private float _nextFire;
         private int _index;
@@ -213,9 +217,25 @@ namespace WeirdBrothers.ThirdPersonController
             Destroy(ejectedCase, 5f);
         }
 
+        internal void SetScopeCamera(Transform transform)
+        {
+            CamController.SetCam(transform);
+            PlayerSetManager.instance.ScopeCinemachine.Follow = CamController.transform;
+        }
 
-       
-
+        internal void SetFieldView()
+        {
+            //PlayerSetManager.instance.GetScopeView.forward = ScopeView.forward;
+            //PlayerSetManager.instance.GetScopeView.position = ScopeView.position;
+            //PlayerSetManager.instance.GetScopeView.forward = ScopeView.forward;
+            //PlayerSetManager.instance.SetScopeCamFeildView(Data.FeildView);
+            //PlayerSetManager.instance.GetScopeView.GetComponent<ScopeCamMovement>().SetTarget(ScopeView);//
+            //PlayerSetManager.instance.GetScopeView.SetParent(ScopeView);
+            PlayerSetManager.instance.GetScopeView.forward = ScopeView.forward;
+            //PlayerSetManager.instance.GetScopeView.localPosition = Vector3.zero;
+            //PlayerSetManager.instance.GetScopeView.localRotation = Quaternion.identity;
+            PlayerSetManager.instance.SetScopeCamFeildView(Data.FeildView);
+        }
 
        
 

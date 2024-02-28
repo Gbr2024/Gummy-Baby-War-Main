@@ -32,6 +32,7 @@ public class SelectionManager : MonoBehaviour
         WeaponIndex = PlayerPrefs.GetInt("WeaponIndex", 0);
         ColorIndex = PlayerPrefs.GetInt("ColorIndex", 0);
         SetColorData();
+        LobbyManager.Instance.GameHasStarted = false;
     }
 
     private void SetColorData()

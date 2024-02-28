@@ -14,7 +14,7 @@ public class PlayerCreator : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.LogError("-------" + IsOwner);
+        //Debug.LogError("-------" + IsOwner);
       
         DontDestroyOnLoad(gameObject);
         //SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId,PlayerPrefs.GetInt("CharacterIndex", 0));
@@ -44,26 +44,12 @@ public class PlayerCreator : NetworkBehaviour
 
 
     [ServerRpc(RequireOwnership = false)]
-    void SpawnPlayerServerRpc(ulong id,int charindex,int weaponIndex,Vector3 pos,int attacklayer)
+    void SpawnPlayerServerRpc(ulong id,int charindex,Vector3 pos,int bulletLayer)
     {
-        //PlayerPrefs.GetInt("CharacterIndex", 0);
-        Debug.LogError(pos);
-        //PlayerPrefs.GetInt("WeaponIndex", 0);
-        //PlayerPrefs.GetInt("ColorIndex", 0);
-        // Instantiate the player prefab on the server
+        ItemReference.Instance.characters.Characters[charindex].transform.position = pos;
         GameObject player = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[charindex],pos,Quaternion.identity);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(id, true);
-        //player.GetComponent<WBThirdPersonController>().SetWeaponDataClientRpc(id, weaponIndex);
-        //if(IsServer)
-        
-        player.GetComponent<WBThirdPersonController>().SetWeaponDataServerRpc(id, weaponIndex,attacklayer);
-        //player.GetComponent<WBThirdPersonController>().SetColorServerRpc(id, ColorIndex);
-        //Weapon.transform.position = Vector3.zero;
-        //Weapon.transform.rotation = Quaternion.identity;
-        // Spawn the player object on all clients
-
-        //Weapon.GetComponent<NetworkObject>().Spawn(true);
-        //player.GetComponent<NetworkObject>().
+        player.GetComponent<WBThirdPersonController>().bulletlayer = bulletLayer;
     }
 
     internal void SpawnObject()
@@ -71,8 +57,9 @@ public class PlayerCreator : NetworkBehaviour
         int bulletlayer = 9;
         if (!CustomProperties.Instance.isRed)
             bulletlayer = 12;
-        Vector3 pos=CustomProperties.Instance.isRed?transform.position = PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position: transform.position = PlayerSetManager.instance.BlueCribs[Random.Range(0, 3)].position; ;
-        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0), PlayerPrefs.GetInt("WeaponIndex", 0),pos,bulletlayer);
+        Vector3 pos=CustomProperties.Instance.isRed?transform.position = PlayerSetManager.instance.RedCribs[Random.Range(0, PlayerSetManager.instance.RedCribs.Length)].position: transform.position = PlayerSetManager.instance.BlueCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)].position;
+        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.position = pos;
+        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0),pos,bulletlayer);
     }
 
     

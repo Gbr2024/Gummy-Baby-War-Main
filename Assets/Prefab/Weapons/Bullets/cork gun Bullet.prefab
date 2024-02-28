@@ -185,10 +185,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.042635743
-  m_Height: 0.14283194
+  m_Radius: 0.053962663
+  m_Height: 0.18340825
   m_Direction: 2
-  m_Center: {x: -0.000000011360442, y: -0.0016418099, z: 0.072370395}
+  m_Center: {x: 0, y: -0.0016418099, z: 0.09265854}
 --- !u!96 &7684201595311128593
 TrailRenderer:
   serializedVersion: 3

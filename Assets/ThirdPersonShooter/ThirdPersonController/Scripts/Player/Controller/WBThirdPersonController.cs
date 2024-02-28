@@ -3,7 +3,9 @@ using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Netcode;
+using DG.Tweening;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 namespace WeirdBrothers.ThirdPersonController
 {
@@ -12,18 +14,22 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] private WBPlayerContext _context;
         public WBPlayerContext Context => _context;
 
+
         [SerializeField] private PlayerState[] _states;
+        Syncer syncer;
 
         private List<object> _playerStates;
         private WBPlayerMovement _movement;
         private WBPlayerIKHandle _ikHandler;
 
+        internal bool isRed = false;
+        internal int bulletlayer;
         bool isDataSet = false;
         int mykills = 0;
 
         private void Awake()
         {
-           
+            syncer=GetComponent<Syncer>();
         }
 
         public override void OnNetworkSpawn()
@@ -35,18 +41,16 @@ namespace WeirdBrothers.ThirdPersonController
             setContext();
             if(IsOwner)
             {
+                syncer.isRed.Value = isRed;
                 if (CustomProperties.Instance.isRed)
                     gameObject.layer = 10;
                 else
                     gameObject.layer = 13;
+
+                SetWeaponData(PlayerPrefs.GetInt("WeaponIndex"), bulletlayer);
+                syncer.WeaponIndex.Value = PlayerPrefs.GetInt("WeaponIndex");
             }
-            else
-            {
-                if (CustomProperties.Instance.isRed)
-                    gameObject.layer = 13;
-                else
-                    gameObject.layer = 10;
-            }
+            
         }
 
        
@@ -76,6 +80,7 @@ namespace WeirdBrothers.ThirdPersonController
                 _playerStates.Add(weaponManager);
             }
             isDataSet = true;
+           
         }
      
 
@@ -137,6 +142,7 @@ namespace WeirdBrothers.ThirdPersonController
            
             if(_context.CurrentWeapon.CurrentAmmo>0)
             {
+                
                 ShootServerRpc(NetworkObject.OwnerClientId, hitPoint, camRot,Context.CurrentWeapon.GetMuzzleFlah.position);
                 _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position);
             }
@@ -188,38 +194,41 @@ namespace WeirdBrothers.ThirdPersonController
 
         bool weaponSet = false;
 
-        [ClientRpc]
-        internal void SetWeaponDataClientRpc(ulong id,int weaponindex,int layer)
+        internal void SetWeaponData(int weaponindex,int layer)
         {
-            if(NetworkObject.OwnerClientId==id)
+            GameObject Weapon = Instantiate(ItemReference.Instance.weaponsData.Weapons[weaponindex]);
+            if (IsOwner) Weapon.GetComponent<WBWeapon>().SetScopeCamera(_context.PlayerScopeCamera.transform);
+            _context.ScopeOnRatio = Weapon.GetComponent<WBWeapon>().Data.TouchRatioOnScope;
+            Context.Inventory.AddItem(new WBItem
             {
-                if (weaponSet) return;
-                else weaponSet = true;
-                GameObject Weapon = Instantiate(ItemReference.Instance.weaponsData.Weapons[weaponindex]);
-                Context.Inventory.AddItem(new WBItem
-                {
-                    ItemName = Weapon.GetComponent<WBWeapon>().Data.AmmoType,
-                    ItemType = WBItemType.Bullet,
-                    ItemAmount = Weapon.GetComponent<WBWeapon>().Data.MagSize
-                });
-                Weapon.GetComponent<WBWeapon>().Setpool(layer,id);
-                SetWeapon(Weapon);
-               
+                ItemName = Weapon.GetComponent<WBWeapon>().Data.AmmoType,
+                ItemType = WBItemType.Bullet,
+                ItemAmount = Weapon.GetComponent<WBWeapon>().Data.MagSize
+            });
+            Weapon.GetComponent<WBWeapon>().Setpool(layer, NetworkObject.OwnerClientId);
+            SetWeapon(Weapon);
+            if (IsOwner)
+            {
+                Weapon.GetComponent<WBWeapon>().SetFieldView();
+                Invoke(nameof(SetLookLookRotationOnWeapon), 0.5f);
+                _context.UpdateAmmo(_context.CurrentWeapon);
             }
         }
 
-        [ServerRpc(RequireOwnership =false)]
-        internal void SetWeaponDataServerRpc(ulong id,int weaponindex,int layer)
+        void SetLookLookRotationOnWeapon()
         {
-
-            Debug.LogError("hmmmmmm");
-            SetWeaponDataClientRpc(id, weaponindex, layer);
-            //if(NetworkManager.Singleton.LocalClientId==id)
-            //{
-            //    GameObject Weapon = NetworkManager.Instantiate(ItemReference.Instance.weaponsData.Weapons[weaponindex]);
-            //    SetWeapon(Weapon);
-            //}
+            if (Physics.Raycast(_context.PlayerCamera.transform.position,
+                           _context.PlayerCamera.transform.forward,
+                           out RaycastHit _hit,
+                            Mathf.Infinity,
+                            _context.Data.DamageLayer))
+            {
+                //Debug.LogError(_context.CurrentWeapon);
+                _context.CurrentWeapon.transform.LookAt(_hit.point);
+            }
         }
+
+        
 
         internal void SetWeapon(GameObject weapon)
         {
@@ -250,6 +259,12 @@ namespace WeirdBrothers.ThirdPersonController
         {
             if (_context.CurrentPickUpItem != null)
             {
+                foreach (Transform item in Context.WeaponSlots.RightHandReference)
+                {
+                    Destroy(item.gameObject);
+                    
+                }
+                _context.CurrentWeapon = null;
                 _context.PickUpManager.OnItemPickUp(_context);
             }
         }
@@ -351,7 +366,16 @@ namespace WeirdBrothers.ThirdPersonController
             FindObjectOfType<ScoreManager>().SetTeamScoreScoreServerRpc(1, CustomProperties.Instance.isRed);
         }
 
-       
-      
+        public void SetScope()
+        {
+            Context.isScopeOn = !Context.isScopeOn;
+            SetLookLookRotationOnWeapon();
+            PlayerSetManager.instance.ChangeView(Context.isScopeOn);
+        }
+
+        private void OnDestroy()
+        {
+        }
+
     }
 }

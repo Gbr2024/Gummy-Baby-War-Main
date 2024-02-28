@@ -19,8 +19,11 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AdmobAds.Instance.LoadBannerAd();
+        AdmobAds.Instance.LoadInterstitialAd();
     }
+
+    
 
     public void quitgame()
     {

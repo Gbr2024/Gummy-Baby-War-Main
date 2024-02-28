@@ -16,11 +16,12 @@ public class LobbyManager : NetworkBehaviour
 
 
     //Lobby Settings
-    const int MaxPlayers = 2;
+    const int MaxPlayers = 10,MinimumPlayerToStartGame=2;
     private readonly string KEY_START_CODE="JoinCode";
     private Lobby JoinedLobby;
     internal bool GameSceneHasLoaded = false;
     bool isLobbyHost = false;
+    internal bool GameHasStarted = false;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class LobbyManager : NetworkBehaviour
     private void ClientStarted()
     {
         Debug.LogError("Client Started");
+        Loader.LoadNetwork(Loader.Gamescenes[Random.Range(0, Loader.Gamescenes.Length)]);
     }
 
     async void InitAuth()
@@ -108,10 +110,11 @@ public class LobbyManager : NetworkBehaviour
     private void LoadGameScene(ulong obj)
     {
        // Debug.LogError("Joined");
-       if(!GameSceneHasLoaded && NetworkManager.Singleton.IsServer && JoinedLobby.Players.Count>2)
+       if(!GameSceneHasLoaded && NetworkManager.Singleton.IsServer && JoinedLobby.Players.Count> MinimumPlayerToStartGame)
         {
             GameSceneHasLoaded = true;
             Loader.LoadNetwork(Loader.Gamescenes[Random.Range(0, Loader.Gamescenes.Length)]);
+            AdmobAds.Instance.DestroyBannerAd();
         }
     }
 
@@ -129,12 +132,11 @@ public class LobbyManager : NetworkBehaviour
         try
         {
             UIManager.instance.Blocker.SetActive(true);
-
             UIManager.instance.LobbyName.text = "Connecting...";
             List<Lobby> lobbies = (await LobbyService.Instance.QueryLobbiesAsync()).Results;
             foreach (Lobby lobby2 in lobbies)
             {
-                if(lobby2.Players.Count<lobby2.MaxPlayers)
+                if(lobby2.Players.Count<lobby2.MaxPlayers && !lobby2.IsPrivate)
                 {
                     Debug.LogError(lobby2.Name);
                     JoinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobby2.Id);
@@ -144,18 +146,16 @@ public class LobbyManager : NetworkBehaviour
                         {
                             await RelayManager.Instance.JoinRelay(JoinedLobby.Data[KEY_START_CODE].Value);
                         }
-                        
                     }
-                    
                     //NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = GetLocalIPAddress();
                     NetworkManager.Singleton.StartClient();
                     UIManager.instance.LobbyName.text = "Waiting for Game Start...";
                     Debug.LogError(JoinedLobby.Players.Count);
                     CustomProperties.Instance.isRed = !(JoinedLobby.Players.Count % 2 == 0);
+                    return;
                 }
             }
-            
-           
+            CreatePublicLobby();
         }
         catch (LobbyServiceException e)
         {

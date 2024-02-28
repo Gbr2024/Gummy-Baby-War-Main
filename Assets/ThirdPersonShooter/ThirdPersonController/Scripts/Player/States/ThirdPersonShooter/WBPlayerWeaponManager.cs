@@ -22,16 +22,20 @@ namespace WeirdBrothers.ThirdPersonController
             if (_context.CurrentWeapon == null)
                 return;
 
-            if (Physics.Raycast(_context.PlayerCamera.transform.position,
-                                _context.PlayerCamera.transform.forward,
+            var Cam = _context.isScopeOn ? _context.PlayerScopeCamera.transform : _context.PlayerCamera.transform;
+            if (Physics.Raycast(Cam.position,
+                                Cam.forward,
                                 out _hit,
                                  Mathf.Infinity,
                                  _context.Data.DamageLayer))
             {
+
                 _aimPoint = _hit.point;
+                //_context.CurrentWeapon.transform.LookAt(_aimPoint);
+
             }
             else
-                _aimPoint = Vector3.zero;
+                _aimPoint = Cam.GetChild(0).position; //Cam.forward*_context.CurrentWeapon.Data.Range;
 
             if (_context.Animator.IsSwitching())
                 return;
@@ -49,20 +53,21 @@ namespace WeirdBrothers.ThirdPersonController
                 int totalAmmo = _context.Inventory.GetAmmo(_context.CurrentWeapon.Data.AmmoType);
                 if (totalAmmo <= 0)
                     return;
+                if (_context.isScopeOn) _context.ShooterController.SetScope();
                 _context.Animator.OnReload();
             }
             else if (_context.CurrentWeapon.Data.FireType == FireType.Auto)
             {
                 if (_context.Input.GetButton(WBInputKeys.Fire))
                 {
-                    OnFire(_hit.point);
+                    OnFire(_aimPoint);
                 }
             }
             else if (_context.CurrentWeapon.Data.FireType == FireType.Semi)
             {
                 if (_context.Input.GetButtonDown(WBInputKeys.Fire))
                 {
-                    OnFire(_hit.point);
+                    OnFire(_aimPoint);
                 }
             }
             else if (_context.CurrentWeapon.Data.FireType == FireType.None)
@@ -77,7 +82,8 @@ namespace WeirdBrothers.ThirdPersonController
         private void OnFire(Vector3 hitPoint)
         {
             //_context.CurrentWeapon.Fire(hitPoint, _context.Data.DamageLayer);
-            
+            //_context.CurrentWeapon.transform.LookAt(_aimPoint);
+            //Debug.LogError(hitPoint);
             _context.ShooterController.FireInAll(hitPoint, _context.Data.DamageLayer);
             //_context.CurrentWeapon.FireBullet(hitPoint, layertoDamage);
             if (_context.CurrentWeapon.CurrentAmmo > 0)
@@ -107,6 +113,11 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.SetPrimaryWeaponUI?.Invoke(_index, _context.CurrentWeapon.Data.WeaponImage,
              _context.CurrentWeapon.CurrentAmmo,
             _context.Inventory.GetAmmo(_context.CurrentWeapon.Data.AmmoType));
+        }
+
+        internal void SetRotationLookForCurrentWeapon()
+        {
+            _context.CurrentWeapon.transform.LookAt(_aimPoint);
         }
     }
 }
