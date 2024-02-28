@@ -51,5 +51,10 @@ namespace WeirdBrothers.ThirdPersonController
         public AudioClip MagOutSound;
         public AudioClip MagInSound;
         public AudioClip BoltSound;
+
+        [Space]
+        [Header("Scope")]
+        public int FeildView = 40;
+        public float TouchRatioOnScope;
     }
 }

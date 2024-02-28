@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instace;    
-
+    public static GameManager Instace;
     [Space]
     [Header("Touch Inputs")]
     [SerializeField]

@@ -6,9 +6,12 @@ namespace WeirdBrothers.ThirdPersonController
     {
         private WBPlayerContext _context;
 
+        Vector3 moderation;
+
         public WBPlayerIKHandle(WBPlayerContext context)
         {
             _context = context;
+            moderation =Vector3.zero;
         }
 
         public void Execute()
@@ -17,10 +20,13 @@ namespace WeirdBrothers.ThirdPersonController
                 return;
             if (_context.CurrentWeapon.Data.WeaponType == WBWeaponType.Melee)
                 return;
+
             if(_context.ShooterController.IsOwner)
             {
+                moderation = _context.WeaponIK.SpineRotation;
+                if (_context.isScopeOn) moderation *= _context.ScopeOnRatio;
                 _context.WeaponIK.Spine.LookAt(_context.WeaponIK.LookAt);
-                _context.WeaponIK.Spine.Rotate(_context.WeaponIK.SpineRotation);
+                _context.WeaponIK.Spine.Rotate(moderation);
             }
             else if(_context.RpcLookPos!=Vector3.zero)
             {

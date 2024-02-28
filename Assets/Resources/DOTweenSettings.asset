@@ -42,7 +42,7 @@ MonoBehaviour:
     audioEnabled: 1
     physicsEnabled: 1
     physics2DEnabled: 1
-    spriteEnabled: 1
+    spriteEnabled: 0
     uiEnabled: 1
     textMeshProEnabled: 0
     tk2DEnabled: 0

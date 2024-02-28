@@ -195,12 +195,14 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void EquipWeapon(WBWeapon currentPickUpWeapon, WBWeaponPositionData data, Transform parent, WeaponSlot slot, WBPlayerContext context)
         {
-            Debug.LogError("On Equip");
+            //Debug.LogError("On Equip");
+            
             currentPickUpWeapon.transform.SetParent(parent);
             //currentPickUpWeapon.RemoveRigidBody();
             currentPickUpWeapon.WeaponSlot = slot;
             currentPickUpWeapon.gameObject.layer = LayerMask.NameToLayer("Weapon");
             if(context.CurrentWeapon==null)context.CurrentWeapon = currentPickUpWeapon;
+            //context.CurrentWeapon = currentPickUpWeapon;
             currentPickUpWeapon.transform.localPosition = data.Position;
             currentPickUpWeapon.transform.localRotation = Quaternion.Euler(data.Rotation);
             context.CurrentPickUpItem = null;
@@ -261,36 +263,23 @@ namespace WeirdBrothers.ThirdPersonController
             var currentWeapon = GetCurrentWeapon(context);
             if (currentWeapon != null)
             {
-                Debug.LogError("1");
                 if (index == 1 && currentWeapon.WeaponSlot == WeaponSlot.First)
                 {
-                    Debug.LogError("1.1");
-                    Debug.LogError(currentWeapon);
-                    Debug.LogError(currentWeapon.Data.WeaponSlotPosition);
-                    Debug.LogError(context.WeaponSlots.PrimarySlot1);
-                    Debug.LogError(currentWeapon.WeaponSlot);
-                    Debug.LogError(context);
-
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlotPosition,
                                 context.WeaponSlots.PrimarySlot1, currentWeapon.WeaponSlot, context);
-                    Debug.LogError("1.1-");
                 }
                 else if (index == 2 && currentWeapon.WeaponSlot == WeaponSlot.Second)
                 {
-                    Debug.LogError("1.2");
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlot2Position,
                                 context.WeaponSlots.PrimarySlot2, currentWeapon.WeaponSlot, context);
-                    Debug.LogError("1.2-");
                 }
                 else if (index == 3 && currentWeapon.Data.WeaponType == WBWeaponType.Secondary)
                 {
-                    Debug.LogError("1.3");
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlotPosition,
                                 context.WeaponSlots.SecondarySlot, currentWeapon.WeaponSlot, context);
                 }
                 else if (index == 4 && currentWeapon.Data.WeaponType == WBWeaponType.Melee)
                 {
-                    Debug.LogError("1.4");
                     EquipWeapon(currentWeapon, currentWeapon.Data.WeaponSlotPosition,
                                 context.WeaponSlots.MeleeSlot, currentWeapon.WeaponSlot, context);
                 }

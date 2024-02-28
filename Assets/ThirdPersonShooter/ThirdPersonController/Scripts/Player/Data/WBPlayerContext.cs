@@ -40,6 +40,9 @@ namespace WeirdBrothers.ThirdPersonController
 
         private Camera _playerCamera;
         public Camera PlayerCamera => _playerCamera;
+        
+        private Camera _playerScopeCamera;
+        public Camera PlayerScopeCamera => _playerScopeCamera;
 
         private CinemachinePOV _pov;
         public CinemachinePOV Pov => _pov;
@@ -56,10 +59,12 @@ namespace WeirdBrothers.ThirdPersonController
         private WBWeaponSlots _weaponSlots;
         public WBWeaponSlots WeaponSlots => _weaponSlots;
         public HealthManager health;
+        public float ScopeOnRatio;
 
         //Netcode Code 
         public Vector3 RpcLookPos;
         public Vector3 RpcSpineRotation;
+        public bool isScopeOn = false;
 
         //public properties        
         [HideInInspector] public Transform CurrentPickUpItem;
@@ -75,6 +80,7 @@ namespace WeirdBrothers.ThirdPersonController
             _pov = _camera.GetCinemachineComponent<CinemachinePOV>();
             _pickUpManager = new WBItemPickUpManager();
             _playerCamera = Camera.main;
+
             _inventory = new WBPlayerInventory();
             health = transform.GetComponent<HealthManager>();
             _transform = transform;
@@ -193,10 +199,11 @@ namespace WeirdBrothers.ThirdPersonController
             RecoilTime = time;
         }
 
-        internal void setcamera(CinemachineVirtualCamera cam)
+        internal void setcamera(CinemachineVirtualCamera cam,Camera c)
         {
             _camera = cam;
-            Debug.LogError("camera has set");
+            _playerScopeCamera = c;
+            //Debug.LogError("camera has set");
         }
 
         

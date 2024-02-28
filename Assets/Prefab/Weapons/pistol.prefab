@@ -4910,12 +4910,58 @@ Transform:
   m_GameObject: {fileID: 3486428180312843098}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.078, z: 0.263}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7484981839013381632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6656938144290490032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2050531718647842785}
+  - component: {fileID: 5457203361461990798}
+  m_Layer: 0
+  m_Name: Scope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2050531718647842785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656938144290490032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.215, z: 0.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7484981839013381632}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5457203361461990798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656938144290490032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde59b2017ecd1b42b49097248c845fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followSpeed: 50
+  yDamping: 1
 --- !u!1 &6722819965980516382
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,6 +4997,7 @@ Transform:
   - {fileID: 5499673571660020169}
   - {fileID: 7504048502400420826}
   - {fileID: 8748651695122697313}
+  - {fileID: 2050531718647842785}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7956337098136357026
@@ -4969,7 +5016,9 @@ MonoBehaviour:
   WeaponSlot: 1
   LeftHandRef: {fileID: 7504048502400420826}
   _shellSpawnPoint: {fileID: 8748651695122697313}
+  ScopeView: {fileID: 2050531718647842785}
   _muzzelFlash: {fileID: 6770554014116283654}
+  CamController: {fileID: 5457203361461990798}
   pool: []
   Cylinder: {fileID: 0}
   CylinderRotation: 0

@@ -188,7 +188,8 @@ namespace WeirdBrothers.CharacterController
 
         public void Jump(float force)
         {
-            Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, force, Rigidbody.velocity.z);
+            //Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, force, Rigidbody.velocity.z);
+            Rigidbody.AddForce(Vector3.up * force, ForceMode.VelocityChange);
         }
 
         #endregion

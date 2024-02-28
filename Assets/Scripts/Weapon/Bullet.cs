@@ -83,6 +83,7 @@ public class Bullet : MonoBehaviour
         rb.drag = 0;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        transform.rotation = Quaternion.identity;
         if (DisableBody) Body.SetActive(true);
         trail.enabled = true;
     }
