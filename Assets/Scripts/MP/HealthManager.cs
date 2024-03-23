@@ -1,0 +1,140 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine;
+using WeirdBrothers.ThirdPersonController;
+using Random = UnityEngine.Random;
+
+public class HealthManager : NetworkBehaviour
+{
+    [SerializeField] float CurrentHealth;
+    [SerializeField] RagdollController ragdollController;
+    [SerializeField] WBThirdPersonController controller;
+    float Health = 100;
+
+    internal bool isDead = false;
+    internal bool isActivated = false;
+
+    private void Awake()
+    {
+        CurrentHealth = Health;
+    }
+
+    private void Start()
+    {
+        if(IsOwner)
+        {
+            isActivated = true;
+            GetComponent<Syncer>().Activated.Value = true;
+            WBUIActions.UpdateHealth?.Invoke(CurrentHealth / Health);
+        }
+        
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished || !isActivated) return;
+       
+        if (collision.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
+        {
+            if (!NetworkManager.Singleton.IsServer) return;
+            if (bullet.isRed == controller.isRed) return;
+            if (CurrentHealth - bullet.damage <= 0)
+            {
+                isDead = true;
+                ScoreManager.Instance.SetKillServerRpc(bullet.PlayerID); 
+            }
+            controller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.PlayerID);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished || !isActivated) return;
+
+        if (other.gameObject.TryGetComponent<Impact>(out Impact impact))
+        {
+            //Debug.LogError(impact.DamagetoApply);
+            if (!NetworkManager.Singleton.IsServer) return;
+
+            if (CurrentHealth - impact.DamagetoApply <= 0 && controller.isRed!=impact.isRed)
+            {
+                isDead = true;
+                ScoreManager.Instance.SetKillServerRpc(impact.PlayerID);
+            }
+            controller.AddDamage(impact.DamagetoApply, NetworkObject.OwnerClientId, impact.PlayerID);
+        }
+    }
+
+    internal void AddDamage(float damage, ulong playerID)
+    {
+        CurrentHealth -= damage;
+        if (CurrentHealth < 0) CurrentHealth = 0;
+        if (NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId)
+        {
+            WBUIActions.UpdateHealth?.Invoke(CurrentHealth / Health);
+            if (CurrentHealth == 0)
+            {
+                SetKillCam(playerID);
+                PlayerSetManager.instance.ChangeView(40f);
+                WBUIActions.isPlayerActive = false;
+                WBUIActions.EnableTouch?.Invoke(false);
+                Invoke(nameof(resetPlayer), 5f);
+            }
+        }
+
+        if (CurrentHealth == 0)
+        {
+            GetComponent<ClientNetworkTransform>().enabled = false;
+            ragdollController.SetToAll(true);
+            isDead = true;
+        }
+    }
+
+    private void SetKillCam(ulong playerID)
+    {
+        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        {
+            if (item.NetworkObject.OwnerClientId == playerID)
+                PlayerSetManager.instance.setKillCam(item.transform);
+        } 
+    }
+
+    void resetPlayer()
+    {
+        if (ScoreManager.Instance.GameHasFinished) return;
+        //ragdollController.SetToAll(false);
+        //ResetHealth();
+        //if (NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId)
+        //    transform.position = CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position : PlayerSetManager.instance.BlueCribs[Random.Range(0, 3)].position;
+
+        DestroyPlayerServerRPC(NetworkObject.OwnerClientId);
+        PlayerSetManager.instance.SpinTheWheel();
+    }
+
+
+
+    internal void ResetHealth()
+    {
+        isDead = false;
+        CurrentHealth = Health;
+        if (NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId)
+            WBUIActions.UpdateHealth?.Invoke(CurrentHealth / Health);
+    }
+
+    [ServerRpc (RequireOwnership =false)]
+    void DestroyPlayerServerRPC(ulong id)
+    {
+        var players = FindObjectsOfType<WBThirdPersonController>();
+        foreach (var item in players)
+        {
+            if(item.NetworkObject.OwnerClientId==id)
+            {
+                item.NetworkObject.Despawn(true);
+            }
+        }
+    }
+
+}

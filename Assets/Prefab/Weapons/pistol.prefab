@@ -4961,7 +4961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followSpeed: 50
-  yDamping: 1
+  smoothTime: 0
 --- !u!1 &6722819965980516382
 GameObject:
   m_ObjectHideFlags: 0
@@ -5013,6 +5013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: e79f88dca8c37274fbc47e02333f11c3, type: 2}
+  Body: {fileID: 8025010389614489931}
   WeaponSlot: 1
   LeftHandRef: {fileID: 7504048502400420826}
   _shellSpawnPoint: {fileID: 8748651695122697313}
@@ -5041,7 +5042,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0.9
   MinDistance: 1
   MaxDistance: 75
   Pan2D: 0
@@ -5093,7 +5094,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.4861111
       inSlope: 0
       outSlope: 0
       tangentMode: 0

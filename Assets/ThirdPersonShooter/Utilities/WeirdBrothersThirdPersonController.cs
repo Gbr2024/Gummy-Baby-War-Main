@@ -46,6 +46,8 @@ namespace WeirdBrothers.ThirdPersonController
         public Transform MeleeSlot;
     }
 
+   
+
     public enum FireType
     {
         None,

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using WeirdBrothers;
+using DG.Tweening;
 using WeirdBrothers.ThirdPersonController;
 using UnityEngine.UI;
 using EasyUI.PickerWheelUI;
+using Unity.Netcode;
 
 public class PlayerSetManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class PlayerSetManager : MonoBehaviour
     [SerializeField] GameObject InputControl,SniperUI;
     [SerializeField] RectTransform CrossHair, CrossHairScope;
     [SerializeField] Transform lookTransform;
-    public CinemachineVirtualCamera virtualCamera,ScopeCinemachine;
+    public CinemachineVirtualCamera virtualCamera;//,ScopeCinemachine;
     [SerializeField] Camera ScopeView;
     [SerializeField] Button Aimbutton;
 
@@ -29,17 +30,24 @@ public class PlayerSetManager : MonoBehaviour
         AdmobAds.Instance?.DestroyBannerAd();
     }
 
+    
+
     // Start is called before the first frame update
 
     void Start()
     {
         Invoke(nameof(SpawnPlayer), 1f);
-       
+        PlayerCreator.Instance.SetIsRed();
         //SpinTheWheel();
+
     }
 
     private void OnspinComplete(WheelPiece obj)
     {
+        WBUIActions.EnableBlackPanel?.Invoke(false);
+        WBUIActions.isPlayerActive = true;
+        virtualCamera.Follow = null;
+        virtualCamera.LookAt = null;
         PlayerPrefs.SetInt("WeaponIndex", obj.Amount);
         SpawnPlayer();
         wheel.transform.parent.gameObject.SetActive(false);
@@ -59,6 +67,8 @@ public class PlayerSetManager : MonoBehaviour
 
     internal void SetCamera(WBThirdPersonController thirdPersonController)
     {
+        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Reset();
+        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Reset();
         thirdPersonController.Context.setcamera(virtualCamera,ScopeView);
         thirdPersonController.Context.CrossHair .CrossHair= CrossHair;
         thirdPersonController.Context.WeaponIK.LookAt = lookTransform;
@@ -74,22 +84,54 @@ public class PlayerSetManager : MonoBehaviour
 
     public void ChangeView(bool b)
     {
-        //ScopeView.gameObject.SetActive(b);
+
+        ScopeView.gameObject.SetActive(b);
         //virtualCamera.gameObject.SetActive(!b);
-        ScopeCinemachine.gameObject.SetActive(b);
+        //ScopeCinemachine.gameObject.SetActive(b);
         SniperUI.SetActive(b);
     }
+
+    internal bool scopemoving = false;
+    
+    public void ChangeView(float fov)
+    {
+        if (scopemoving) return;
+        DOTween.To(() => virtualCamera.m_Lens.FieldOfView, x => virtualCamera.m_Lens.FieldOfView = x, fov, .35f)
+            .OnUpdate(() => {
+                // This will be called every frame during the animation
+                scopemoving = true;
+            })
+            .OnComplete(() => {
+                // This will be called when the animation is complete
+                scopemoving = false;
+            });
+        //virtualCamera.
+    }
+
+   
 
     internal void SetScopeCamFeildView(int feildView)
     {
         ScopeView.fieldOfView = feildView;
-        ScopeCinemachine.m_Lens.FieldOfView = feildView;
+        //ScopeCinemachine.m_Lens.FieldOfView = feildView;
     }
 
     internal void SpinTheWheel()
     {
+        WBUIActions.EnableBlackPanel?.Invoke(false);
         wheel.transform.parent.gameObject.SetActive(true);
         wheel.Spin();
         wheel.OnSpinEnd(wheelPiece => { OnspinComplete(wheelPiece); });
+    }
+
+    internal void setKillCam(Transform t)
+    {
+        if (t == null) return;
+        WBUIActions.isPlayerActive = false;
+        WBUIActions.EnableBlackPanel?.Invoke(true);
+        virtualCamera.Follow = t;
+        virtualCamera.LookAt = t;
+        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
+        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
     }
 }

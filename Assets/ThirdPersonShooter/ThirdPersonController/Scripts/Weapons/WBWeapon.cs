@@ -15,6 +15,7 @@ namespace WeirdBrothers.ThirdPersonController
         [Header("Weawpon Data")]
         [Space]
         public WBWeaponData Data;
+        public GameObject Body;
 
         public WeaponSlot WeaponSlot;
         internal ulong id;
@@ -57,13 +58,17 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void Start()
         {
-            _audioSource = GetComponent<AudioSource>();
-            _currentAmmo = Data.MagSize;
-            _directionToTarget = Vector3.zero;
-            _hit = new RaycastHit();
+            setStartData();
             //Setpool();
         }
         
+        internal void setStartData()
+        {
+            _audioSource = GetComponent<AudioSource>();
+            _directionToTarget = Vector3.zero;
+            _hit = new RaycastHit();
+            _currentAmmo = Data.MagSize;
+        }
 
         private void FixedUpdate()
         {
@@ -71,6 +76,8 @@ namespace WeirdBrothers.ThirdPersonController
             //{
             //    FireBullet();
             //}
+
+           
         }
 
         public void setfiring(bool b)
@@ -134,7 +141,7 @@ namespace WeirdBrothers.ThirdPersonController
         }
 
 
-        public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos)
+        public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos,bool isRed)
         {
             
             if (Time.time > _nextFire)
@@ -148,15 +155,13 @@ namespace WeirdBrothers.ThirdPersonController
                 pool[poolIndex].transform.forward = transform.forward;
                 pool[poolIndex].gameObject.SetActive(true);
                 pool[poolIndex].moveBullet(hitPoint, RotationToUse);
+                pool[poolIndex].isRed = isRed;
                 poolIndex++;
                 
                 if (poolIndex >= pool.Length) poolIndex = 0;
 
                 if (Cylinder != null)
                 {
-                    WBUIActions.SetPrimaryWeaponUI?.Invoke(_index,Data.WeaponImage,
-                    CurrentAmmo,
-                    30);
                     //Debug.LogError(Cylinder.localEulerAngles.z);
                     Cylinder.DOLocalRotate(new Vector3(Cylinder.localEulerAngles.x, Cylinder.localEulerAngles.y, Cylinder.localEulerAngles.z - CylinderRotation), Data.FireRate*.8f); 
                 }
@@ -220,7 +225,8 @@ namespace WeirdBrothers.ThirdPersonController
         internal void SetScopeCamera(Transform transform)
         {
             CamController.SetCam(transform);
-            PlayerSetManager.instance.ScopeCinemachine.Follow = CamController.transform;
+            setStartData();
+            //PlayerSetManager.instance.ScopeCinemachine.Follow = CamController.transform;
         }
 
         internal void SetFieldView()
@@ -237,8 +243,14 @@ namespace WeirdBrothers.ThirdPersonController
             PlayerSetManager.instance.SetScopeCamFeildView(Data.FeildView);
         }
 
-       
+        private void OnDestroy()
+        {
+            foreach (var item in pool)
+            {
+                Destroy(item.gameObject);
+            }
+        }
 
-       
+
     }
 }

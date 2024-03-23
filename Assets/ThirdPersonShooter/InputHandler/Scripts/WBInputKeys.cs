@@ -8,4 +8,6 @@ public static class WBInputKeys
     public static string Switch3 = "Switch3";
     public static string Switch4 = "Switch4";
     public static string Jump = "Jump";
+    public static string GrenadeEnable = "Grenade";
+    public static string KillStreak = "KillStreak";
 }

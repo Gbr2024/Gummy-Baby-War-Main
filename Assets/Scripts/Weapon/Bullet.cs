@@ -8,21 +8,20 @@ public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
     internal int damage;
-    [SerializeField] internal ulong PlayerID;
+    internal ulong PlayerID;
     [SerializeField] private float range;
     [SerializeField] private Rigidbody rb;
     [SerializeField] TrailRenderer trail;
     [SerializeField] GameObject HitEffect;
     [SerializeField] GameObject Body;
     [SerializeField] bool DisableBody;
-    Transform aimpoint;
 
     [SerializeField] private float customGravity;
+    internal bool isRed;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        aimpoint = GameObject.Find("AimPoint").transform;
     }
     private void Start()
     {
@@ -44,7 +43,6 @@ public class Bullet : MonoBehaviour
             float distanceToHit = range;
             // Adjust the force based on the distance and slowing distance
             float adjustedForce = Mathf.Clamp(distanceToHit, 0f, 1f) * range;
-
             transform.LookAt(point);
             // Apply the force to the rigidbody
             rb.AddForce(transform.forward * adjustedForce, ForceMode.Impulse);
@@ -55,6 +53,10 @@ public class Bullet : MonoBehaviour
             rb.AddForce(transform.forward * range, ForceMode.Impulse);
         }
     }
+    internal void moveBullet()
+    {
+        rb.AddForce(transform.forward * range, ForceMode.Impulse);
+    }
 
 
     private void OnCollisionEnter(Collision collision)
@@ -64,7 +66,10 @@ public class Bullet : MonoBehaviour
             if(Body!=null)Body.SetActive(!DisableBody);
             trail.enabled = false;
             Invoke(nameof(Sleep), 4f);
+            if(TryGetComponent(out AudioSource ad))
+                ad.Play();
             Instantiate(HitEffect, transform.position, Quaternion.identity);
+
         }
         
     }
@@ -78,7 +83,6 @@ public class Bullet : MonoBehaviour
     {
         trail.Clear();
         if (rb == null) rb = GetComponent<Rigidbody>();
-        if (aimpoint == null) aimpoint = GameObject.Find("AimPoint").transform;
         rb.angularDrag = 0;
         rb.drag = 0;
         rb.velocity = Vector3.zero;
@@ -88,9 +92,9 @@ public class Bullet : MonoBehaviour
         trail.enabled = true;
     }
 
-    private void FixedUpdate()
-    {
-        if (trail.enabled) rb.AddForce(Vector3.up * customGravity, ForceMode.Acceleration);
-    }
+    //private void FixedUpdate()
+    //{
+    //    if (trail.enabled) rb.AddForce(Vector3.up * customGravity, ForceMode.Acceleration);
+    //}
 }
 

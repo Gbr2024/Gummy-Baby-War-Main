@@ -16,10 +16,11 @@ namespace WeirdBrothers.ThirdPersonController
 
         public void Execute()
         {
-            if (_context.CurrentWeapon == null)
+            if (_context.CurrentWeapon == null && !_context.GrenadeSet)
                 return;
-            if (_context.CurrentWeapon.Data.WeaponType == WBWeaponType.Melee)
-                return;
+            if (_context.CurrentWeapon != null)
+                if (_context.CurrentWeapon.Data.WeaponType == WBWeaponType.Melee)
+                    return;
 
             if(_context.ShooterController.IsOwner)
             {

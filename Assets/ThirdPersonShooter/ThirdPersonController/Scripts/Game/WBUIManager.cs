@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
+using System;
+using System.Collections;
 
 namespace WeirdBrothers.ThirdPersonController
 {
@@ -16,7 +18,13 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] private WBItemUI _secondaryWeaponUI;
         [SerializeField] private WBItemUI _meleeWeaponUI;
         [SerializeField] private Slider HealthBar;
-        [SerializeField] TMP_Text MyKills;
+        [SerializeField] GameObject Tick;
+        [SerializeField] TMP_Text tickTimer;
+        [SerializeField] TMP_Text MyKills,killstreaklabel;
+        [SerializeField] GameObject BlackPanel,GrenadeButton,KillstreakButton,Map;
+        [SerializeField] Sprite GunSprite, GrenadeSprite;
+        [SerializeField] Image ShootImage;
+        [SerializeField] WBTouchLook DisableTouch;
 
         [Header("Weapon Icons")]
         [SerializeField] private GameObject _weaponPanels;
@@ -29,6 +37,36 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.SetWeaponUI += SetWeaponUI;
             WBUIActions.UpdateHealth += UpdateHealth;
             WBUIActions.UpdatelocalScore += UpdateMykills;
+            WBUIActions.EnableBlackPanel += EnableBlackPanel;
+            WBUIActions.EnableGrenadeTime += StartTick;
+            WBUIActions.EnableGrenadeButton += EnableGrenadeButton;
+            WBUIActions.ChangeFireIcon += SetButtonIcon;
+            WBUIActions.EnableKillstreakButton += SetKillStreakButton;
+            WBUIActions.EnableMap += EnableMap;
+            WBUIActions.EnableTouch += EnableTouch;
+            WBUIActions.ChangeKillstreak += SetStreakLabel;
+        }
+
+        private void SetStreakLabel(string obj)
+        {
+            killstreaklabel.text = obj;
+        }
+
+        private void EnableTouch(bool obj)
+        {
+            DisableTouch.enabled = obj;
+        }
+
+        private void EnableMap(bool obj)
+        {
+            Map.SetActive(obj);
+        }
+
+        
+
+        private void EnableBlackPanel(bool b)
+        {
+            BlackPanel.SetActive(b);
         }
 
         private void OnDisable()
@@ -39,6 +77,14 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.SetWeaponUI -= SetWeaponUI;
             WBUIActions.UpdateHealth -= UpdateHealth;
             WBUIActions.UpdatelocalScore -= UpdateMykills;
+            WBUIActions.EnableBlackPanel -= EnableBlackPanel;
+            WBUIActions.EnableGrenadeButton -= EnableGrenadeButton;
+            WBUIActions.EnableGrenadeTime -= StartTick;
+            WBUIActions.ChangeFireIcon -= SetButtonIcon;
+            WBUIActions.EnableKillstreakButton -= SetKillStreakButton;
+            WBUIActions.EnableMap -= EnableMap;
+            WBUIActions.EnableTouch -= EnableTouch;
+            WBUIActions.ChangeKillstreak -= SetStreakLabel;
         }
 
         private void Start()
@@ -62,7 +108,6 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void SetPrimaryWeaponUI(int index, Sprite weaponImage, int currentAmmo, int totalAmmo)
         {
-           
             if (index == 1)
             {
                 if (!_primaryWeaponUI1.UIPanel.activeSelf)
@@ -116,5 +161,55 @@ namespace WeirdBrothers.ThirdPersonController
             //if (!IsOwner) return;
             _weaponPanels.SetActive(state);
         }
+
+        public void LoadMenu()
+        {
+            Loader.Load(1);
+        }
+
+        void StartTick(bool enable)
+        {
+            StopCoroutine(StartTimer());
+            Tick.SetActive(enable);
+            if(Tick.activeSelf)
+                StartCoroutine(StartTimer());
+            else
+                ShootImage.sprite = GunSprite;
+        }
+
+        void EnableGrenadeButton(bool act)
+        {
+            GrenadeButton.SetActive(act);
+        }
+
+        void SetButtonIcon(string id="Gun")
+        {
+            switch(id)
+            {
+                case "Grenade":
+                    ShootImage.sprite = GrenadeSprite;
+                    break;
+                default:
+                    ShootImage.sprite = GunSprite;
+                    break;
+            }
+        }
+
+        IEnumerator StartTimer()
+        {
+            tickTimer.text = "6";
+            for (int i = 6; i >= 0; i--)
+            {
+                yield return new WaitForSeconds(1f);
+                tickTimer.text = i.ToString();
+            }
+            Tick.SetActive(false);
+        }
+
+        private void SetKillStreakButton(bool obj)
+        {
+            KillstreakButton.SetActive(obj);
+        }
     }
+
 }

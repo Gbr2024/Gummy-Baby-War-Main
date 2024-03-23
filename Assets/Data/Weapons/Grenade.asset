@@ -16,7 +16,7 @@ MonoBehaviour:
   WeaponName: test
   WeaponHandPosition:
     Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 350, y: 34.999996, z: 90}
+    Rotation: {x: 340, y: 37.5, z: 90}
   WeaponSlotPosition:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
@@ -24,7 +24,7 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 1
+  WeaponIndex: 2
   AmmoType: GrenadeAmmo
   FireType: 1
   bullet: {fileID: 4416225141524912330, guid: 97ea939696b5b2e4ea25dc1de5b7d0d5, type: 3}
@@ -44,5 +44,5 @@ MonoBehaviour:
   MagOutSound: {fileID: 8300000, guid: e7eec80bb1c05f5428550d15f82e9f7f, type: 3}
   MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}
   BoltSound: {fileID: 0}
-  FeildView: 32
+  FeildView: 30
   TouchRatioOnScope: 0.65

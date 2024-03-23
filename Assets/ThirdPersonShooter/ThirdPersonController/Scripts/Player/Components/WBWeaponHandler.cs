@@ -233,7 +233,8 @@ namespace WeirdBrothers.ThirdPersonController
             var weaponImage = currentPickUpWeapon.gameObject.GetItemImage();
             var currentAmmo = currentPickUpWeapon.CurrentAmmo;
             var totalAmmo = context.Inventory.GetAmmo(currentPickUpWeapon.Data.AmmoType);
-            WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
+            if(context.ShooterController.IsOwner)
+                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
 
 
             // if (context.ShooterController.IsLocalPlayer)
@@ -242,7 +243,7 @@ namespace WeirdBrothers.ThirdPersonController
             //Debug.LogError(currentPickUpWeapon.Data.WeaponIndex);
             if (parent.GetInstanceID() == context.WeaponSlots.RightHandReference.GetInstanceID())
             {
-                Debug.LogError("Here");
+               // Debug.LogError("Here");
                 context.SetAnimator(currentPickUpWeapon.Data.WeaponIndex);
             }
 
@@ -333,7 +334,8 @@ namespace WeirdBrothers.ThirdPersonController
                 return weaponSlot.GetComponent<WBWeapon>();
             }
             context.CrossHair.CrossHair.gameObject.SetActive(false);
-            WBUIActions.SetWeaponUI?.Invoke(false);
+            if(!context.GrenadeSet)
+                WBUIActions.SetWeaponUI?.Invoke(false);
             return null;
         }
 

@@ -16,16 +16,18 @@ namespace WeirdBrothers.ThirdPersonController
 
 
         [SerializeField] private PlayerState[] _states;
-        Syncer syncer;
+        internal Syncer syncer;
 
         private List<object> _playerStates;
         private WBPlayerMovement _movement;
         private WBPlayerIKHandle _ikHandler;
 
+       
+
         internal bool isRed = false;
         internal int bulletlayer;
         bool isDataSet = false;
-        int mykills = 0;
+        
 
         private void Awake()
         {
@@ -39,18 +41,39 @@ namespace WeirdBrothers.ThirdPersonController
             //    enabled = false;
             //Debug.LogError(_context.PlayerCamera);
             setContext();
+
             if(IsOwner)
             {
+                syncer = GetComponent<Syncer>();
+                isRed = CustomProperties.Instance.isRed;
+                SetSkin(LobbyManager.Instance.getSkinColor(isRed));
                 syncer.isRed.Value = isRed;
                 if (CustomProperties.Instance.isRed)
                     gameObject.layer = 10;
                 else
                     gameObject.layer = 13;
+                bulletlayer = isRed ? 9 : 12;
 
                 SetWeaponData(PlayerPrefs.GetInt("WeaponIndex"), bulletlayer);
                 syncer.WeaponIndex.Value = PlayerPrefs.GetInt("WeaponIndex");
+                WBUIActions.isPlayerActive = true;
+                Context.GrenadeCount = 1;
+                WBUIActions.EnableGrenadeButton?.Invoke(true);
+                WBUIActions.EnableTouch?.Invoke(true);
             }
-            
+            else
+            {
+                isRed = syncer.isRed.Value;
+            }
+            if (!IsLocalPlayer && CustomProperties.Instance.isRed == isRed)
+            {
+                GetComponentInChildren<marker>().SetColor(Color.blue);
+                GetComponentInChildren<marker>().EnableBody(true, false);
+            }
+            else
+                GetComponentInChildren<marker>().SetColor(Color.red);
+
+            transform.LookAt(ItemReference.Instance.EmtptyTarget);
         }
 
        
@@ -63,6 +86,7 @@ namespace WeirdBrothers.ThirdPersonController
             _playerStates = new List<object>();
             _movement = new WBPlayerMovement(_context);
             _ikHandler = new WBPlayerIKHandle(_context);
+            _context.GrenadeSet = false;
 
             WBPlayerGroundChecker groundChecker = new WBPlayerGroundChecker(_context);
             WBPlayerJump jump = new WBPlayerJump(_context);
@@ -94,11 +118,10 @@ namespace WeirdBrothers.ThirdPersonController
             return false;
         }
 
-        private void FixedUpdate()
-        {
-            if (IsOwner && isDataSet)
-                _movement.Schedule();
-        }
+        //private void FixedUpdate()
+        //{
+           
+        //}
 
         [ServerRpc (RequireOwnership =false)]
         internal void SetColorServerRpc(ulong id, int colorIndex)
@@ -116,6 +139,8 @@ namespace WeirdBrothers.ThirdPersonController
         private void Update()
         {
             if (IsOwner && isDataSet && !Context.health.isDead)
+                _movement.Schedule();
+            if (IsOwner && isDataSet && !Context.health.isDead)
             {
                 Array.ForEach(_playerStates.ToArray(), state =>
                 {
@@ -126,7 +151,7 @@ namespace WeirdBrothers.ThirdPersonController
                 _context.CrossHair.CrossHair.sizeDelta = new Vector2(_context.CrossHair.CrossHairSpread,
                     _context.CrossHair.CrossHairSpread);
 
-                if (_context.RecoilTime > 0)
+                if (_context.RecoilTime > 0 && !_context.isScopeOn)
                 {
                     _context.Pov.m_VerticalAxis.Value -= _context.CurrentWeapon.Data.VerticalRecoil;
                     _context.Pov.m_HorizontalAxis.Value -= UnityEngine.Random.Range(-_context.CurrentWeapon.Data.HorizontalRecoil,
@@ -136,33 +161,45 @@ namespace WeirdBrothers.ThirdPersonController
             }
         }
 
+        internal void DespawnGrenade()
+        {
+            PlayerCreator.Instance.DespawnGrenadeServerRpc(OwnerClientId);
+        }
+
+        internal void CreateGrenade()
+        {
+            //Debug.LogError("Being Called");
+            PlayerCreator.Instance.CreateGrenadeServerRpc(OwnerClientId,isRed);
+        }
+
         internal void FireInAll(Vector3 hitPoint, LayerMask damageLayer)
         {
             var camRot = Camera.main.transform.rotation;
            
             if(_context.CurrentWeapon.CurrentAmmo>0)
             {
-                
-                ShootServerRpc(NetworkObject.OwnerClientId, hitPoint, camRot,Context.CurrentWeapon.GetMuzzleFlah.position);
-                _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position);
+                ShootServerRpc(NetworkObject.OwnerClientId, hitPoint, camRot,Context.CurrentWeapon.GetMuzzleFlah.position,isRed);
+                _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position,isRed);
             }
             
             
         }
 
         [ServerRpc (RequireOwnership =false)]
-        void ShootServerRpc(ulong id, Vector3 hitPoint, Quaternion rot,Vector3 pos)
+        void ShootServerRpc(ulong id, Vector3 hitPoint, Quaternion rot,Vector3 pos,bool isRed)
         {
-            ShootClientClientRpc(NetworkObject.OwnerClientId, hitPoint, rot,pos);
+            ShootClientClientRpc(NetworkObject.OwnerClientId, hitPoint, rot,pos,isRed);
         }
 
+        
+
         [ClientRpc]
-        void ShootClientClientRpc(ulong id, Vector3 hitPoint,Quaternion rot,Vector3 pos)
+        void ShootClientClientRpc(ulong id, Vector3 hitPoint,Quaternion rot,Vector3 pos,bool isRed)
         {
             if (id != NetworkObject.OwnerClientId || NetworkManager.Singleton.LocalClientId==id) return;
             //Debug.LogError(_context.CurrentWeapon);
 
-            _context.CurrentWeapon.FireBullet(hitPoint,rot,pos);
+            _context.CurrentWeapon.FireBullet(hitPoint,rot,pos,isRed);
         }
 
 
@@ -172,6 +209,11 @@ namespace WeirdBrothers.ThirdPersonController
             if (isDataSet && !Context.health.isDead)
             {
                 _ikHandler.Schedule();
+            }
+            if(_context.CurrentWeapon!=null)
+            {
+                if (_context.CurrentWeapon.transform.localPosition != _context.CurrentWeapon.Data.WeaponHandPosition.Position) _context.CurrentWeapon.transform.localPosition = _context.CurrentWeapon.Data.WeaponHandPosition.Position;
+                if (_context.CurrentWeapon.transform.localRotation != Quaternion.Euler(_context.CurrentWeapon.Data.WeaponHandPosition.Rotation)) _context.CurrentWeapon.transform.localRotation = Quaternion.Euler(_context.CurrentWeapon.Data.WeaponHandPosition.Rotation);
             }
         }
 
@@ -207,11 +249,13 @@ namespace WeirdBrothers.ThirdPersonController
             });
             Weapon.GetComponent<WBWeapon>().Setpool(layer, NetworkObject.OwnerClientId);
             SetWeapon(Weapon);
+            Weapon.GetComponent<WBWeapon>().setStartData();
             if (IsOwner)
             {
+               
                 Weapon.GetComponent<WBWeapon>().SetFieldView();
                 Invoke(nameof(SetLookLookRotationOnWeapon), 0.5f);
-                _context.UpdateAmmo(_context.CurrentWeapon);
+                //_context.UpdateAmmo(_context.CurrentWeapon);
             }
         }
 
@@ -327,7 +371,7 @@ namespace WeirdBrothers.ThirdPersonController
                 return;
             }
 
-            if (_context.CurrentWeapon != null)
+            if (_context.CurrentWeapon != null && !_context.GrenadeSet && _context.CurrentWeapon.Body.activeSelf && Context.isAiming)
             {
                 var handRef = _context.CurrentWeapon.LeftHandRef;
                 if (handRef == null) return;
@@ -337,45 +381,78 @@ namespace WeirdBrothers.ThirdPersonController
             }
         }
 
-        internal void AddDamage(int damage,ulong clientId)
+        internal void AddDamage(float damage,ulong clientId, ulong playerID)
         {
-            AddDamageServerRpc(clientId, damage);
+            AddDamageServerRpc(clientId, damage,playerID);
         }
 
         [ServerRpc (RequireOwnership =false)]
-        void AddDamageServerRpc(ulong id,int damage)
+        void AddDamageServerRpc(ulong id,float damage, ulong playerID)
         {
             //Debug.LogError("Damaging");
-            AddDamageClientRpc(id, damage);
+            AddDamageClientRpc(id, damage,playerID);
         }
 
 
         [ClientRpc]
-        void AddDamageClientRpc(ulong id,int damage)
+        void AddDamageClientRpc(ulong id,float damage, ulong playerID)
         {
             if (NetworkObject.OwnerClientId == id)
             {
-                GetComponent<HealthManager>().AddDamage(damage); 
+                GetComponent<HealthManager>().AddDamage(damage,playerID); 
             }
         }
 
-        internal void SetKill()
-        {
-            mykills++;
-            WBUIActions.UpdatelocalScore?.Invoke(mykills);
-            FindObjectOfType<ScoreManager>().SetTeamScoreScoreServerRpc(1, CustomProperties.Instance.isRed);
-        }
+        
 
         public void SetScope()
         {
+            if (PlayerSetManager.instance.scopemoving) return;
             Context.isScopeOn = !Context.isScopeOn;
             SetLookLookRotationOnWeapon();
-            PlayerSetManager.instance.ChangeView(Context.isScopeOn);
+            PlayerSetManager.instance.ChangeView(Context.isScopeOn?Context.CurrentWeapon.Data.FeildView:40f);
         }
 
-        private void OnDestroy()
+        internal void SetSkin(int color)
         {
+            //Debug.LogError("On Value Invoked +" + gameObject.name);
+            List<Material> mats = new List<Material>();
+            foreach (var item in GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                foreach (var item2 in item.materials)
+                {
+                    mats.Add(item2);
+                }
+            }
+            foreach (var item in mats)
+            {
+                item.SetColor("_BaseColor", ItemReference.Instance.colorReference.CharacterColors[color].color);
+            }
         }
 
+        internal void ActivateBodyOnWait()
+        {
+            Invoke(nameof(ActivateBody), .5f);
+        }
+        void ActivateBody()
+        {
+            if (_context.CurrentWeapon == null) return;
+            _context.CurrentWeapon.Body.SetActive(true);
+            _context.ShooterController.syncer.isWeaponActivated.Value = true;
+        }
+
+        [ClientRpc]
+        internal void SetKillStreakClientRPC(int KillStreak,ulong clientID)
+        {
+            if( IsOwner && OwnerClientId==clientID)
+            {
+                PlayerCreator.Instance.killstreak = KillStreak;
+                if(PlayerCreator.Instance.killstreak >= 2)
+                {
+                    WBUIActions.EnableKillstreakButton?.Invoke(true);
+                    WBUIActions.ChangeKillstreak?.Invoke(PlayerCreator.Instance.killstreak.ToString());
+                }
+            }
+        }
     }
 }

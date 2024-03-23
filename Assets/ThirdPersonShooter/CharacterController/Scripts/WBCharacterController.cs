@@ -138,6 +138,9 @@ namespace WeirdBrothers.CharacterController
 
         private bool _isGrounded;
         private float _groundDistance;
+
+        
+
         private RaycastHit _hit;
         public bool IsGrounded => _isGrounded;
         public float GroundDistance => _groundDistance;

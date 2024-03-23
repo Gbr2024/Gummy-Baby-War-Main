@@ -1,0 +1,188 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Netcode;
+using UnityEngine;
+using WeirdBrothers.ThirdPersonController;
+
+public class PlayerCreator : NetworkBehaviour
+{
+    public static PlayerCreator Instance;
+
+
+    [Header("Sync")]
+    public NetworkVariable<bool> isRedTeam = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> kills = new NetworkVariable<int>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<FixedString64Bytes> playername = new NetworkVariable<FixedString64Bytes>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    internal int killstreak = 0;
+
+    private void Awake()
+    {
+        
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Debug.LogError("-------" + IsOwner);
+      
+        DontDestroyOnLoad(gameObject);
+        //SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId,PlayerPrefs.GetInt("CharacterIndex", 0));
+        //GameObject go = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)], Vector3.zero, Quaternion.identity);
+        //go.GetComponent<NetworkObject>().Spawn(true);
+        
+        
+    }
+
+  
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        if (IsOwner)
+            Instance = this;
+        if (IsOwner) OnClientConnectedServerRpc();
+
+        isRedTeam.OnValueChanged += (previous, current) => SetisRed(isRedTeam.Value);
+        kills.OnValueChanged += (previous, current) => Setkills(kills.Value);
+        playername.OnValueChanged += (previous, current) => SetName(playername.Value);
+        if(IsOwner)
+        {
+            playername.Value = PlayerPrefs.GetString("PlayerName");
+        }
+        if(IsServer)
+        {
+            Invoke(nameof(CloseLobby), 30f);
+        }
+
+    }
+
+
+
+    void CloseLobby()
+    {
+        LobbyManager.Instance.CloseLobby();
+    }
+
+    internal void SetIsRed()
+    {
+        if (IsOwner)
+        {
+            //Debug.LogError("Setting is Red" + CustomProperties.Instance.isRed);
+            isRedTeam.Value = CustomProperties.Instance.isRed;
+            //Debug.LogError("Setting is Red" + isRedTeam.Value);
+        }
+    }
+
+
+
+    private void SetisRed(bool value)
+    {
+        isRedTeam.Value = value;
+    }
+
+    private void Setkills(int value)
+    {
+        kills.Value = value;
+    }
+
+    private void SetName(FixedString64Bytes value)
+    {
+        playername.Value = value;
+    }
+
+    //[ServerRpc (RequireOwnership =false)]
+    //internal void setkillServerRpc(ulong id)
+    //{
+    //    SetKillClientRpc(id);
+    //}
+
+    [ClientRpc]
+    internal void UpdateKillsClientRpc()
+    {
+        if(IsLocalPlayer)
+        {
+            UpdateKills();
+        }
+        
+    }
+
+
+    void UpdateKills()
+    {
+        ScoreManager.Instance.SetTeamScoreScoreServerRpc(1, isRedTeam.Value);
+        kills.Value += 1;
+        killstreak++;
+        if (killstreak >= 2)
+        { 
+            WBUIActions.EnableKillstreakButton?.Invoke(true);
+            WBUIActions.ChangeKillstreak?.Invoke(killstreak.ToString());
+        }
+        WBUIActions.UpdatelocalScore?.Invoke(kills.Value);
+
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void OnClientConnectedServerRpc()
+    {
+        //Debug.LogError("Being Called " + NetworkManager.Singleton.ConnectedClients.Count );
+        if(!LobbyManager.Instance.GameSceneHasLoaded && NetworkManager.Singleton.ConnectedClients.Count>=2)
+        {
+            Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
+        }
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    void SpawnPlayerServerRpc(ulong id,int charindex,Vector3 pos,Vector3 angles,int bulletLayer)
+    {
+        ItemReference.Instance.characters.Characters[charindex].transform.position = pos;
+        ItemReference.Instance.characters.Characters[charindex].transform.eulerAngles= angles;
+        GameObject player = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[charindex]);
+        player.GetComponent<NetworkObject>().SpawnWithOwnership(id, true);
+        player.GetComponent<WBThirdPersonController>().bulletlayer = bulletLayer;
+    }
+
+    internal void SpawnObject()
+    {
+        int bulletlayer = 9;
+        if (!CustomProperties.Instance.isRed)
+            bulletlayer = 12;
+        var tmp= CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[Random.Range(0, PlayerSetManager.instance.RedCribs.Length)] :PlayerSetManager.instance.BlueCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)];
+        Vector3 pos = tmp.position;
+        Vector3 forward = tmp.eulerAngles;
+        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.position = pos;
+        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0),pos,forward,bulletlayer);
+        killstreak = 0;
+        WBUIActions.EnableKillstreakButton?.Invoke(false);
+        WBUIActions.ChangeKillstreak?.Invoke(0.ToString());
+    }
+
+    [ServerRpc]
+    internal void DespawnGrenadeServerRpc(ulong ownerClientId)
+    {
+        foreach (var item in FindObjectsOfType<Grenade>())
+        {
+            item.NetworkObject.Despawn(true);
+        } 
+    }
+
+    [ServerRpc (RequireOwnership =false)]
+    internal void CreateGrenadeServerRpc(ulong ownerClientId,bool isRed)
+    {
+        WBThirdPersonController controller=null;
+        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        {
+            if (item.OwnerClientId == ownerClientId)
+                controller = item;
+        }
+        controller.Context.trajectory.prefab.transform.position = controller.Context.GrenadeHandPos.position;
+        Grenade grenade = NetworkManager.Instantiate(controller.Context.trajectory.prefab);
+        grenade.ToFollow = controller.Context.GrenadeHandPos;
+        grenade.PlayerID = ownerClientId;
+        grenade.isRed = isRed;
+        controller.Context.trajectory.grenade = grenade;
+        grenade.GetComponent<NetworkObject>().SpawnWithOwnership(ownerClientId, true);
+    }
+
+   
+}

@@ -11,13 +11,21 @@ namespace WeirdBrothers.ThirdPersonController
     {
         //private properties
         [SerializeField] private WBPlayerData _data;
+        [SerializeField] private TrajectoryController trajectoryController;
+
+        public Transform GrenadeHandPos;
+        public int GrenadeCount = 1;
         public WBPlayerData Data => _data;
+        public TrajectoryController trajectory => trajectoryController;
 
         [SerializeField] private LookAtIK _weaponIK;
         public LookAtIK WeaponIK => _weaponIK;
 
         [Space]
         [SerializeField] private CrossHairSettings _crossHairSetting;
+
+        public bool GrenadeSet { get; internal set; }
+
         public CrossHairSettings CrossHair => _crossHairSetting;
 
         [Space]
@@ -71,6 +79,7 @@ namespace WeirdBrothers.ThirdPersonController
         [HideInInspector] public WBWeapon CurrentWeapon;
         [HideInInspector] public float RecoilTime;
         [HideInInspector] public float Speed;
+        internal bool isAiming = false;
 
         public void SetData(Transform transform)
         {
@@ -156,8 +165,8 @@ namespace WeirdBrothers.ThirdPersonController
             var weaponImage = weapon.gameObject.GetItemImage();
             var currentAmmo = weapon.CurrentAmmo;
             var totalAmmo = Inventory.GetAmmo(weapon.Data.AmmoType);
-
-            WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
+            if (ShooterController.IsOwner)
+                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
         }
 
         public void UpdateAmmo()

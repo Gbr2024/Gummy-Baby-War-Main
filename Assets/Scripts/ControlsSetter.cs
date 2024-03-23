@@ -13,7 +13,7 @@ public class ControlsSetter : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        transform.position = PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position;
+        //transform.position = PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position;
         if (!IsOwner)
             enabled = false;
     }

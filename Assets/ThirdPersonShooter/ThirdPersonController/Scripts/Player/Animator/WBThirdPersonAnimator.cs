@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 namespace WeirdBrothers.ThirdPersonController
 {
     public class WBThirdPersonAnimator
     {
-        private Animator _animator;
+        internal Animator _animator;
 
         //animation ids        
         private int _animIDHor;
@@ -164,6 +165,12 @@ namespace WeirdBrothers.ThirdPersonController
             }
         }
 
+        internal void SetAim(bool v)
+        {
+            if (_animator.GetBool("Aiming") != v) _animator.SetBool("Aiming", v);
+            
+        }
+
         public bool IsSwitching()
         {
             return _animator.GetBool(_animIDIsSwitching);
@@ -187,6 +194,7 @@ namespace WeirdBrothers.ThirdPersonController
             _animator.SetIKRotation(AvatarIKGoal.LeftHand, rotation);
         }
 
+
         public void OnReload()
         {
             _animator.SetTrigger(_animIDReload);
@@ -201,6 +209,8 @@ namespace WeirdBrothers.ThirdPersonController
         {
             return _animator.GetBool(_animIDIsReload);
         }
+
+        
 
         public void OnMeleeAttack()
         {
