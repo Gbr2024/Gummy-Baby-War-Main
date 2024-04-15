@@ -111,6 +111,7 @@ public class PlayerCreator : NetworkBehaviour
     {
         ScoreManager.Instance.SetTeamScoreScoreServerRpc(1, isRedTeam.Value);
         kills.Value += 1;
+        CustomProperties.Instance.kills = kills.Value;
         killstreak++;
         if (killstreak >= 2)
         { 
@@ -133,10 +134,11 @@ public class PlayerCreator : NetworkBehaviour
 
 
     [ServerRpc(RequireOwnership = false)]
-    void SpawnPlayerServerRpc(ulong id,int charindex,Vector3 pos,Vector3 angles,int bulletLayer)
+    void SpawnPlayerServerRpc(ulong id,int charindex,int index,int bulletLayer,bool isRed)
     {
-        ItemReference.Instance.characters.Characters[charindex].transform.position = pos;
-        ItemReference.Instance.characters.Characters[charindex].transform.eulerAngles= angles;
+        var t=isRed ? PlayerSetManager.instance.RedCribs[index] : PlayerSetManager.instance.BlueCribs[index];
+        ItemReference.Instance.characters.Characters[charindex].transform.position = t.position;
+        ItemReference.Instance.characters.Characters[charindex].transform.rotation = t.rotation;
         GameObject player = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[charindex]);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(id, true);
         player.GetComponent<WBThirdPersonController>().bulletlayer = bulletLayer;
@@ -147,11 +149,12 @@ public class PlayerCreator : NetworkBehaviour
         int bulletlayer = 9;
         if (!CustomProperties.Instance.isRed)
             bulletlayer = 12;
-        var tmp= CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[Random.Range(0, PlayerSetManager.instance.RedCribs.Length)] :PlayerSetManager.instance.BlueCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)];
-        Vector3 pos = tmp.position;
-        Vector3 forward = tmp.eulerAngles;
-        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.position = pos;
-        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0),pos,forward,bulletlayer);
+        int index = Random.Range(0, PlayerSetManager.instance.RedCribs.Length);
+        var tmp= CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[index] :PlayerSetManager.instance.BlueCribs[index];
+
+        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.position = tmp.transform.position;
+        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.rotation = tmp.transform.rotation;
+        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0),index,bulletlayer, CustomProperties.Instance.isRed);
         killstreak = 0;
         WBUIActions.EnableKillstreakButton?.Invoke(false);
         WBUIActions.ChangeKillstreak?.Invoke(0.ToString());

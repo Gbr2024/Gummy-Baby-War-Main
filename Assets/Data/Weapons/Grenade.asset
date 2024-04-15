@@ -24,9 +24,10 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 2
+  isSniper: 0
+  WeaponIndex: 1
   AmmoType: GrenadeAmmo
-  FireType: 1
+  FireType: 2
   bullet: {fileID: 4416225141524912330, guid: 97ea939696b5b2e4ea25dc1de5b7d0d5, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
@@ -37,7 +38,7 @@ MonoBehaviour:
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 80
-  FireRate: 0.8
+  FireRate: 0.05
   MagSize: 10
   Range: 75
   FireSound: {fileID: 8300000, guid: f229fdc2562deac428f04a0ef329c51a, type: 3}

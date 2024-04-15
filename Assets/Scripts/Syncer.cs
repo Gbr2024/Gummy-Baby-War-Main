@@ -53,11 +53,13 @@ public class Syncer : NetworkBehaviour
     private void SetisAim(bool value)
     {
         controller.Context.isAiming = value;
+        controller.Context.Animator.SetAim(value);
     }
 
     private void SetWeaponActivated(bool value)
     {
-        controller.Context.CurrentWeapon.Body.SetActive(value);
+        if(controller.Context.CurrentWeapon!=null)
+            controller.Context.CurrentWeapon.Body.SetActive(value);
         controller.Context.GrenadeSet = !value;
     }
 
@@ -104,6 +106,8 @@ public class Syncer : NetworkBehaviour
         SpineIK.OnValueChanged -= (previous, current) => SetSpine(SpineIK.Value);
         SpineRot.OnValueChanged -= (previous, current) => SetSpineRot(SpineRot.Value);
         isRed.OnValueChanged -= (previous, current) => SetisRed(isRed.Value);
+        isAiming.OnValueChanged -= (previous, current) => SetisAim(isAiming.Value);
+        WeaponIndex.OnValueChanged -= (previous, current) => SetWeaponIndex(WeaponIndex.Value);
         base.OnNetworkDespawn();
     }
 

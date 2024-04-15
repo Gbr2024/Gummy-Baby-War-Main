@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.Netcode;
-using System;
 using System.Collections;
 
 namespace WeirdBrothers.ThirdPersonController

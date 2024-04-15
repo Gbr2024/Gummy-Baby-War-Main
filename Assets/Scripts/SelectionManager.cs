@@ -183,4 +183,9 @@ public class SelectionManager : MonoBehaviour
             goto START;
         return no.ToString();
     }
+
+    public int GetSky()
+    {
+        return Random.Range(0, ColorData.skyboxes.Length);
+    }
 }

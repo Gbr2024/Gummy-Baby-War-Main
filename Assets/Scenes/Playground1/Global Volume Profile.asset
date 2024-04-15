@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   lift:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: -0.021186441}
+    m_OverrideState: 1
+    m_Value: {x: 0.96724844, y: 0.9691565, z: 1, w: -0.021186441}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.954554, y: 0.9754053, z: 1, w: 0.14830509}
+    m_Value: {x: 0.909558, y: 0.9491715, z: 1, w: 0.14830509}
   gain:
-    m_OverrideState: 1
-    m_Value: {x: 0.89796215, y: 0.98664445, z: 1, w: 0}
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 0.994705, z: 0.9648904, w: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.35
+    m_Value: 0.25
   smoothness:
     m_OverrideState: 0
     m_Value: 0.2
@@ -85,13 +85,13 @@ MonoBehaviour:
     m_Value: 0
   contrast:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 15
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 5
   saturation:
     m_OverrideState: 1
     m_Value: 10
@@ -107,10 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221518ef91623a7438a71fef23660601, type: 3}
   m_Name: WhiteBalance
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   temperature:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 5
   tint:
     m_OverrideState: 1
     m_Value: -5

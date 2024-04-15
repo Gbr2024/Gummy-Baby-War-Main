@@ -26,8 +26,7 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField]
         private Transform _shellSpawnPoint;
         
-        [SerializeField]
-        private Transform ScopeView;
+        public Transform ScopeView;
 
         [SerializeField]
         private ParticleSystem _muzzelFlash;
@@ -141,7 +140,7 @@ namespace WeirdBrothers.ThirdPersonController
         }
 
 
-        public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos,bool isRed)
+        public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos,bool isRed,bool isOwner=false)
         {
             
             if (Time.time > _nextFire)
@@ -157,7 +156,7 @@ namespace WeirdBrothers.ThirdPersonController
                 pool[poolIndex].moveBullet(hitPoint, RotationToUse);
                 pool[poolIndex].isRed = isRed;
                 poolIndex++;
-                
+                if(isOwner) CustomProperties.Instance.currentAmmo = _currentAmmo;
                 if (poolIndex >= pool.Length) poolIndex = 0;
 
                 if (Cylinder != null)
@@ -229,19 +228,7 @@ namespace WeirdBrothers.ThirdPersonController
             //PlayerSetManager.instance.ScopeCinemachine.Follow = CamController.transform;
         }
 
-        internal void SetFieldView()
-        {
-            //PlayerSetManager.instance.GetScopeView.forward = ScopeView.forward;
-            //PlayerSetManager.instance.GetScopeView.position = ScopeView.position;
-            //PlayerSetManager.instance.GetScopeView.forward = ScopeView.forward;
-            //PlayerSetManager.instance.SetScopeCamFeildView(Data.FeildView);
-            //PlayerSetManager.instance.GetScopeView.GetComponent<ScopeCamMovement>().SetTarget(ScopeView);//
-            //PlayerSetManager.instance.GetScopeView.SetParent(ScopeView);
-            PlayerSetManager.instance.GetScopeView.forward = ScopeView.forward;
-            //PlayerSetManager.instance.GetScopeView.localPosition = Vector3.zero;
-            //PlayerSetManager.instance.GetScopeView.localRotation = Quaternion.identity;
-            PlayerSetManager.instance.SetScopeCamFeildView(Data.FeildView);
-        }
+       
 
         private void OnDestroy()
         {

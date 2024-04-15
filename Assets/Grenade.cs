@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using WeirdBrothers.ThirdPersonController;
+using Unity.Netcode.Components;
 
 public class Grenade : NetworkBehaviour
 {
@@ -18,6 +19,8 @@ public class Grenade : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb.interpolation = RigidbodyInterpolation.None;
+        rb.detectCollisions = false;
         rb.isKinematic = true;
     }
 
@@ -73,10 +76,10 @@ public class Grenade : NetworkBehaviour
     {
         if (IsOwner && ToFollow != null)
         {
-            transform.position = ToFollow.position;
-            transform.forward = ToFollow.forward;
+           
+            transform.position=ToFollow.position;
         }
     }
 
-
+   
 }

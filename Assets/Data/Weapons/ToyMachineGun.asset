@@ -16,7 +16,7 @@ MonoBehaviour:
   WeaponName: test
   WeaponHandPosition:
     Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 347.5, y: 35, z: 90}
+    Rotation: {x: 347.5, y: 25, z: 90}
   WeaponSlotPosition:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
@@ -24,7 +24,7 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 2
+  WeaponIndex: 1
   AmmoType: ToyMachineAmmo
   FireType: 1
   bullet: {fileID: 4416225141524912330, guid: 1a858d125b157854ba6992fe4b0a341f, type: 3}

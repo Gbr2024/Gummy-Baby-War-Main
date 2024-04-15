@@ -24,9 +24,10 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 1
+  isSniper: 0
+  WeaponIndex: 2
   AmmoType: PistolAmmo
-  FireType: 1
+  FireType: 2
   bullet: {fileID: 4416225141524912330, guid: ee0c12cab7dc5be479fe28ae4087b721, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
@@ -37,7 +38,7 @@ MonoBehaviour:
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 35
-  FireRate: 0.75
+  FireRate: 0.05
   MagSize: 7
   Range: 75
   FireSound: {fileID: 8300000, guid: b6f89b76c6f27c941bf27e7e29d956f3, type: 3}

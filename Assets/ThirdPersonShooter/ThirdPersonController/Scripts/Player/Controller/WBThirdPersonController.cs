@@ -44,9 +44,11 @@ namespace WeirdBrothers.ThirdPersonController
 
             if(IsOwner)
             {
+                PlayerSetManager.instance.setAimCam(this);
                 syncer = GetComponent<Syncer>();
                 isRed = CustomProperties.Instance.isRed;
                 SetSkin(LobbyManager.Instance.getSkinColor(isRed));
+
                 syncer.isRed.Value = isRed;
                 if (CustomProperties.Instance.isRed)
                     gameObject.layer = 10;
@@ -56,10 +58,12 @@ namespace WeirdBrothers.ThirdPersonController
 
                 SetWeaponData(PlayerPrefs.GetInt("WeaponIndex"), bulletlayer);
                 syncer.WeaponIndex.Value = PlayerPrefs.GetInt("WeaponIndex");
+                Context.isScopeOn = false;
                 WBUIActions.isPlayerActive = true;
                 Context.GrenadeCount = 1;
                 WBUIActions.EnableGrenadeButton?.Invoke(true);
                 WBUIActions.EnableTouch?.Invoke(true);
+                FindObjectOfType<WBTouchLook>().context = Context;
             }
             else
             {
@@ -73,10 +77,21 @@ namespace WeirdBrothers.ThirdPersonController
             else
                 GetComponentInChildren<marker>().SetColor(Color.red);
 
-            transform.LookAt(ItemReference.Instance.EmtptyTarget);
+            transform.LookAt(ItemReference.Instance?.EmtptyTarget);
         }
 
-       
+        
+
+        internal void resetAim()
+        {
+            CancelInvoke(nameof(ResetAim));
+            Invoke(nameof(ResetAim), .5f);
+        }
+
+        private void ResetAim()
+        {
+            SetScope(_context.isScopeOn);
+        }
 
         internal void setContext()
         {
@@ -120,7 +135,12 @@ namespace WeirdBrothers.ThirdPersonController
 
         //private void FixedUpdate()
         //{
-           
+        //    if (!IsOwner) return;
+        //    if(Context.CurrentWeapon!=null && Context.PlayerScopeCamera!=null)
+        //    {
+        //        Context.PlayerScopeCamera.transform.position=Context.CurrentWeapon.ScopeView.position;
+        //        Context.PlayerScopeCamera.transform.forward=Context.CurrentWeapon.ScopeView.forward;
+        //    }
         //}
 
         [ServerRpc (RequireOwnership =false)]
@@ -138,10 +158,14 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void Update()
         {
+            if (IsOwner && transform.position.y < ItemReference.Instance?.hasgoneDownY)
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             if (IsOwner && isDataSet && !Context.health.isDead)
                 _movement.Schedule();
+
             if (IsOwner && isDataSet && !Context.health.isDead)
             {
+                CustomProperties.Instance.LastPositon = transform.position;
                 Array.ForEach(_playerStates.ToArray(), state =>
                 {
                     state.Schedule();
@@ -151,7 +175,7 @@ namespace WeirdBrothers.ThirdPersonController
                 _context.CrossHair.CrossHair.sizeDelta = new Vector2(_context.CrossHair.CrossHairSpread,
                     _context.CrossHair.CrossHairSpread);
 
-                if (_context.RecoilTime > 0 && !_context.isScopeOn)
+                if (_context.RecoilTime > 0)
                 {
                     _context.Pov.m_VerticalAxis.Value -= _context.CurrentWeapon.Data.VerticalRecoil;
                     _context.Pov.m_HorizontalAxis.Value -= UnityEngine.Random.Range(-_context.CurrentWeapon.Data.HorizontalRecoil,
@@ -172,17 +196,32 @@ namespace WeirdBrothers.ThirdPersonController
             PlayerCreator.Instance.CreateGrenadeServerRpc(OwnerClientId,isRed);
         }
 
+        bool AimEnd = false;
+
         internal void FireInAll(Vector3 hitPoint, LayerMask damageLayer)
         {
+            if (!AimEnd && !Context.isScopeOn) return;
             var camRot = Camera.main.transform.rotation;
            
             if(_context.CurrentWeapon.CurrentAmmo>0)
             {
                 ShootServerRpc(NetworkObject.OwnerClientId, hitPoint, camRot,Context.CurrentWeapon.GetMuzzleFlah.position,isRed);
-                _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position,isRed);
+                _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position,isRed,true);
             }
-            
-            
+        }
+
+        internal void NewFire(Vector3 hitPoint, LayerMask damageLayer)
+        {
+            StartCoroutine(shootWait(hitPoint, damageLayer));
+        }
+
+        IEnumerator shootWait(Vector3 hitPoint, LayerMask damageLayer)
+        {
+            AimEnd = false;
+            yield return new WaitForSeconds(0.1f);
+            AimEnd = true;
+            FireInAll(hitPoint, damageLayer);
+
         }
 
         [ServerRpc (RequireOwnership =false)]
@@ -201,6 +240,8 @@ namespace WeirdBrothers.ThirdPersonController
 
             _context.CurrentWeapon.FireBullet(hitPoint,rot,pos,isRed);
         }
+
+
 
 
 
@@ -239,7 +280,6 @@ namespace WeirdBrothers.ThirdPersonController
         internal void SetWeaponData(int weaponindex,int layer)
         {
             GameObject Weapon = Instantiate(ItemReference.Instance.weaponsData.Weapons[weaponindex]);
-            if (IsOwner) Weapon.GetComponent<WBWeapon>().SetScopeCamera(_context.PlayerScopeCamera.transform);
             _context.ScopeOnRatio = Weapon.GetComponent<WBWeapon>().Data.TouchRatioOnScope;
             Context.Inventory.AddItem(new WBItem
             {
@@ -252,10 +292,8 @@ namespace WeirdBrothers.ThirdPersonController
             Weapon.GetComponent<WBWeapon>().setStartData();
             if (IsOwner)
             {
-               
-                Weapon.GetComponent<WBWeapon>().SetFieldView();
                 Invoke(nameof(SetLookLookRotationOnWeapon), 0.5f);
-                //_context.UpdateAmmo(_context.CurrentWeapon);
+                _context.UpdateAmmo(_context.CurrentWeapon);
             }
         }
 
@@ -405,12 +443,19 @@ namespace WeirdBrothers.ThirdPersonController
 
         
 
-        public void SetScope()
+        public void SetScope(bool b)
         {
             if (PlayerSetManager.instance.scopemoving) return;
-            Context.isScopeOn = !Context.isScopeOn;
+            Context.isScopeOn = b;
+            Context.isAiming = Context.isScopeOn;
+            Context.Animator.SetAim(Context.isScopeOn);
             SetLookLookRotationOnWeapon();
-            PlayerSetManager.instance.ChangeView(Context.isScopeOn?Context.CurrentWeapon.Data.FeildView:40f);
+            Debug.LogError(Context.isScopeOn);
+
+            if (Context.CurrentWeapon.Data.isSniper)
+                Context.CurrentWeapon.ScopeView.gameObject.SetActive(Context.isScopeOn);
+            else
+                PlayerSetManager.instance.ChangeView(Context.isScopeOn?Context.CurrentWeapon.Data.FeildView:40f);
         }
 
         internal void SetSkin(int color)
@@ -454,5 +499,7 @@ namespace WeirdBrothers.ThirdPersonController
                 }
             }
         }
+
+        
     }
 }

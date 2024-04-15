@@ -15,6 +15,7 @@ public class KillStreakSystem : NetworkBehaviour
     [SerializeField] FlyController Chopperprefab;
     [SerializeField] PlanerController planePrefab;
     [SerializeField] PathCreator Chopperpath;
+    [SerializeField] PegionController pegionController;
 
     // Start is called before the first frame update
 
@@ -46,17 +47,19 @@ public class KillStreakSystem : NetworkBehaviour
             //    spawnPosition = new Vector3(Random.Range(dropMin.x, DropMax.x), 75f, Random.Range(dropMin.y, DropMax.y));
             //    yield return null;
             //}
-            
+
             // Check if the spawn position is valid (not colliding with any objects in the specified layer)
             // Spawn the drop prefab at the calculated position
-            Crate go = NetworkObject.Instantiate(Drop, spawnPosition, Quaternion.identity).GetComponent<Crate>();
-            go.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
+            Drop.transform.position = spawnPosition;
+            Crate go = Instantiate(Drop, spawnPosition, Quaternion.identity).GetComponent<Crate>();
+            go.NetworkObject.SpawnWithOwnership(OwnerClientId,true);
         }
     }
 
     internal void SetCrates()
     {
         StartCoroutine(SpawnDropsPeriodically());
+        Debug.LogError("Setting up crates");
     }
 
     private bool IsGroundUnderneath(Vector3 spawnPosition)
@@ -84,7 +87,7 @@ public class KillStreakSystem : NetworkBehaviour
                 SetPlaneandTargetServerRpc(id, isred);
                 break;
             case 4:
-                SetChopperandTargetServerRpc(id, isred);
+                SetPlgeoonandTargetServerRpc(id, isred);
                 break;
             case 5:
                 SetChopperandTargetServerRpc(id, isred);
@@ -109,33 +112,58 @@ public class KillStreakSystem : NetworkBehaviour
     [ServerRpc (RequireOwnership =false)]
     internal void SetChopperandTargetServerRpc(ulong id,bool isRed)
     {
-        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        START:
+        var item = GetRandomObject();
+
+        if (item.isRed != isRed)
         {
-            if(item.isRed!=isRed)
-            {
-                Chopperpath.transform.position = new Vector3(item.transform.position.x, 30f, item.transform.position.z);
-                var path = Instantiate(Chopperpath);
-                var Chopper = NetworkManager.Instantiate(Chopperprefab);
-                Chopper.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
-                Chopper.SetTargetClientRpc(item.OwnerClientId, id, isRed);
-                Chopper.SetPath(path);
-                Chopper.ShootServerRpc();
-            }
+            Chopperpath.transform.position = new Vector3(item.transform.position.x, 30f, item.transform.position.z);
+            var path = Instantiate(Chopperpath);
+            var Chopper = Instantiate(Chopperprefab);
+            Chopper.NetworkObject.SpawnWithOwnership(OwnerClientId,true);
+            Chopper.SetTargetClientRpc(item.OwnerClientId, id, isRed);
+            Chopper.SetPath(path);
+            Chopper.ShootServerRpc();
         }
+        else if(!ScoreManager.Instance.GameHasFinished)
+            goto START;
     }
+    
+    
     
     [ServerRpc (RequireOwnership =false)]
     internal void SetPlaneandTargetServerRpc(ulong id,bool isRed)
     {
-        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        var item = GetRandomObject();
+        if (item.isRed != isRed)
         {
-            if(item.isRed!=isRed)
-            {
-                var plane = NetworkManager.Instantiate(planePrefab);
-                plane.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
-                plane.SetTargetClientRpc(id, item.OwnerClientId, isRed);
-                plane.SetTarget(item.transform.position);
-            }
+            var plane = Instantiate(planePrefab);
+            plane.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
+            plane.SetTargetClientRpc(id, item.OwnerClientId, isRed);
+            plane.SetTarget(item.transform.position);
         }
+    }
+    
+    [ServerRpc (RequireOwnership =false)]
+    internal void SetPlgeoonandTargetServerRpc(ulong id,bool isRed)
+    {
+        var item = GetRandomObject();
+        if (item.isRed != isRed)
+        {
+            var plane = Instantiate(pegionController);
+            plane.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
+            plane.SetTargetClientRpc(id, item.OwnerClientId, isRed);
+            plane.SetTarget(item.transform);
+        }
+    }
+
+    public WBThirdPersonController GetRandomObject()
+    {
+        var l = FindObjectsOfType<WBThirdPersonController>();
+        if (l.Length == 1)
+            return l[0];
+
+        int randomIndex = Random.Range(0, l.Length);
+        return l[randomIndex];
     }
 }

@@ -167,8 +167,16 @@ namespace WeirdBrothers.ThirdPersonController
 
         internal void SetAim(bool v)
         {
-            if (_animator.GetBool("Aiming") != v) _animator.SetBool("Aiming", v);
+            _animator.SetBool("Aiming", v);
+            _animator.SetFloat("Aim", v?1f:0);
+
             
+        }
+
+        internal bool isAimOn()
+        {
+            //if (_animator.GetBool("AimOn") != v) _animator.SetBool("AimOn", v);
+            return _animator.GetBool("AimOn");
         }
 
         public bool IsSwitching()

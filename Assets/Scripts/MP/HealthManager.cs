@@ -48,6 +48,18 @@ public class HealthManager : NetworkBehaviour
             }
             controller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.PlayerID);
         }
+        if (collision.gameObject.TryGetComponent<Slime>(out Slime slime))
+        {
+            if (!NetworkManager.Singleton.IsServer) return;
+            if (!slime.isActive) return;
+            if (slime.isRed == controller.isRed) return;
+            if (CurrentHealth - slime.Damage <= 0)
+            {
+                isDead = true;
+                ScoreManager.Instance.SetKillServerRpc(slime.id); 
+            }
+            controller.AddDamage(slime.Damage, NetworkObject.OwnerClientId, slime.id);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -71,6 +83,7 @@ public class HealthManager : NetworkBehaviour
     internal void AddDamage(float damage, ulong playerID)
     {
         CurrentHealth -= damage;
+        CustomProperties.Instance.currentHealth = CurrentHealth;
         if (CurrentHealth < 0) CurrentHealth = 0;
         if (NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId)
         {
@@ -78,7 +91,7 @@ public class HealthManager : NetworkBehaviour
             if (CurrentHealth == 0)
             {
                 SetKillCam(playerID);
-                PlayerSetManager.instance.ChangeView(40f);
+                controller.SetScope(false);
                 WBUIActions.isPlayerActive = false;
                 WBUIActions.EnableTouch?.Invoke(false);
                 Invoke(nameof(resetPlayer), 5f);

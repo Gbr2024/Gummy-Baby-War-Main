@@ -32,13 +32,16 @@ namespace WeirdBrothers.ThirdPersonController
             _forward.y = 0f;
             _context.Speed = _speed;
             _context.Transform.rotation = Quaternion.Slerp(_context.Transform.rotation,
-                                                        Quaternion.LookRotation(_forward),
-                                                        _context.Data.DesireRotationSpeed);
-            if(_context.isScopeOn)
+                                                    Quaternion.LookRotation(_forward),
+                                                    _context.Data.DesireRotationSpeed);
+            //_context.Transform.Rotate(new Vector3(_context.Transform.rotation.x, _context.Transform.rotation.y *_speed,_context.Transform.rotation.z));
+
+            if (_context.isScopeOn)
             {
                 _hor /= 5f;
                 _ver /= 5f;
             }
+
             if (_speed > _context.Data.AllowPlayerMovement)
             {
                 _context.CrossHair.CrossHairSpread = Mathf.Lerp(_context.CrossHair.CrossHairSpread,

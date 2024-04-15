@@ -140,10 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2493130584
-  AlwaysReplicateAsRoot: 0
+  GlobalObjectIdHash: 3048151971
+  AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
+  ActiveSceneSynchronization: 1
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   Chopperprefab: {fileID: 4048607609417102631, guid: 472027244258764458dcc9ba63d8701c, type: 3}
   planePrefab: {fileID: 7755358527941364868, guid: 855ec3ce06300d94795e91f6d7f0fb95, type: 3}
   Chopperpath: {fileID: 6468590637564902803, guid: c55e12aa7ae7ab349865a7b39304a39a, type: 3}
+  pegionController: {fileID: 1576442797086343453, guid: 599a234f50bb9fc4b87ad7630bd7061e, type: 3}
 --- !u!1 &4814230067678280931
 GameObject:
   m_ObjectHideFlags: 0

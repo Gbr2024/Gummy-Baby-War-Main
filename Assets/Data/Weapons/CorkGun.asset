@@ -24,9 +24,10 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 1
+  isSniper: 0
+  WeaponIndex: 2
   AmmoType: CorkAmmo
-  FireType: 1
+  FireType: 2
   bullet: {fileID: 3184629018253203977, guid: 27c9aacc87feb6b49996ea22d82b58eb, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
@@ -37,7 +38,7 @@ MonoBehaviour:
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 20
-  FireRate: 0.5
+  FireRate: 0.05
   MagSize: 10
   Range: 75
   FireSound: {fileID: 8300000, guid: 316d7780dc4bc704b98bf8a53f08c6f8, type: 3}

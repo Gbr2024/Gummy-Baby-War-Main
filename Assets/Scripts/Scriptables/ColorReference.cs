@@ -6,6 +6,7 @@ using UnityEngine;
 public class ColorReference : ScriptableObject
 {
     public ColorReferences[] CharacterColors;
+    public Material[] skyboxes;
 }
 
 [System.Serializable]

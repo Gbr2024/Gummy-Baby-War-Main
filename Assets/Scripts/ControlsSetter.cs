@@ -16,6 +16,10 @@ public class ControlsSetter : NetworkBehaviour
         //transform.position = PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position;
         if (!IsOwner)
             enabled = false;
+        if (IsOwner)
+        {
+            PlayerSetManager.instance.setPlayerControlandCam(gameObject);
+        }
     }
 
    
@@ -24,10 +28,7 @@ public class ControlsSetter : NetworkBehaviour
 
     private void Start()
     {
-        if (GetComponent<NetworkObject>().IsOwner)
-        {
-            PlayerSetManager.instance.setPlayerControlandCam(gameObject);
-        }
+        
     }
 
     

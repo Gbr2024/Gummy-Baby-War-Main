@@ -33,3 +33,16 @@ MonoBehaviour:
     color: {r: 0.754717, g: 0.017799927, b: 0.5117691, a: 1}
   - id: Brown
     color: {r: 0.49019608, g: 0.28235295, b: 0.23921569, a: 1}
+  skyboxes:
+  - {fileID: 2100000, guid: ef876b3f88685084fb10dd6823e7e753, type: 2}
+  - {fileID: 2100000, guid: 594b32238e06d9b4bbf88b158d7a70b3, type: 2}
+  - {fileID: 2100000, guid: 55de5e387202a754ab42d1a754b34043, type: 2}
+  - {fileID: 2100000, guid: 5e61e56228509174c99100b4742ae099, type: 2}
+  - {fileID: 2100000, guid: e1b3fc0bc2573764f8c07c20e062849c, type: 2}
+  - {fileID: 2100000, guid: cf105a715f71fee499c642416939963e, type: 2}
+  - {fileID: 2100000, guid: 0701834277d31774eba55bfa0f4191b8, type: 2}
+  - {fileID: 2100000, guid: 0b72ee5cfe12c444a88a4028be217c67, type: 2}
+  - {fileID: 2100000, guid: 9c106aa1661abf04facd40cc467d0f04, type: 2}
+  - {fileID: 2100000, guid: 07caef7049e2970469fa4b783af98edf, type: 2}
+  - {fileID: 2100000, guid: 81765b068c27cf44ca5a769982bc084d, type: 2}
+  - {fileID: 2100000, guid: 241ac98ca392f8f4b801d2d6973b34d1, type: 2}

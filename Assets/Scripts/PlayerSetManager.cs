@@ -7,21 +7,20 @@ using WeirdBrothers.ThirdPersonController;
 using UnityEngine.UI;
 using EasyUI.PickerWheelUI;
 using Unity.Netcode;
+using System;
 
 public class PlayerSetManager : MonoBehaviour
 {
     public static PlayerSetManager instance;
-    [SerializeField] GameObject InputControl,SniperUI;
+    [SerializeField] GameObject InputControl;
     [SerializeField] RectTransform CrossHair, CrossHairScope;
     [SerializeField] Transform lookTransform;
     public CinemachineVirtualCamera virtualCamera;//,ScopeCinemachine;
-    [SerializeField] Camera ScopeView;
     [SerializeField] Button Aimbutton;
 
     public PickerWheel wheel;
 
     public Transform[] RedCribs, BlueCribs;
-    public Transform GetScopeView { get { return ScopeView.transform; } }
 
     private void Awake()
     {
@@ -46,8 +45,6 @@ public class PlayerSetManager : MonoBehaviour
     {
         WBUIActions.EnableBlackPanel?.Invoke(false);
         WBUIActions.isPlayerActive = true;
-        virtualCamera.Follow = null;
-        virtualCamera.LookAt = null;
         PlayerPrefs.SetInt("WeaponIndex", obj.Amount);
         SpawnPlayer();
         wheel.transform.parent.gameObject.SetActive(false);
@@ -59,7 +56,6 @@ public class PlayerSetManager : MonoBehaviour
         //go.GetComponent<WBThirdPersonController>().SetWeaponData();
         virtualCamera.LookAt = go.transform;
         virtualCamera.Follow = go.transform;
-
         go.GetComponent<WBInputHandler>().SetInput(InputControl);
 
         //Debug.LogError("data Set");
@@ -67,13 +63,12 @@ public class PlayerSetManager : MonoBehaviour
 
     internal void SetCamera(WBThirdPersonController thirdPersonController)
     {
-        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Reset();
-        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Reset();
-        thirdPersonController.Context.setcamera(virtualCamera,ScopeView);
+        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
+        virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
+        thirdPersonController.Context.setcamera(virtualCamera);
         thirdPersonController.Context.CrossHair .CrossHair= CrossHair;
         thirdPersonController.Context.WeaponIK.LookAt = lookTransform;
-        Aimbutton.onClick.RemoveAllListeners();
-        Aimbutton.onClick.AddListener(() => { thirdPersonController.SetScope(); });
+       
     }
 
 
@@ -82,13 +77,11 @@ public class PlayerSetManager : MonoBehaviour
         PlayerCreator.Instance.SpawnObject();
     }
 
-    public void ChangeView(bool b)
+    internal void setAimCam(WBThirdPersonController thirdPersonController)
     {
-
-        ScopeView.gameObject.SetActive(b);
-        //virtualCamera.gameObject.SetActive(!b);
-        //ScopeCinemachine.gameObject.SetActive(b);
-        SniperUI.SetActive(b);
+        Aimbutton.onClick.RemoveAllListeners();
+        Aimbutton.onClick.AddListener(() => { thirdPersonController.SetScope(!thirdPersonController.Context.isScopeOn); });
+        Debug.LogError("Cameras has set" + thirdPersonController.gameObject.name);
     }
 
     internal bool scopemoving = false;
@@ -108,13 +101,6 @@ public class PlayerSetManager : MonoBehaviour
         //virtualCamera.
     }
 
-   
-
-    internal void SetScopeCamFeildView(int feildView)
-    {
-        ScopeView.fieldOfView = feildView;
-        //ScopeCinemachine.m_Lens.FieldOfView = feildView;
-    }
 
     internal void SpinTheWheel()
     {

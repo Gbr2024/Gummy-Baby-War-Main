@@ -20,4 +20,4 @@ MonoBehaviour:
   JumpForce: 5
   DamageLayer:
     serializedVersion: 2
-    m_Bits: 27649
+    m_Bits: 27713

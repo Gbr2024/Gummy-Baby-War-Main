@@ -24,9 +24,10 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  WeaponIndex: 2
+  isSniper: 1
+  WeaponIndex: 1
   AmmoType: ToyMachineAmmo
-  FireType: 1
+  FireType: 2
   bullet: {fileID: 4416225141524912330, guid: 1a858d125b157854ba6992fe4b0a341f, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
@@ -37,7 +38,7 @@ MonoBehaviour:
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 120
-  FireRate: 0.8
+  FireRate: 0.05
   MagSize: 5
   Range: 250
   FireSound: {fileID: 8300000, guid: 328927f678e90594f990334d0ce94526, type: 3}
@@ -45,4 +46,4 @@ MonoBehaviour:
   MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}
   BoltSound: {fileID: 0}
   FeildView: 17
-  TouchRatioOnScope: 0.45
+  TouchRatioOnScope: 0.35

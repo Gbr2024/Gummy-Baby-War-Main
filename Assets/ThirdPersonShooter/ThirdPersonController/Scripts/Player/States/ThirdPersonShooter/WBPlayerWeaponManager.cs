@@ -18,6 +18,8 @@ namespace WeirdBrothers.ThirdPersonController
             _aimPoint = Vector3.zero;
         }
 
+       
+        
         public void Execute()
         {
             if (_context.Input.GetButtonDown(WBInputKeys.GrenadeEnable))
@@ -27,7 +29,7 @@ namespace WeirdBrothers.ThirdPersonController
             if (_context.CurrentWeapon == null)
                 return;
 
-            var Cam = _context.PlayerCamera.transform;//_context.isScopeOn ? _context.PlayerScopeCamera.transform : _context.PlayerCamera.transform;
+            var Cam = _context.PlayerCamera.transform; //_context.isScopeOn && _context.CurrentWeapon.Data.isSniper? _context.CurrentWeapon.ScopeView : _context.PlayerCamera.transform; //_context.PlayerCamera.transform;//
             if (Physics.Raycast(Cam.position,
                                 Cam.forward,
                                 out _hit,
@@ -36,7 +38,8 @@ namespace WeirdBrothers.ThirdPersonController
             {
 
                 _aimPoint = _hit.point;
-                //_context.CurrentWeapon.transform.LookAt(_aimPoint);
+                if(_context.CurrentWeapon!=null) _context.CurrentWeapon.ScopeView.LookAt(_aimPoint);
+                //_context.CurrentWeapon.ScopeView.LookAt(_aimPoint);
 
             }
             else
@@ -58,13 +61,13 @@ namespace WeirdBrothers.ThirdPersonController
                 int totalAmmo = _context.Inventory.GetAmmo(_context.CurrentWeapon.Data.AmmoType);
                 if (totalAmmo <= 0)
                     return;
-                if (_context.isScopeOn) _context.ShooterController.SetScope();
+                if (_context.isScopeOn) _context.ShooterController.SetScope(false);
                 _context.Animator.OnReload();
             }
             if (_context.Input.GetButtonUp(WBInputKeys.Fire))
             {
-                _context.isAiming = false;
-                _context.Animator.SetAim(false); 
+                if (!_context.isScopeOn) _context.WaitTime = 0;
+                _context.ShooterController.resetAim();
             }
             
             if (_context.Input.GetButtonUp(WBInputKeys.KillStreak))
@@ -142,8 +145,7 @@ namespace WeirdBrothers.ThirdPersonController
             //_context.CurrentWeapon.Fire(hitPoint, _context.Data.DamageLayer);
             //_context.CurrentWeapon.transform.LookAt(_aimPoint);
             //Debug.LogError(hitPoint);
-            _context.Animator.SetAim(true);
-            _context.isAiming = true;
+            
             if (_context.GrenadeSet)
             {
                 _context.Animator._animator.SetBool("GrenadeThrow",true);
@@ -157,9 +159,23 @@ namespace WeirdBrothers.ThirdPersonController
                 return;
             }
 
+
+
             if (!_context.CurrentWeapon.Body.activeSelf) return;
 
-            _context.ShooterController.FireInAll(hitPoint, _context.Data.DamageLayer);
+            if(_context.isAiming)
+            {
+                Debug.LogError("HERERERE");
+                _context.ShooterController.FireInAll(hitPoint, _context.Data.DamageLayer);
+            }
+            else
+            {
+               
+                _context.Animator._animator.SetFloat("Aim", 1f);
+                _context.isAiming = true;
+                _context.ShooterController.NewFire(hitPoint, _context.Data.DamageLayer);
+            }
+            
 
             //_context.CurrentWeapon.FireBullet(hitPoint, layertoDamage);
             if (_context.CurrentWeapon.CurrentAmmo > 0)

@@ -22,12 +22,18 @@ public class LobbyManager : NetworkBehaviour
     private readonly string KEY_START_CODE="JoinCode";
     private readonly string KEY_REDCOLOR_CODE="RedColor";
     private readonly string KEY_BLUECOLOR_CODE="BlueColor";
+    private readonly string KEY_SKYBOX_Code="Skybox";
     private readonly string KEY_LEVEL_CODE="Level";
-    private Lobby JoinedLobby;
+    internal Lobby JoinedLobby;
     internal bool GameSceneHasLoaded = false;
     bool isLobbyHost = false;
     internal bool GameHasStarted = false;
+    private string oldHost;
+    private Coroutine waitCor;
 
+    public string OldRelayJoinCode { get; private set; }
+
+    
     private void Awake()
     {
         if (Instance == null)
@@ -44,9 +50,21 @@ public class LobbyManager : NetworkBehaviour
     {
         InitAuth();
         NetworkManager.Singleton.OnClientConnectedCallback += LoadGameScene;
-        NetworkManager.Singleton.OnClientStarted += ClientStarted;
+
+        //NetworkManager.Singleton.OnClientStarted += ClientStarted;
         isLobbyHost = false;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
+
+    private void Test(ulong obj)
+    {
+        Debug.LogError("Here");
+    }
+
+    internal async void removeclientFromLobby()
+    {
+        await LobbyService.Instance.RemovePlayerAsync(JoinedLobby.Id, JoinedLobby.HostId);
+        
     }
 
     private void Update()
@@ -55,6 +73,50 @@ public class LobbyManager : NetworkBehaviour
         {
             UIManager.instance?.SetMessage("No Internet Connetction. Please check you connection and restart the game");
         }
+
+        //if (JoinedLobby != null)//when host leaves, lobby service automaticaly pick new host and updates hois host id
+        //{
+        //    if (oldHost != JoinedLobby.HostId) // so if my cahed "oldhost" is not equol to new host id
+        //    {
+        //        if (JoinedLobby.HostId == AuthenticationService.Instance.PlayerId) //if im the host i start new relay
+        //        {
+        //            //  NetworkManager.Singleton.Shutdown();
+        //            CreateNewRelayOnHostDc();
+        //            oldHost = JoinedLobby.HostId;
+        //            Debug.Log("starting new relay");
+        //        }
+        //        else
+        //        {
+
+        //            if (JoinedLobby.Data.ContainsKey(KEY_START_CODE)) // if im client (also i didnt checked if this part works with more than 2 players)
+        //            {
+        //                if (OldRelayJoinCode != JoinedLobby.Data[KEY_START_CODE].Value) // check if cached relay is diferent than new relay
+        //                {
+        //                    Debug.Log("joining new relay");
+        //                    JoinNewRelay(); // join new relay
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+    }
+
+    private void JoinNewRelay()
+    {
+        
+    }
+
+    private async void CreateNewRelayOnHostDc()
+    {
+        await RelayManager.Instance.CreateRelay(MaxPlayers);
+        JoinedLobby = await LobbyService.Instance.UpdateLobbyAsync(JoinedLobby.Id, new UpdateLobbyOptions
+        {
+            Data = new Dictionary<string, DataObject>
+                {
+                    {KEY_START_CODE,new DataObject(DataObject.VisibilityOptions.Member,RelayManager.Instance.joincode) }
+                }
+        });
+        NetworkManager.Singleton.StartHost();
     }
 
     internal async void CloseLobby()
@@ -67,8 +129,14 @@ public class LobbyManager : NetworkBehaviour
 
     private void ClientStarted()
     {
+        if (waitCor != null) StopCoroutine(waitCor);
         Debug.LogError("Client Started");
-        Loader.LoadNetwork(Loader.Gamescenes[Random.Range(0, Loader.Gamescenes.Length)]);
+        Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
+    }
+
+    internal void StopCoroutineofWait()
+    {
+        if (waitCor != null) StopCoroutine(waitCor);
     }
 
     async void InitAuth()
@@ -76,9 +144,16 @@ public class LobbyManager : NetworkBehaviour
         UIManager.instance?.SetMessage("Connecting...");
         if(UnityServices.State!=ServicesInitializationState.Initialized)
         {
+            string profile = "GummyBaby" + Random.Range(0, 100000).ToString();
             InitializationOptions initializationOptions = new();
-            initializationOptions.SetProfile(Random.Range(0, 100000).ToString());
+            initializationOptions.SetProfile(profile);
             await UnityServices.InitializeAsync();
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                UIManager.instance.CloseMessage();
+                return;
+            }
+            AuthenticationService.Instance.SwitchProfile(profile);
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.LogError(UnityServices.State);
             if(AuthenticationService.Instance.IsSignedIn)
@@ -101,16 +176,20 @@ public class LobbyManager : NetworkBehaviour
             JoinedLobby = await LobbyService.Instance.CreateLobbyAsync("Lobby_"+CustomProperties.Instance.MyCode, MaxPlayers, new CreateLobbyOptions
             {
                 IsPrivate = false,
+               
                 Data=new Dictionary<string, DataObject>
                 {
                     {KEY_START_CODE,new DataObject(DataObject.VisibilityOptions.Member,"0") },
                     {KEY_LEVEL_CODE,new DataObject(DataObject.VisibilityOptions.Public,PlayerPrefs.GetString("Level")) },
                     {KEY_REDCOLOR_CODE,new DataObject(DataObject.VisibilityOptions.Public,n.ToString()) },
-                    {KEY_BLUECOLOR_CODE,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetColor(n)) }
+                    {KEY_BLUECOLOR_CODE,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetColor(n)) },
+                    {KEY_SKYBOX_Code,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetSky().ToString()) }
+
                 }
             });
             await RelayManager.Instance.CreateRelay(MaxPlayers);
             isLobbyHost = true;
+            oldHost = JoinedLobby.HostId;
             JoinedLobby = await LobbyService.Instance.UpdateLobbyAsync(JoinedLobby.Id, new UpdateLobbyOptions
             {
                 Data=new Dictionary<string, DataObject>
@@ -118,17 +197,40 @@ public class LobbyManager : NetworkBehaviour
                     {KEY_START_CODE,new DataObject(DataObject.VisibilityOptions.Member,RelayManager.Instance.joincode) }
                 }
             });
-            
+            OldRelayJoinCode = RelayManager.Instance.joincode;
             Debug.LogError(RelayManager.Instance.joincode);
             //Debug.LogError(NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address);
             //NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = GetLocalIPAddress();
             NetworkManager.Singleton.StartHost();
+            waitCor= StartCoroutine(StartWaitTimer());
             CustomProperties.Instance.isRed = !(JoinedLobby.Players.Count % 2 == 0);
-            UIManager.instance.LobbyName.text = "Waiting for Game Start...";
         }
         catch(LobbyServiceException e)
         {
             Debug.LogError(e);
+            UIManager.instance.Blocker.SetActive(false);
+        }
+    }
+
+    private IEnumerator StartWaitTimer()
+    {
+        int Timre = 60;
+        START:
+        UIManager.instance.LobbyName.text = "Waiting for Game Start...\n" + Timre.ToString() ;
+        yield return new WaitForSeconds(1f);
+        Timre--;
+        if (Timre > 0)
+            goto START;
+        else
+        {
+
+            UIManager.instance.LobbyName.text = "Server Timed Out";
+            if (IsServer)
+            {
+                NetworkManager.Singleton.Shutdown();
+                LobbyService.Instance.DeleteLobbyAsync(JoinedLobby.Id);
+            }
+            yield return new WaitForSeconds(2f);
             UIManager.instance.Blocker.SetActive(false);
         }
     }
@@ -153,6 +255,7 @@ public class LobbyManager : NetworkBehaviour
             if (!GameSceneHasLoaded && NetworkManager.Singleton.IsServer && JoinedLobby.Players.Count > MinimumPlayerToStartGame)
             {
                 GameSceneHasLoaded = true;
+                if (waitCor != null) StopCoroutine(waitCor);
                 Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
                 AdmobAds.Instance.DestroyBannerAd();
             }
@@ -186,18 +289,22 @@ public class LobbyManager : NetworkBehaviour
                 {
                     Debug.LogError(lobby2.Name);
                     JoinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobby2.Id);
-                    if(JoinedLobby.Data[KEY_START_CODE].Value!="0")
+                    oldHost = JoinedLobby.HostId;
+                    OldRelayJoinCode = JoinedLobby.Data[KEY_START_CODE].Value;
+                    if (JoinedLobby.Data[KEY_START_CODE].Value!="0")
                     {
                         if(!isLobbyHost)
                         {
                             await RelayManager.Instance.JoinRelay(JoinedLobby.Data[KEY_START_CODE].Value);
                         }
                     }
+                    
                     //NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = GetLocalIPAddress();
                     NetworkManager.Singleton.StartClient();
                     UIManager.instance.LobbyName.text = "Waiting for Game Start...";
                     Debug.LogError(JoinedLobby.Players.Count);
                     CustomProperties.Instance.isRed = !(JoinedLobby.Players.Count % 2 == 0);
+                    waitCor=StartCoroutine(StartWaitTimer());
                     return;
                 }
             }
@@ -229,6 +336,10 @@ public class LobbyManager : NetworkBehaviour
     internal int getSkinColor(bool isRed)
     {
         return isRed ? int.Parse(JoinedLobby.Data[KEY_REDCOLOR_CODE].Value) : int.Parse(JoinedLobby.Data[KEY_BLUECOLOR_CODE].Value);
-        
+    }
+
+    internal int GetSkybox()
+    {
+        return int.Parse(JoinedLobby.Data[KEY_SKYBOX_Code].Value);
     }
 }

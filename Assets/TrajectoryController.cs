@@ -117,7 +117,12 @@ public class TrajectoryController : MonoBehaviour
         {
             if (grenade == null) yield break;
             if (i == 2)
+            {
+
+                grenade.rb.interpolation = RigidbodyInterpolation.Interpolate;
+                grenade.rb.detectCollisions = true;
                 grenade.rb.isKinematic = false;
+            }
              startPosition = points[i];
              endPosition = points[i + 1];
 

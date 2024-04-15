@@ -16,9 +16,9 @@ public class ScoreManager : NetworkBehaviour
     [SerializeField] TMP_Text RedTeamScore, BlueTeamScore,WinnerTitle,TimerLabel,StartTimeLabel,myTeamWinnerPanelScore,AnotherTeamWinnerPanelScore;
     [SerializeField] GameObject WinnerAnnouncementPanel,HostDisconnection;
     [SerializeField] WinnerPanelRow[] MyTeamRow,OtherTeamRows;
-    [SerializeField] float TimerClock = 600f;
+    [SerializeField] float TimerClock = 300f;
     [SerializeField] float TimeBeforeStart = 11f;
-    const int WinThreshold = 20;
+    const int WinThreshold = 30;
     internal bool GameHasFinished = false;
 
     int RedScore=0, BlueScore=0;
@@ -34,14 +34,16 @@ public class ScoreManager : NetworkBehaviour
 
     private void Start()
     {
+        LobbyManager.Instance.StopCoroutineofWait();
         NetworkManager.Singleton.OnClientDisconnectCallback += HandleDisconnection;
+        RenderSettings.skybox = ItemReference.Instance.colorReference.skyboxes[int.Parse(LobbyManager.Instance.JoinedLobby.Data["Skybox"].Value)];
     }
 
     private void HandleDisconnection(ulong obj)
     {
-        if(obj==NetworkManager.ServerClientId)
+        if(obj==NetworkManager.ServerClientId && !GameHasFinished)
         {
-            HostDisconnection.SetActive(!GameHasFinished);
+            ShowMe();
         }
     }
 
@@ -194,7 +196,7 @@ public class ScoreManager : NetworkBehaviour
             else if(StartTimeLabel.gameObject.activeSelf)
             {
                 StartTimeLabel.gameObject.SetActive(false);
-                //InvokeRepeating(nameof(CheckTeams), 10f, 5f);
+                InvokeRepeating(nameof(CheckTeams), 10f, 5f);
                 TimeBeforeStart = 0;
                 LobbyManager.Instance.GameHasStarted = true;
                 KillStreakSystem.Instance.SetCrates();
@@ -313,6 +315,19 @@ public class ScoreManager : NetworkBehaviour
             }
         }
         
+    }
+
+    internal void ShowMe()
+    {
+        WinnerAnnouncementPanel.SetActive(true);
+        GameHasFinished = true;
+        WinnerTitle.text = "VICTORY";
+        myTeamWinnerPanelScore.text = CustomProperties.Instance.isRed ? RedScore.ToString() : BlueScore.ToString();
+        AnotherTeamWinnerPanelScore.text = CustomProperties.Instance.isRed ? BlueScore.ToString() : RedScore.ToString();
+        AnotherTeamWinnerPanelScore.text = "";
+        MyTeamRow[0].SetData(new PlayerData(PlayerPrefs.GetString("PlayerName"), CustomProperties.Instance.kills), true);
+        WBUIActions.EnableBlackPanel?.Invoke(false);
+        AdmobAds.Instance.ShowInterstitialAd();
     }
 
 

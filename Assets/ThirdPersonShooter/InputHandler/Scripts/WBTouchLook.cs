@@ -5,7 +5,7 @@ using WeirdBrothers.ThirdPersonController;
 public class WBTouchLook : MonoBehaviour//, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     public float speed;
-
+    public WBPlayerContext context;
 
     private static Vector2 touchDist;
     public static Vector2 TouchDist { get { return touchDist; } }
@@ -49,6 +49,14 @@ public class WBTouchLook : MonoBehaviour//, IPointerDownHandler, IPointerUpHandl
                     // Check if the touch phase is began
                     touchDist.x = touch.deltaPosition.x * Sensitivity;
                     touchDist.y = touch.deltaPosition.y * Sensitivity;
+                    if(context!=null)
+                    {
+                        if(context.isScopeOn)
+                        {
+                            touchDist *= context.ScopeOnRatio;
+                        }
+                    }
+                    
                 }
                
             }
