@@ -1,6 +1,7 @@
 public static class WBInputKeys
 {
     public static string Fire = "Fire";
+    public static string Fire1 = "Fire1";
     public static string Interaction = "Interaction";
     public static string Reload = "Reload";
     public static string Switch1 = "Switch1";

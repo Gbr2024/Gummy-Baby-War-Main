@@ -51,6 +51,8 @@ namespace WeirdBrothers.ThirdPersonController
                 return;
             if (_context.Animator.IsMeleeAttacking())
                 return;
+            if (_context.isRecoking)
+                return;
 
             if (_context.Input.GetButtonDown(WBInputKeys.Reload))
             {
@@ -67,7 +69,7 @@ namespace WeirdBrothers.ThirdPersonController
             if (_context.Input.GetButtonUp(WBInputKeys.Fire))
             {
                 if (!_context.isScopeOn) _context.WaitTime = 0;
-                _context.ShooterController.resetAim();
+                //_context.ShooterController.resetAim();
             }
             
             if (_context.Input.GetButtonUp(WBInputKeys.KillStreak))
@@ -82,6 +84,10 @@ namespace WeirdBrothers.ThirdPersonController
                 {
                     OnFire(_aimPoint);
                 }
+                if (_context.Input.GetButton(WBInputKeys.Fire1))
+                {
+                    OnFire(_aimPoint);
+                }
             }
             else if (_context.CurrentWeapon.Data.FireType == FireType.Semi)
             {
@@ -89,10 +95,18 @@ namespace WeirdBrothers.ThirdPersonController
                 {
                     OnFire(_aimPoint);
                 }
+                if (_context.Input.GetButtonDown(WBInputKeys.Fire1))
+                {
+                    OnFire(_aimPoint);
+                }
             }
             else if (_context.CurrentWeapon.Data.FireType == FireType.None)
             {
                 if (_context.Input.GetButtonDown(WBInputKeys.Fire))
+                {
+                    _context.Animator.OnMeleeAttack();
+                }
+                if (_context.Input.GetButtonDown(WBInputKeys.Fire1))
                 {
                     _context.Animator.OnMeleeAttack();
                 }
@@ -148,11 +162,11 @@ namespace WeirdBrothers.ThirdPersonController
             
             if (_context.GrenadeSet)
             {
+                 ResetGrenade();
+                _context.trajectory.CalculatePointsOnCurve();
                 _context.Animator._animator.SetBool("GrenadeThrow",true);
-                _context.trajectory.grenade.ToFollow = null;
                 _context.trajectory.ThrowObject();
                 WBUIActions.ChangeFireIcon?.Invoke("Gun");
-                ResetGrenade();
                 _context.GrenadeCount--;
                 if(_context.GrenadeCount<=0)
                     WBUIActions.EnableGrenadeButton?.Invoke(false);

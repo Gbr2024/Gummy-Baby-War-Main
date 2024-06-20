@@ -44,9 +44,20 @@ public class HealthManager : NetworkBehaviour
             if (CurrentHealth - bullet.damage <= 0)
             {
                 isDead = true;
-                ScoreManager.Instance.SetKillServerRpc(bullet.PlayerID); 
+                if (!bullet.isAI)
+                {
+                    ScoreManager.Instance.SetKillServerRpc(bullet.PlayerID);
+                }
+                else
+                {
+                    ScoreManager.Instance.SetKillServerRpc(bullet.AIname);
+                }
             }
-            controller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.PlayerID);
+
+            if (!bullet.isAI)
+                controller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.PlayerID);
+            else
+                controller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.AIname, true);
         }
         if (collision.gameObject.TryGetComponent<Slime>(out Slime slime))
         {
@@ -80,7 +91,7 @@ public class HealthManager : NetworkBehaviour
         }
     }
 
-    internal void AddDamage(float damage, ulong playerID)
+    internal void AddDamage(float damage, ulong playerID, string AIname, bool isAI = false)
     {
         CurrentHealth -= damage;
         CustomProperties.Instance.currentHealth = CurrentHealth;
@@ -90,7 +101,10 @@ public class HealthManager : NetworkBehaviour
             WBUIActions.UpdateHealth?.Invoke(CurrentHealth / Health);
             if (CurrentHealth == 0)
             {
-                SetKillCam(playerID);
+                if (!isAI)
+                    SetKillCam(playerID);
+                else
+                    SetKillCamAI(AIname);
                 controller.SetScope(false);
                 WBUIActions.isPlayerActive = false;
                 WBUIActions.EnableTouch?.Invoke(false);
@@ -103,6 +117,15 @@ public class HealthManager : NetworkBehaviour
             GetComponent<ClientNetworkTransform>().enabled = false;
             ragdollController.SetToAll(true);
             isDead = true;
+        }
+    }
+
+    private void SetKillCamAI(string aIname)
+    {
+        foreach (var item in FindObjectsOfType<PlayerController>())
+        {
+            if (item.AIname == aIname)
+                PlayerSetManager.instance.setKillCam(item.transform);
         }
     }
 
@@ -124,7 +147,10 @@ public class HealthManager : NetworkBehaviour
         //    transform.position = CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position : PlayerSetManager.instance.BlueCribs[Random.Range(0, 3)].position;
 
         DestroyPlayerServerRPC(NetworkObject.OwnerClientId);
-        PlayerSetManager.instance.SpinTheWheel();
+        if (PlayerPrefs.GetInt("WeaponSelected", 0) == 0)
+            PlayerSetManager.instance.SpinTheWheel();
+        else
+            PlayerSetManager.instance.spawnWithoutWheel();
     }
 
 

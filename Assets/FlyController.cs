@@ -12,7 +12,7 @@ public class FlyController : NetworkBehaviour
     [SerializeField] GunController gun;
     bool TeamisRed;
     ulong Teamid;
-
+    bool isTargetAI = false;
     bool fire=false;
 
     public override void OnNetworkSpawn()
@@ -20,38 +20,40 @@ public class FlyController : NetworkBehaviour
         base.OnNetworkSpawn();
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void ShootServerRpc()
-    {
-        ShootNAllClientRpc();
-    }
 
 
     [ClientRpc]
-    internal void ShootNAllClientRpc()
+    internal void SetTargetClientRpc(ulong id, ulong playerID, bool isRed, bool TargetAI = false)
     {
-        fire = true;
-        //
-    }
-
-
-
-    [ClientRpc]
-    internal void SetTargetClientRpc(ulong id,ulong playerID,bool isRed)
-    {
-        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        if (!isTargetAI)
         {
-            if (item.OwnerClientId == id)
+            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
             {
-                gun.setLookTarget(item.transform);
-                targethealth = item.GetComponent<HealthManager>();
+                if (item.OwnerClientId == id)
+                {
+                    gun.setLookTarget(item.transform);
+                    targethealth = item.GetComponent<HealthManager>();
+                }
+            }
+        }
+        else
+        {
+            foreach (var item in FindObjectsOfType<PlayerController>())
+            {
+                if (item.OwnerClientId == id)
+                {
+                    gun.setLookTarget(item.transform);
+                    targetAIhealth = item.GetComponent<AIHealth>();
+                }
             }
         }
         Teamid = playerID;
         TeamisRed = isRed;
+        fire = true;
     }
 
     HealthManager targethealth;
+    AIHealth targetAIhealth;
     bool isdone = false;
 
     private void FixedUpdate()
@@ -75,7 +77,7 @@ public class FlyController : NetworkBehaviour
 
             }
         }
-        if(fire && gun._currentAmmo>0 && !targethealth.isDead)
+        if(fire && gun._currentAmmo>0 && ((!isTargetAI && !targethealth.isDead) || (isTargetAI && !targetAIhealth.isDead)))
         {
             gun.FireBullet(TeamisRed, Teamid);
         }

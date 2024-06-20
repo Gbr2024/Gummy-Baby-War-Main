@@ -19,11 +19,7 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void FootSteps()
         {
-            if (_controller.Context.Speed > 0.1f)
-            {                
-                _audioSource.PlayOneShotAudioClip(_footSteps);
-                //Debug.Log("Play foot step audio");
-            }
+            _audioSource.PlayOneShotAudioClip(_footSteps);
         }
     }
 }

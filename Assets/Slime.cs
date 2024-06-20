@@ -5,6 +5,7 @@ using Unity.Netcode;
 
 public class Slime : NetworkBehaviour
 {
+    [SerializeField] Impact impact;
     public float Damage = 100f;
     internal ulong id;
     internal bool isRed;
@@ -20,8 +21,23 @@ public class Slime : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 6)
+        if(isActive)
+        {
             isActive = false;
+            BlastServerRpc();
+        }
+       
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void BlastServerRpc()
+    {
+        impact.transform.position = transform.position;
+        var effect = NetworkManager.Instantiate(impact).GetComponent<Impact>();
+        effect.PlayerID = id;
+        effect.isRed = isRed;
+        effect.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
+        NetworkObject.Despawn(true);
     }
 
     void DespawninTime()

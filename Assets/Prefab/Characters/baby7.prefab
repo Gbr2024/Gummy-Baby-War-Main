@@ -2601,7 +2601,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbodies: []
   colliders: []
-  toggleKey: 32
   ragdollActive: 0
 --- !u!114 &8164695885997966692
 MonoBehaviour:
@@ -2764,7 +2763,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

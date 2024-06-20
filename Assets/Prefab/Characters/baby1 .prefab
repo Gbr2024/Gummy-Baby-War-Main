@@ -3467,7 +3467,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbodies: []
   colliders: []
-  toggleKey: 32
   ragdollActive: 0
 --- !u!114 &7156682701005987975
 MonoBehaviour:
@@ -3618,7 +3617,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4655,22 +4654,6 @@ PrefabInstance:
     - target: {fileID: 2854799012049618230, guid: 15596899715dc03428ff76af9c3baeed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6692670331171949280, guid: 15596899715dc03428ff76af9c3baeed, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 6692670331171949280, guid: 15596899715dc03428ff76af9c3baeed, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832189874759060644, guid: 15596899715dc03428ff76af9c3baeed, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979666539084821645, guid: 15596899715dc03428ff76af9c3baeed, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

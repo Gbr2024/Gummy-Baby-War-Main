@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     internal int damage;
     internal ulong PlayerID;
+    internal string AIname;
     [SerializeField] private float range;
     [SerializeField] private Rigidbody rb;
     [SerializeField] TrailRenderer trail;
@@ -18,6 +19,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private float customGravity;
     internal bool isRed;
+    internal bool isAI;
 
     private void Awake()
     {
@@ -53,6 +55,9 @@ public class Bullet : MonoBehaviour
             rb.AddForce(transform.forward * range, ForceMode.Impulse);
         }
     }
+
+    
+
     internal void moveBullet()
     {
         rb.AddForce(transform.forward * range, ForceMode.Impulse);

@@ -11,6 +11,7 @@ using Unity.Netcode.Transports.UTP;
 using TMPro;
 using System;
 using Random = UnityEngine.Random;
+using System.Threading.Tasks;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -24,6 +25,7 @@ public class LobbyManager : NetworkBehaviour
     private readonly string KEY_BLUECOLOR_CODE="BlueColor";
     private readonly string KEY_SKYBOX_Code="Skybox";
     private readonly string KEY_LEVEL_CODE="Level";
+    private readonly string KEY_AI_NAME="AIname";
     internal Lobby JoinedLobby;
     internal bool GameSceneHasLoaded = false;
     bool isLobbyHost = false;
@@ -64,7 +66,6 @@ public class LobbyManager : NetworkBehaviour
     internal async void removeclientFromLobby()
     {
         await LobbyService.Instance.RemovePlayerAsync(JoinedLobby.Id, JoinedLobby.HostId);
-        
     }
 
     private void Update()
@@ -101,10 +102,7 @@ public class LobbyManager : NetworkBehaviour
         //}
     }
 
-    private void JoinNewRelay()
-    {
-        
-    }
+   
 
     private async void CreateNewRelayOnHostDc()
     {
@@ -119,7 +117,7 @@ public class LobbyManager : NetworkBehaviour
         NetworkManager.Singleton.StartHost();
     }
 
-    internal async void CloseLobby()
+    internal async void CloseLobby(string SetAI="0")
     {
         JoinedLobby = await LobbyService.Instance.UpdateLobbyAsync(JoinedLobby.Id, new UpdateLobbyOptions
         {
@@ -183,8 +181,8 @@ public class LobbyManager : NetworkBehaviour
                     {KEY_LEVEL_CODE,new DataObject(DataObject.VisibilityOptions.Public,PlayerPrefs.GetString("Level")) },
                     {KEY_REDCOLOR_CODE,new DataObject(DataObject.VisibilityOptions.Public,n.ToString()) },
                     {KEY_BLUECOLOR_CODE,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetColor(n)) },
-                    {KEY_SKYBOX_Code,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetSky().ToString()) }
-
+                    {KEY_SKYBOX_Code,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetSky().ToString()) },
+                    {KEY_AI_NAME,new DataObject(DataObject.VisibilityOptions.Public,"Guest_"+GenerateRandomNumberString(8)) },
                 }
             });
             await RelayManager.Instance.CreateRelay(MaxPlayers);
@@ -214,7 +212,7 @@ public class LobbyManager : NetworkBehaviour
 
     private IEnumerator StartWaitTimer()
     {
-        int Timre = 60;
+        int Timre = 35;
         START:
         UIManager.instance.LobbyName.text = "Waiting for Game Start...\n" + Timre.ToString() ;
         yield return new WaitForSeconds(1f);
@@ -223,16 +221,14 @@ public class LobbyManager : NetworkBehaviour
             goto START;
         else
         {
-
-            UIManager.instance.LobbyName.text = "Server Timed Out";
-            if (IsServer)
-            {
-                NetworkManager.Singleton.Shutdown();
-                LobbyService.Instance.DeleteLobbyAsync(JoinedLobby.Id);
-            }
-            yield return new WaitForSeconds(2f);
-            UIManager.instance.Blocker.SetActive(false);
+            SetAIGame();
         }
+    }
+
+    void SetAIGame()
+    {
+        CloseLobby("1");
+        Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
     }
 
     internal async void Getout()
@@ -341,5 +337,19 @@ public class LobbyManager : NetworkBehaviour
     internal int GetSkybox()
     {
         return int.Parse(JoinedLobby.Data[KEY_SKYBOX_Code].Value);
+    }
+
+
+    string GenerateRandomNumberString(int length)
+    {
+        string result = "";
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < length; i++)
+        {
+            result += random.Next(0, 10).ToString(); // Generating random digits (0-9)
+        }
+
+        return result;
     }
 }

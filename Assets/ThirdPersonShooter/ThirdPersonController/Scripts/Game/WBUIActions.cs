@@ -17,6 +17,7 @@ namespace WeirdBrothers.ThirdPersonController
         public static Action<bool> EnableMapButton;
         public static Action<bool> EnableMap;
         public static Action<bool> EnableTouch;
+        public static Action<bool> EnableSecShoot;
         public static Action<string> ChangeFireIcon;
         public static Action<string> ChangeKillstreak;
        

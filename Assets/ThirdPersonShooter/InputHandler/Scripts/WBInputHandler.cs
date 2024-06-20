@@ -5,7 +5,7 @@ using Unity.Netcode; // Import Unity.NetCode for NetworkBehaviour
 using UnityStandardAssets.CrossPlatformInput;
 
 // Add the GenerateAuthoringComponent attribute to indicate that this component will be generated for each networked entity
-public class WBInputHandler : NetworkBehaviour
+public class WBInputHandler : MonoBehaviour
 {
     // Enum to define the types of input (PC or Mobile)
     private enum InputType
@@ -19,7 +19,7 @@ public class WBInputHandler : NetworkBehaviour
     [Space]
     [SerializeField] private GameObject _mobileInput;
     [SerializeField] private float _touchSensitivity;
-    [SerializeField] private bool HasControl = false; 
+    [SerializeField] private bool HasControl = false,isForLocal=false; 
 
     private FixedJoystick _joystick;
 
@@ -28,19 +28,12 @@ public class WBInputHandler : NetworkBehaviour
       
     }
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        if (!IsOwner)
-            enabled = false;
-    }
-
 
     private IEnumerator Start()
     {
         // Check if the client has control before setting up input
         yield return new WaitForSeconds(0.25f);
-        if(GetComponent<NetworkObject>()!=null)
+        if(GetComponent<NetworkObject>()!=null && !isForLocal)
             HasControl = GetComponent<NetworkObject>().IsOwner; 
 
         if (!HasControl)
@@ -78,7 +71,7 @@ public class WBInputHandler : NetworkBehaviour
             // Check if the client has control before returning input
             if (HasControl && _inputType == InputType.PC)
                 return Input.GetAxis("Horizontal");
-            else if (HasControl && _inputType == InputType.Mobile)
+            else if (HasControl && _inputType == InputType.Mobile && _joystick!=null)
                 return _joystick.Horizontal;
             return 0;
         }
@@ -93,7 +86,7 @@ public class WBInputHandler : NetworkBehaviour
             // Check if the client has control before returning input
             if (HasControl && _inputType == InputType.PC)
                 return Input.GetAxis("Vertical");
-            else if (HasControl && _inputType == InputType.Mobile)
+            else if (HasControl && _inputType == InputType.Mobile && _joystick != null)
                 return _joystick.Vertical;
             return 0;
         }

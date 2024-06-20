@@ -885,6 +885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bomb: {fileID: 5751642921957689194, guid: a968571f8d731ab48a2fe7a8b909a359, type: 3}
+  speed: 90
 --- !u!82 &7429959805217369433
 AudioSource:
   m_ObjectHideFlags: 0

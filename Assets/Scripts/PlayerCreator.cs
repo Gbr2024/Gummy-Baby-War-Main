@@ -113,6 +113,7 @@ public class PlayerCreator : NetworkBehaviour
         kills.Value += 1;
         CustomProperties.Instance.kills = kills.Value;
         killstreak++;
+        if (killstreak > 5) killstreak = 5;
         if (killstreak >= 2)
         { 
             WBUIActions.EnableKillstreakButton?.Invoke(true);
@@ -142,7 +143,44 @@ public class PlayerCreator : NetworkBehaviour
         GameObject player = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[charindex]);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(id, true);
         player.GetComponent<WBThirdPersonController>().bulletlayer = bulletLayer;
+       
     }
+    
+    [ServerRpc(RequireOwnership = false)]
+    internal void SpawnAIServerRpc(string name="",bool isRed=true)
+    {
+        Transform t = isRed!=true?PlayerSetManager.instance.BlueCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)]: PlayerSetManager.instance.RedCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)];
+        GameObject player = NetworkManager.Instantiate(PlayerSetManager.instance.AIPrefabs[0].gameObject,t.position ,t.rotation);
+        player.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkObject.OwnerClientId, true);
+        player.GetComponent<PlayerController>().bulletlayer = isRed ? 9 : 12;
+        player.GetComponent<PlayerController>().isRed = isRed;
+        if (string.IsNullOrEmpty(name))
+        {
+            player.GetComponent<PlayerController>().AIname = "Guest"+GenerateRandomNumberString(8);
+            
+            var aicreater=NetworkManager.Instantiate(ItemReference.Instance.AIcreator);
+            aicreater.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkObject.OwnerClientId, true);
+            aicreater.AIname = player.GetComponent<PlayerController>().AIname;
+        }
+        else
+        {
+            player.GetComponent<PlayerController>().AIname = name;
+        }
+    }
+
+    string GenerateRandomNumberString(int length)
+    {
+        string result = "";
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < length; i++)
+        {
+            result += random.Next(0, 10).ToString(); // Generating random digits (0-9)
+        }
+
+        return result;
+    }
+
 
     internal void SpawnObject()
     {
@@ -158,7 +196,10 @@ public class PlayerCreator : NetworkBehaviour
         killstreak = 0;
         WBUIActions.EnableKillstreakButton?.Invoke(false);
         WBUIActions.ChangeKillstreak?.Invoke(0.ToString());
+
     }
+
+
 
     [ServerRpc]
     internal void DespawnGrenadeServerRpc(ulong ownerClientId)

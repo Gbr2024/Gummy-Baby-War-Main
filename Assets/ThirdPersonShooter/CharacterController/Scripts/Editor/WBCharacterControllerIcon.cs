@@ -23,7 +23,7 @@ namespace WeirdBrothers.CharacterController
         private static void DrawIcon(string texName, Rect rect)
         {
             Rect r = new Rect(rect.x + rect.width - 16f, rect.y, 16f, 16f);
-            GUI.DrawTexture(r, GetTex(texName));
+            //GUI.DrawTexture(r, GetTex(texName));
         }
 
         private static Texture2D GetTex(string name)

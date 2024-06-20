@@ -15,12 +15,14 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         public void SetDownState()
         {
+            Debug.LogError("Down " + name);
             CrossPlatformInputManager.SetButtonDown(Name);
         }
 
 
         public void SetUpState()
         {
+            Debug.LogError("up " + name);
             CrossPlatformInputManager.SetButtonUp(Name);
         }
 
@@ -42,6 +44,10 @@ namespace UnityStandardAssets.CrossPlatformInput
             CrossPlatformInputManager.SetAxisNegative(Name);
         }
 
-        
+        private void OnDisable()
+        {
+            CrossPlatformInputManager.SetButtonUp(Name);
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -25,10 +26,13 @@ public class TrajectoryController : MonoBehaviour
 
     void Update()
     {
-        CalculateEndPose();
-        CalculateCurvePoints();
-        DrawCurve();
-        
+        if(lineRenderer.enabled)
+        {
+            CalculateEndPose();
+            CalculateCurvePoints();
+            DrawCurve();
+        }
+      
     }
 
     private void CalculateEndPose()
@@ -104,22 +108,24 @@ public class TrajectoryController : MonoBehaviour
     float startTime;
     float elapsedTime = 0f;
     float t;
+    float y;
 
+
+    List<Vector3> points = new();
     IEnumerator MoveObjectAlongTrajectory()
     {
-        var points = pointsOnCurve.ToList();
+        grenade.ToFollow = null;
         yield return new WaitForSeconds(.15f);
         grenade.hasCollided = false;
         grenade.hasThrown = true;
         grenade.ToFollow = null;
         
-        for (int i = 0; i < pointCount - 1; i++)
+        for (int i = 0; i < points.Count-1; i++)
         {
             if (grenade == null) yield break;
-            if (i == 2)
+            if (i == 3)
             {
-
-                grenade.rb.interpolation = RigidbodyInterpolation.Interpolate;
+                //grenade.rb.interpolation = RigidbodyInterpolation.Interpolate;
                 grenade.rb.detectCollisions = true;
                 grenade.rb.isKinematic = false;
             }
@@ -136,8 +142,7 @@ public class TrajectoryController : MonoBehaviour
             {
                 if (grenade == null) yield break;
                 t = elapsedTime / duration;
-                grenade.transform.position=(Vector3.Lerp(startPosition, endPosition, t));
-
+                grenade.transform.position=(Vector3.LerpUnclamped(startPosition, endPosition, t));
                 elapsedTime = Time.time - startTime;
                 yield return null;
             }
@@ -147,6 +152,16 @@ public class TrajectoryController : MonoBehaviour
     internal void ThrowObject()
     {
         StartCoroutine(MoveObjectAlongTrajectory());
+    }
+
+    internal void CalculatePointsOnCurve()
+    {
+        points = pointsOnCurve.ToList();
+        foreach (var item in points)
+        {
+            if (item.y > y)
+                y = item.y;
+        }
     }
 
 

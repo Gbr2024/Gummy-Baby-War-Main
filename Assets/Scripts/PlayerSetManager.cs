@@ -15,6 +15,7 @@ public class PlayerSetManager : MonoBehaviour
     [SerializeField] GameObject InputControl;
     [SerializeField] RectTransform CrossHair, CrossHairScope;
     [SerializeField] Transform lookTransform;
+    public PlayerController[] AIPrefabs;
     public CinemachineVirtualCamera virtualCamera;//,ScopeCinemachine;
     [SerializeField] Button Aimbutton;
 
@@ -50,6 +51,14 @@ public class PlayerSetManager : MonoBehaviour
         wheel.transform.parent.gameObject.SetActive(false);
     }
 
+    internal void spawnWithoutWheel()
+    {
+        WBUIActions.EnableBlackPanel?.Invoke(false);
+        WBUIActions.isPlayerActive = true;
+        SpawnPlayer();
+        wheel.transform.parent.gameObject.SetActive(false);
+    }
+
     public void setPlayerControlandCam(GameObject go)
     {
         //go.GetComponent<WBThirdPersonController>().Context.CrossHair.CrossHair = CrossHair;
@@ -74,6 +83,7 @@ public class PlayerSetManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
+        WBUIActions.EnableSecShoot?.Invoke(false);
         PlayerCreator.Instance.SpawnObject();
     }
 
@@ -119,5 +129,10 @@ public class PlayerSetManager : MonoBehaviour
         virtualCamera.LookAt = t;
         virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = 0;
         virtualCamera.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = 0;
+    }
+
+    internal void CreateNewAI(string name="",bool isRed=true)
+    {
+        PlayerCreator.Instance.SpawnAIServerRpc(name,isRed);
     }
 }

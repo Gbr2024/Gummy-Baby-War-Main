@@ -11,7 +11,8 @@ public class PlanerController : NetworkBehaviour
     ulong TargetId, PlayerID;
     bool isRed;
     bool bombset = false;
-    private float speed=150f;
+    public float speed=150f;
+    bool isTargetAI;
 
     private void Update()
     {
@@ -34,20 +35,34 @@ public class PlanerController : NetworkBehaviour
         NetworkObject.Despawn(true);
     }
 
-    internal void SetTarget(Vector3 pos)
+    internal void SetTarget(Vector3 pos,bool target=false)
     {
         pos = new Vector3(pos.x, transform.position.y, pos.z);
         targetpos = pos;
+        isTargetAI = target;
     }
 
     [ServerRpc]
     void SetBombServerRpc()
     {
-        foreach (var item in FindObjectsOfType<WeirdBrothers.ThirdPersonController.WBThirdPersonController>())
+        if(isTargetAI)
         {
-            if (item.OwnerClientId == TargetId)
-                Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
+            foreach (var item in FindObjectsOfType<PlayerController>())
+            {
+                if (item.OwnerClientId == TargetId)
+                    Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
+            }
         }
+        else
+        {
+            foreach (var item in FindObjectsOfType<WeirdBrothers.ThirdPersonController.WBThirdPersonController>())
+            {
+                if (item.OwnerClientId == TargetId)
+                    Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
+            }
+
+        }
+
         var drop = NetworkManager.Instantiate(Bomb);
         drop.id = PlayerID;
         drop.isRed = isRed;

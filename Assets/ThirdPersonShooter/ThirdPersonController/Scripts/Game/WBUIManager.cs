@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 namespace WeirdBrothers.ThirdPersonController
 {
@@ -16,7 +17,7 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] private WBItemUI _secondaryWeaponUI;
         [SerializeField] private WBItemUI _meleeWeaponUI;
         [SerializeField] private Slider HealthBar;
-        [SerializeField] GameObject Tick;
+        [SerializeField] GameObject Tick,SecShootButton;
         [SerializeField] TMP_Text tickTimer;
         [SerializeField] TMP_Text MyKills,killstreaklabel;
         [SerializeField] GameObject BlackPanel,GrenadeButton,KillstreakButton,Map;
@@ -43,6 +44,12 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.EnableMap += EnableMap;
             WBUIActions.EnableTouch += EnableTouch;
             WBUIActions.ChangeKillstreak += SetStreakLabel;
+            WBUIActions.EnableSecShoot += SetSecShootbtn;
+        }
+
+        private void SetSecShootbtn(bool obj)
+        {
+            SecShootButton.SetActive(obj);
         }
 
         private void SetStreakLabel(string obj)
@@ -83,6 +90,7 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.EnableMap -= EnableMap;
             WBUIActions.EnableTouch -= EnableTouch;
             WBUIActions.ChangeKillstreak -= SetStreakLabel;
+            WBUIActions.EnableSecShoot -= SetSecShootbtn;
         }
 
         private void Start()

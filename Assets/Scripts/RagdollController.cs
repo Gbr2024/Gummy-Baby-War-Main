@@ -9,7 +9,6 @@ public class RagdollController : NetworkBehaviour
     private Animator animator;
     [SerializeField] private List<Rigidbody> rigidbodies=new();
     [SerializeField] private List<Collider> colliders=new();
-    public KeyCode toggleKey = KeyCode.Space;
 
     [SerializeField]private bool ragdollActive = false;
     private void Awake()

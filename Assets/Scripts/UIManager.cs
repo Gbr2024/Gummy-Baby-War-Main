@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -136,6 +137,11 @@ public class UIManager : MonoBehaviour
     public void CloseMessage()
     {
         Blocker.SetActive(false);
+    }
+
+    public void LeadShop()
+    {
+        SceneManager.LoadSceneAsync("Shop");
     }
     
 }

@@ -41,7 +41,7 @@ namespace WeirdBrothers.ThirdPersonController
                 _hor /= 5f;
                 _ver /= 5f;
             }
-
+            
             if (_speed > _context.Data.AllowPlayerMovement)
             {
                 _context.CrossHair.CrossHairSpread = Mathf.Lerp(_context.CrossHair.CrossHairSpread,

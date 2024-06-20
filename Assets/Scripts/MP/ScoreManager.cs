@@ -106,6 +106,10 @@ public class ScoreManager : NetworkBehaviour
         {
             OtherTeamRows[i].SetData(new PlayerData(otherTeam[i].playername.Value.ToString(), otherTeam[i].kills.Value), otherTeam[i].IsLocalPlayer);
         }
+        foreach (var item in FindObjectsOfType<AICreater>())
+        {
+            OtherTeamRows[0].SetData(new PlayerData(item.AIname, item.Kills), false);
+        }
     }
 
     private List<PlayerCreator> GetMyTeamScore()
@@ -215,10 +219,16 @@ public class ScoreManager : NetworkBehaviour
     void CheckTeams()
     {
         var players = FindObjectsOfType<PlayerCreator>();
+        var AIs = FindObjectsOfType<AICreater>();
         int count=0;
         foreach (var item in players)
         {
             if (item.isRedTeam.Value)
+                count += 1;
+        }
+        foreach (var item in AIs)
+        {
+            if (item.isRed)
                 count += 1;
         }
         if(count==0) ShowWinnerClientRpc(false);
@@ -226,6 +236,11 @@ public class ScoreManager : NetworkBehaviour
         foreach (var item in players)
         {
             if (!item.isRedTeam.Value)
+                count += 1;
+        }
+        foreach (var item in AIs)
+        {
+            if (!item.isRed)
                 count += 1;
         }
         if (count == 0) ShowWinnerClientRpc();
@@ -244,10 +259,39 @@ public class ScoreManager : NetworkBehaviour
         {
             item.NetworkObject.Despawn(true);
         }
+
+        var AIs = FindObjectsOfType<PlayerController>();
+        foreach (var item in AIs)
+        {
+            item.NetworkObject.Despawn(true);
+        }
         SpawnAllAgainClientRpc();
+        spawnAIs();
+        //if (LobbyManager.Instance.JoinedLobby.Data[LobbyManager.Instance.KEY_SPAWNAI].Value == "1")
+        //    PlayerCreator.Instance.SpawnAIServerRpc();
+
     }
 
-   
+    private void spawnAIs()
+    {
+        int reds = 0, blues = 0;
+        foreach (var item in FindObjectsOfType<PlayerCreator>())
+        {
+            if (item.isRedTeam.Value)
+                reds++;
+            else
+                blues++;
+        }
+        for (int i = 0; i < 5-reds; i++)
+        {
+            PlayerCreator.Instance.SpawnAIServerRpc();
+        }
+        for (int i = 0; i < 5-blues; i++)
+        {
+            PlayerCreator.Instance.SpawnAIServerRpc(isRed:false);
+        }
+
+    }
 
     public void UpdateTimer(float time)
     {
@@ -301,7 +345,10 @@ public class ScoreManager : NetworkBehaviour
     private void SpawnAllAgainClientRpc()
     {
         PlayerSetManager.instance.ChangeView(40f);
-        PlayerSetManager.instance.SpinTheWheel();
+        if (PlayerPrefs.GetInt("WeaponSelected", 0) == 0)
+            PlayerSetManager.instance.SpinTheWheel();
+        else
+            PlayerSetManager.instance.spawnWithoutWheel();
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -312,6 +359,20 @@ public class ScoreManager : NetworkBehaviour
             if(item.OwnerClientId==id)
             {
                 item.UpdateKillsClientRpc();
+            }
+        }
+        
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    internal void SetKillServerRpc(string ainame)
+    {
+        foreach (var item in FindObjectsOfType<AICreater>())
+        {
+            if(item.AIname==ainame)
+            {
+                item.Kills += 1;
+                SetTeamScoreScoreServerRpc(1, item.isRed);
             }
         }
         

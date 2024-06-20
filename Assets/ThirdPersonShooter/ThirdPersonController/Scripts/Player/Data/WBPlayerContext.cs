@@ -78,6 +78,7 @@ namespace WeirdBrothers.ThirdPersonController
         [HideInInspector] public float RecoilTime;
         [HideInInspector] public float Speed;
         internal bool isAiming = false;
+        internal bool isRecoking;
 
         public void SetData(Transform transform)
         {

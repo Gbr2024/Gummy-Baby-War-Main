@@ -45,6 +45,7 @@ namespace WeirdBrothers.ThirdPersonController
         public float FireRate;
         public int MagSize;
         public float Range;
+        public float RecockTime = 1.5f;
 
         [Space]
         [Header("Weapon Audio")]

@@ -67,6 +67,7 @@ namespace WeirdBrothers.ThirdPersonController
             }
             else
             {
+                GetComponent<WBInputHandler>().enabled = false;
                 isRed = syncer.isRed.Value;
             }
             if (!IsLocalPlayer && CustomProperties.Instance.isRed == isRed)
@@ -85,7 +86,7 @@ namespace WeirdBrothers.ThirdPersonController
         internal void resetAim()
         {
             CancelInvoke(nameof(ResetAim));
-            Invoke(nameof(ResetAim), .5f);
+            Invoke(nameof(ResetAim), Context.CurrentWeapon.Data.RecockTime);
         }
 
         private void ResetAim()
@@ -208,7 +209,35 @@ namespace WeirdBrothers.ThirdPersonController
                 ShootServerRpc(NetworkObject.OwnerClientId, hitPoint, camRot,Context.CurrentWeapon.GetMuzzleFlah.position,isRed);
                 _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position,isRed,true);
             }
+            if(_context.CurrentWeapon.Data.isSniper && Context.isScopeOn)
+            {
+                Context.Animator._animator.SetTrigger("DummyReload");
+                Context.isRecoking = true;
+                Context.CurrentWeapon.ScopeView.gameObject.SetActive(false);
+                WBUIActions.EnableSecShoot?.Invoke(false);
+                Invoke(nameof(ResetScope), 1.5f);
+                Invoke(nameof(PlayRecock), .5f);
+                
+            }
+
         }
+
+        public void ResetScope()
+        {
+            
+            if (Context.CurrentWeapon.CurrentAmmo == 0)
+               Context.isScopeOn = false;
+            Context.isRecoking = false;
+            SetScope(Context.isScopeOn);
+            
+        }
+        public void PlayRecock()
+        {
+            Context.CurrentWeapon.MagOut();
+        }
+
+
+        
 
         internal void NewFire(Vector3 hitPoint, LayerMask damageLayer)
         {
@@ -423,6 +452,10 @@ namespace WeirdBrothers.ThirdPersonController
         {
             AddDamageServerRpc(clientId, damage,playerID);
         }
+        internal void AddDamage(float damage,ulong clientId, string AIname, bool isAI=false)
+        {
+            AddDamageServerRpc(clientId, damage, AIname,isAI);
+        }
 
         [ServerRpc (RequireOwnership =false)]
         void AddDamageServerRpc(ulong id,float damage, ulong playerID)
@@ -430,14 +463,30 @@ namespace WeirdBrothers.ThirdPersonController
             //Debug.LogError("Damaging");
             AddDamageClientRpc(id, damage,playerID);
         }
+        
+        [ServerRpc (RequireOwnership =false)]
+        void AddDamageServerRpc(ulong id,float damage,string AIname, bool playerID)
+        {
+            //Debug.LogError("Damaging");
+            AddDamageClientRpc(id, damage,0, AIname,playerID);
+        }
 
 
         [ClientRpc]
-        void AddDamageClientRpc(ulong id,float damage, ulong playerID)
+        void AddDamageClientRpc(ulong id,float damage, ulong playerID,string name,bool isAI=false)
         {
             if (NetworkObject.OwnerClientId == id)
             {
-                GetComponent<HealthManager>().AddDamage(damage,playerID); 
+                GetComponent<HealthManager>().AddDamage(damage,playerID, name, isAI); 
+            }
+        }
+        
+        [ClientRpc]
+        void AddDamageClientRpc(ulong id,float damage, ulong playerID,bool isAI=false)
+        {
+            if (NetworkObject.OwnerClientId == id)
+            {
+                GetComponent<HealthManager>().AddDamage(damage,playerID,"",isAI); 
             }
         }
 
@@ -453,9 +502,12 @@ namespace WeirdBrothers.ThirdPersonController
             Debug.LogError(Context.isScopeOn);
 
             if (Context.CurrentWeapon.Data.isSniper)
+            { 
                 Context.CurrentWeapon.ScopeView.gameObject.SetActive(Context.isScopeOn);
+                WBUIActions.EnableSecShoot?.Invoke(Context.isScopeOn);
+            }
             else
-                PlayerSetManager.instance.ChangeView(Context.isScopeOn?Context.CurrentWeapon.Data.FeildView:40f);
+                PlayerSetManager.instance.ChangeView(Context.isScopeOn ? Context.CurrentWeapon.Data.FeildView : 40f);
         }
 
         internal void SetSkin(int color)
@@ -500,6 +552,7 @@ namespace WeirdBrothers.ThirdPersonController
             }
         }
 
-        
+       
+
     }
 }

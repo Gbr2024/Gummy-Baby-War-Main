@@ -31,6 +31,12 @@ public class Crate : NetworkBehaviour
                 controller.SetKillStreakClientRPC(KillStreak,controller.OwnerClientId);
                 transform.DOScale(Vector3.zero, .5f).OnComplete(()=> { DestrouCrateServerRpc(); });
             }
+            
+            if(collision.transform.TryGetComponent(out PlayerController ai))
+            {
+                Destroy(particleEffect);
+                transform.DOScale(Vector3.zero, .5f).OnComplete(()=> { DestrouCrateServerRpc(); });
+            }
         }
     }
 

@@ -9,7 +9,7 @@ using UnityEditor;
 
 namespace WeirdBrothers.CharacterController
 {
-    public class WBCharacterController : NetworkBehaviour
+    public class WBCharacterController : MonoBehaviour
     {
         #region Collider        
         [SerializeField]
@@ -205,12 +205,7 @@ namespace WeirdBrothers.CharacterController
             GetRigidBody();
         }
 
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            //if (!IsOwner)
-            //    enabled = false;
-        }
+        
 
         private void FixedUpdate()
         {

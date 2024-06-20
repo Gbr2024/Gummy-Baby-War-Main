@@ -76,7 +76,6 @@ public class Grenade : NetworkBehaviour
     {
         if (IsOwner && ToFollow != null)
         {
-           
             transform.position=ToFollow.position;
         }
     }

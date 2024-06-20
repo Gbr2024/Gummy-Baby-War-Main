@@ -12,6 +12,7 @@ public class PegionController : NetworkBehaviour
     bool isRed;
     bool bombset = false;
     private float speed = 40f;
+    bool isTargetAI;
 
     public override void OnNetworkSpawn()
     {
@@ -27,8 +28,9 @@ public class PegionController : NetworkBehaviour
         if (IsOwner && IsServer)
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            if (targetpos == null) return;
             var pos = new Vector3(targetpos.position.x, 35f, targetpos.position.z);
-            if (targetpos != null) transform.LookAt(pos);
+            transform.LookAt(pos);
             if (Vector3.Distance(transform.position, pos) < 5f && !bombset)
             {
                 targetpos = null;
@@ -45,18 +47,31 @@ public class PegionController : NetworkBehaviour
         NetworkObject.Despawn(true);
     }
 
-    internal void SetTarget(Transform pos)
+    internal void SetTarget(Transform pos, bool target = false)
     {
         targetpos = pos;
+        isTargetAI = target;
     }
 
     [ServerRpc]
     void SetBombServerRpc()
     {
-        foreach (var item in FindObjectsOfType<WeirdBrothers.ThirdPersonController.WBThirdPersonController>())
+        if (isTargetAI)
         {
-            if (item.OwnerClientId == TargetId)
-                Bomb.transform.position = new Vector3(item.transform.position.x, 35f, item.transform.position.z);
+            foreach (var item in FindObjectsOfType<PlayerController>())
+            {
+                if (item.OwnerClientId == TargetId)
+                    Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
+            }
+        }
+        else
+        {
+            foreach (var item in FindObjectsOfType<WeirdBrothers.ThirdPersonController.WBThirdPersonController>())
+            {
+                if (item.OwnerClientId == TargetId)
+                    Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
+            }
+
         }
         var drop = NetworkManager.Instantiate(Bomb);
         drop.id = PlayerID;

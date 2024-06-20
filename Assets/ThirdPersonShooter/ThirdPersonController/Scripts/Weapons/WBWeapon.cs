@@ -16,6 +16,8 @@ namespace WeirdBrothers.ThirdPersonController
         [Space]
         public WBWeaponData Data;
         public GameObject Body;
+        public bool isAI = false;
+        public string AIname;
 
         public WeaponSlot WeaponSlot;
         internal ulong id;
@@ -36,7 +38,7 @@ namespace WeirdBrothers.ThirdPersonController
 
         public SmoothFollow CamController;
         private AudioSource _audioSource;
-        private float _nextFire;
+        internal float _nextFire;
         private int _index;
         private Vector3 _directionToTarget;
         private RaycastHit _hit;
@@ -142,28 +144,27 @@ namespace WeirdBrothers.ThirdPersonController
 
         public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos,bool isRed,bool isOwner=false)
         {
-            
-            if (Time.time > _nextFire)
-            {
-                _currentAmmo--;
-                pool[poolIndex].gameObject.SetActive(false);
-                pool[poolIndex].resetBullet();
-                _nextFire = Time.time + Data.FireRate;
-                _audioSource.PlayOneShotAudioClip(Data.FireSound);
-                pool[poolIndex].transform.position =pos;
-                pool[poolIndex].transform.forward = transform.forward;
-                pool[poolIndex].gameObject.SetActive(true);
-                pool[poolIndex].moveBullet(hitPoint, RotationToUse);
-                pool[poolIndex].isRed = isRed;
-                poolIndex++;
-                if(isOwner) CustomProperties.Instance.currentAmmo = _currentAmmo;
-                if (poolIndex >= pool.Length) poolIndex = 0;
+            if (poolIndex >= pool.Length) poolIndex = 0;
+            _nextFire = Time.time + Data.FireRate;
+            _currentAmmo--;
+            pool[poolIndex].gameObject.SetActive(false);
+            pool[poolIndex].resetBullet();
+            _audioSource.PlayOneShotAudioClip(Data.FireSound);
+            pool[poolIndex].transform.position = pos;
+            pool[poolIndex].transform.forward = transform.forward;
+            pool[poolIndex].gameObject.SetActive(true);
+            pool[poolIndex].moveBullet(hitPoint, RotationToUse);
+            pool[poolIndex].isRed = isRed;
+            pool[poolIndex].isAI = isAI;
+            pool[poolIndex].AIname = AIname;
+            poolIndex++;
+            if (isOwner) CustomProperties.Instance.currentAmmo = _currentAmmo;
+            if (poolIndex >= pool.Length) poolIndex = 0;
 
-                if (Cylinder != null)
-                {
-                    //Debug.LogError(Cylinder.localEulerAngles.z);
-                    Cylinder.DOLocalRotate(new Vector3(Cylinder.localEulerAngles.x, Cylinder.localEulerAngles.y, Cylinder.localEulerAngles.z - CylinderRotation), Data.FireRate*.8f); 
-                }
+            if (Cylinder != null)
+            {
+                //Debug.LogError(Cylinder.localEulerAngles.z);
+                Cylinder.DOLocalRotate(new Vector3(Cylinder.localEulerAngles.x, Cylinder.localEulerAngles.y, Cylinder.localEulerAngles.z - CylinderRotation), Data.FireRate * .8f);
             }
         }
 
@@ -180,6 +181,8 @@ namespace WeirdBrothers.ThirdPersonController
                 Destroy(bulletHole, 10);
             }
         }
+
+
 
         private Vector3 CalculatelateSpread(float inaccuracy, Vector3 direction)
         {
@@ -234,7 +237,11 @@ namespace WeirdBrothers.ThirdPersonController
         {
             foreach (var item in pool)
             {
-                Destroy(item.gameObject);
+                if(item!=null)
+                {
+                    Destroy(item.gameObject);
+                }
+                
             }
         }
 

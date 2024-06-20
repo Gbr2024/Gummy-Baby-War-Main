@@ -9,6 +9,7 @@ public class ItemReference :MonoBehaviour
     public ColorReference colorReference;
     public CharactersData characters;
     public Transform EmtptyTarget;
+    public AICreater AIcreator;
     public float hasgoneDownY = -10f;
 
     private void Awake()

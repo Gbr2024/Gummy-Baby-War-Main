@@ -27,7 +27,7 @@ MonoBehaviour:
   isSniper: 1
   WeaponIndex: 1
   AmmoType: ToyMachineAmmo
-  FireType: 2
+  FireType: 0
   bullet: {fileID: 4416225141524912330, guid: 1a858d125b157854ba6992fe4b0a341f, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
@@ -41,6 +41,7 @@ MonoBehaviour:
   FireRate: 0.05
   MagSize: 5
   Range: 250
+  RecockTime: 1.5
   FireSound: {fileID: 8300000, guid: 328927f678e90594f990334d0ce94526, type: 3}
   MagOutSound: {fileID: 8300000, guid: e7eec80bb1c05f5428550d15f82e9f7f, type: 3}
   MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}
