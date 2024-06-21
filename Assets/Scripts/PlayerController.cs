@@ -16,8 +16,8 @@ public class PlayerController : NetworkBehaviour
     private float AIFOV = 30;
     public WBWeapon weapon;
     public string AIname;
-    internal bool isRed;
 
+    public NetworkVariable<bool> isRed = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isaiming = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     // Start is called before the first frame update
@@ -28,16 +28,24 @@ public class PlayerController : NetworkBehaviour
         weapon.isAI = true;
         weapon.Setpool(12, NetworkObject.OwnerClientId);
         animator.SetFloat("WeaponIndex", WeaponIndex);
+
+
     }
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         isaiming.OnValueChanged += (previous, current) => SetisAim(isaiming.Value);
-        if (isRed)
+        if (isRed.Value)
             gameObject.layer = 10;
         else
             gameObject.layer = 13;
-        SetSkin(LobbyManager.Instance.getSkinColor(isRed));
+        isRed.OnValueChanged += (previous, current) => SetisRed(isRed.Value);
+        
+    }
+
+    private void SetisRed(bool value)
+    {
+        SetSkin(LobbyManager.Instance.getSkinColor(value));
     }
 
     private void SetisAim(bool value)
@@ -77,7 +85,8 @@ public class PlayerController : NetworkBehaviour
     }
 
     bool isAiming = false;
-    internal int bulletlayer;
+    public NetworkVariable<int> bulletlayer = new NetworkVariable<int>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
 
     public Vector3 velocity { get; private set; }
 
@@ -130,7 +139,7 @@ public class PlayerController : NetworkBehaviour
         foreach (var item in FindObjectsOfType<PlayerController>())
         {
             if(item.AIname==name)
-                weapon.FireBullet(point, Quaternion.identity, weapon.GetMuzzleFlah.position, isRed, true);
+                weapon.FireBullet(point, Quaternion.identity, weapon.GetMuzzleFlah.position, isRed.Value, true);
         }
         
     }
@@ -140,7 +149,7 @@ public class PlayerController : NetworkBehaviour
         List<Transform> ts = new();
         foreach (var item in FindObjectsOfType<WBThirdPersonController>())
         {
-            if (item.isRed != isRed)
+            if (item.isRed != isRed.Value)
                 ts.Add(item.transform);
         }
         foreach (var item in FindObjectsOfType<PlayerController>())

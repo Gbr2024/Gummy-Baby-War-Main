@@ -3402,6 +3402,7 @@ GameObject:
   - component: {fileID: 5474318012947345666}
   - component: {fileID: 816913829797382994}
   - component: {fileID: 7104849797815468561}
+  - component: {fileID: -2872316193680672449}
   m_Layer: 13
   m_Name: 'baby1 '
   m_TagString: Player
@@ -3443,7 +3444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2325984993
+  GlobalObjectIdHash: 2655669770
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -3511,9 +3512,11 @@ MonoBehaviour:
   controller: {fileID: 816913829797382994}
   WeaponIndex: 1
   Front: {fileID: 1198451101749138522}
-  target: {fileID: 0}
   weapon: {fileID: 3055465076682657062}
   AIname: 
+  isRed: 0
+  isaiming:
+    m_InternalValue: 0
 --- !u!114 &7649958806074472798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3736,7 +3739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 3711748741934835232}
   agent: {fileID: 3794068443561907014}
-  player: {fileID: 0}
+  players: []
   whatIsGround:
     serializedVersion: 2
     m_Bits: 65
@@ -3772,6 +3775,20 @@ CapsuleCollider:
   m_Height: 2.0592778
   m_Direction: 1
   m_Center: {x: 0, y: 1.028675, z: -0.071266174}
+--- !u!114 &-2872316193680672449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861483763653670305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2c1fc49d296be4184a1f856cdf1868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 0}
 --- !u!1 &7094766942671647651
 GameObject:
   m_ObjectHideFlags: 0
@@ -4738,6 +4755,14 @@ PrefabInstance:
     - target: {fileID: 7992035459784967246, guid: bb2b2655909b19a468169d5aa11d75e2, type: 3}
       propertyPath: isAI
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992035459784967246, guid: bb2b2655909b19a468169d5aa11d75e2, type: 3}
+      propertyPath: AIname
+      value: Guest76691054
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992035459784967246, guid: bb2b2655909b19a468169d5aa11d75e2, type: 3}
+      propertyPath: pool.Array.size
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -27,7 +27,7 @@ MonoBehaviour:
   isSniper: 0
   WeaponIndex: 2
   AmmoType: PistolAmmo
-  FireType: 0
+  FireType: 2
   bullet: {fileID: 4416225141524912330, guid: ee0c12cab7dc5be479fe28ae4087b721, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0

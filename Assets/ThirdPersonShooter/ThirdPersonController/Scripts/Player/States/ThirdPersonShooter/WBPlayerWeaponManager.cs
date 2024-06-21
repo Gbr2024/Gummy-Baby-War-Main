@@ -179,7 +179,6 @@ namespace WeirdBrothers.ThirdPersonController
 
             if(_context.isAiming)
             {
-                Debug.LogError("HERERERE");
                 _context.ShooterController.FireInAll(hitPoint, _context.Data.DamageLayer);
             }
             else

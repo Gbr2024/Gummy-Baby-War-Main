@@ -97,7 +97,9 @@ public class ScoreManager : NetworkBehaviour
     private void SetPlayerScores()
     {
         var myteam = GetMyTeamScore();
+        var MyAIs = GetMyAIs();
         var otherTeam = GetAnotherTeamScore();
+        var OtherAIs = GetOtherAIs();
         for (int i = 0; i < myteam.Count; i++)
         {
             MyTeamRow[i].SetData(new PlayerData(myteam[i].playername.Value.ToString(), myteam[i].kills.Value), myteam[i].IsLocalPlayer);
@@ -106,10 +108,44 @@ public class ScoreManager : NetworkBehaviour
         {
             OtherTeamRows[i].SetData(new PlayerData(otherTeam[i].playername.Value.ToString(), otherTeam[i].kills.Value), otherTeam[i].IsLocalPlayer);
         }
+        for (int i = 0; i < MyAIs.Count; i++)
+        {
+            MyTeamRow[myteam.Count+i].SetData(new PlayerData(MyAIs[i].AIname.Value.ToString(), MyAIs[i].Kills.Value), false);
+        }
+        for (int i = 0; i < OtherAIs.Count; i++)
+        {
+            OtherTeamRows[otherTeam.Count + i].SetData(new PlayerData(OtherAIs[i].AIname.Value.ToString(), OtherAIs[i].Kills.Value), false);
+        }
+
+        
+    }
+
+    private List<AICreater> GetOtherAIs()
+    {
+        List<AICreater> players = new();
         foreach (var item in FindObjectsOfType<AICreater>())
         {
-            OtherTeamRows[0].SetData(new PlayerData(item.AIname, item.Kills), false);
+            if (item.isRed.Value != CustomProperties.Instance.isRed)
+            {
+                players.Add(item);
+            }
         }
+        players = BubbleSort(players);
+        return players;
+    }
+
+    private List<AICreater> GetMyAIs()
+    {
+        List<AICreater> players = new();
+        foreach (var item in FindObjectsOfType<AICreater>())
+        {
+            if (item.isRed.Value == CustomProperties.Instance.isRed)
+            {
+                players.Add(item);
+            }
+        }
+        players = BubbleSort(players);
+        return players;
     }
 
     private List<PlayerCreator> GetMyTeamScore()
@@ -159,6 +195,23 @@ public class ScoreManager : NetworkBehaviour
                 if (list[j].kills.Value < list[j + 1].kills.Value)
                 {
                     PlayerCreator temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+            }
+        }
+        return list;
+    }
+    public List<AICreater> BubbleSort(List<AICreater> list)
+    {
+        int n = list.Count;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - i - 1; j++)
+            {
+                if (list[j].Kills.Value < list[j + 1].Kills.Value)
+                {
+                    AICreater temp = list[j];
                     list[j] = list[j + 1];
                     list[j + 1] = temp;
                 }
@@ -228,7 +281,7 @@ public class ScoreManager : NetworkBehaviour
         }
         foreach (var item in AIs)
         {
-            if (item.isRed)
+            if (item.isRed.Value)
                 count += 1;
         }
         if(count==0) ShowWinnerClientRpc(false);
@@ -240,7 +293,7 @@ public class ScoreManager : NetworkBehaviour
         }
         foreach (var item in AIs)
         {
-            if (!item.isRed)
+            if (!item.isRed.Value)
                 count += 1;
         }
         if (count == 0) ShowWinnerClientRpc();
@@ -369,10 +422,10 @@ public class ScoreManager : NetworkBehaviour
     {
         foreach (var item in FindObjectsOfType<AICreater>())
         {
-            if(item.AIname==ainame)
+            if(item.AIname.Value==ainame)
             {
-                item.Kills += 1;
-                SetTeamScoreScoreServerRpc(1, item.isRed);
+                item.Kills.Value += 1;
+                SetTeamScoreScoreServerRpc(1, item.isRed.Value);
             }
         }
         

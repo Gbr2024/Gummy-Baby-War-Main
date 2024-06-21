@@ -150,17 +150,20 @@ public class PlayerCreator : NetworkBehaviour
     internal void SpawnAIServerRpc(string name="",bool isRed=true)
     {
         Transform t = isRed!=true?PlayerSetManager.instance.BlueCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)]: PlayerSetManager.instance.RedCribs[Random.Range(0, PlayerSetManager.instance.BlueCribs.Length)];
-        GameObject player = NetworkManager.Instantiate(PlayerSetManager.instance.AIPrefabs[0].gameObject,t.position ,t.rotation);
-        player.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkObject.OwnerClientId, true);
-        player.GetComponent<PlayerController>().bulletlayer = isRed ? 9 : 12;
-        player.GetComponent<PlayerController>().isRed = isRed;
+        GameObject player = NetworkManager.Instantiate(PlayerSetManager.instance.AIPrefabs[Random.Range(0, PlayerSetManager.instance.AIPrefabs.Length)].gameObject,t.position ,t.rotation);
+        player.GetComponent<NetworkObject>().Spawn(true);
+        player.GetComponent<PlayerController>().bulletlayer.Value = isRed ? 9 : 12;
+        player.GetComponent<PlayerController>().isRed.Value = isRed;
+        
+       
         if (string.IsNullOrEmpty(name))
         {
             player.GetComponent<PlayerController>().AIname = "Guest"+GenerateRandomNumberString(8);
             
             var aicreater=NetworkManager.Instantiate(ItemReference.Instance.AIcreator);
-            aicreater.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkObject.OwnerClientId, true);
-            aicreater.AIname = player.GetComponent<PlayerController>().AIname;
+            aicreater.GetComponent<NetworkObject>().Spawn(true);
+            aicreater.AIname.Value = player.GetComponent<PlayerController>().AIname;
+            aicreater.isRed.Value = isRed;
         }
         else
         {

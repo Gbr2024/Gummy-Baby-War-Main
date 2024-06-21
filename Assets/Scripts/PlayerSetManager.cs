@@ -91,7 +91,6 @@ public class PlayerSetManager : MonoBehaviour
     {
         Aimbutton.onClick.RemoveAllListeners();
         Aimbutton.onClick.AddListener(() => { thirdPersonController.SetScope(!thirdPersonController.Context.isScopeOn); });
-        Debug.LogError("Cameras has set" + thirdPersonController.gameObject.name);
     }
 
     internal bool scopemoving = false;

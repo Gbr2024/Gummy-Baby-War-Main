@@ -21,7 +21,7 @@ public class AIHealth : NetworkBehaviour
         if (collision.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
         {
             if (!NetworkManager.Singleton.IsServer) return;
-            if (bullet.isRed == playercontroller.isRed) return;
+            if (bullet.isRed == playercontroller.isRed.Value) return;
             if (CurrentHealth - bullet.damage <= 0)
             {
                 isDead = true;
@@ -40,7 +40,7 @@ public class AIHealth : NetworkBehaviour
         {
             if (!NetworkManager.Singleton.IsServer) return;
             if (!slime.isActive) return;
-            if (slime.isRed == playercontroller.isRed) return;
+            if (slime.isRed == playercontroller.isRed.Value) return;
             if (CurrentHealth - slime.Damage <= 0)
             {
                 isDead = true;
@@ -66,7 +66,7 @@ public class AIHealth : NetworkBehaviour
             //Debug.LogError(impact.DamagetoApply);
             if (!NetworkManager.Singleton.IsServer) return;
 
-            if (CurrentHealth - impact.DamagetoApply <= 0 && playercontroller.isRed != impact.isRed)
+            if (CurrentHealth - impact.DamagetoApply <= 0 && playercontroller.isRed.Value != impact.isRed)
             {
                 isDead = true;
                 ScoreManager.Instance.SetKillServerRpc(impact.PlayerID);
@@ -77,7 +77,7 @@ public class AIHealth : NetworkBehaviour
         if (other.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
         {
             if (!NetworkManager.Singleton.IsServer) return;
-            if (bullet.isRed == playercontroller.isRed) return;
+            if (bullet.isRed == playercontroller.isRed.Value) return;
             if (CurrentHealth - bullet.damage <= 0)
             {
                 isDead = true;
@@ -96,7 +96,7 @@ public class AIHealth : NetworkBehaviour
         {
             if (!NetworkManager.Singleton.IsServer) return;
             if (!slime.isActive) return;
-            if (slime.isRed == playercontroller.isRed) return;
+            if (slime.isRed == playercontroller.isRed.Value) return;
             if (CurrentHealth - slime.Damage <= 0)
             {
                 isDead = true;
@@ -149,7 +149,7 @@ public class AIHealth : NetworkBehaviour
         //    transform.position = CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position : PlayerSetManager.instance.BlueCribs[Random.Range(0, 3)].position;
 
         DestroyPlayerServerRPC(NetworkObject.OwnerClientId);
-        PlayerSetManager.instance.CreateNewAI(playercontroller.AIname,playercontroller.isRed);
+        PlayerSetManager.instance.CreateNewAI(playercontroller.AIname,playercontroller.isRed.Value);
     }
 
 

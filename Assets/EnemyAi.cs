@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System.Collections.Generic;
+using WeirdBrothers.ThirdPersonController;
 
 public class EnemyAi : MonoBehaviour
 {
@@ -48,10 +49,21 @@ public class EnemyAi : MonoBehaviour
         Transform nearest = null;
         float minDistance = Mathf.Infinity;
 
+        foreach (var item in players)
+        {
+            if(item==null)
+            {
+                players = FindTarget();
+                break;
+            }
+        }
+        
         foreach (Transform player in players)
         {
+           
             if (transform.TryGetComponent(out HealthManager H)) if (H.isDead) continue;
             if (transform.TryGetComponent(out AIHealth A)) if (A.isDead) continue;
+
 
             float distance = Vector3.Distance(transform.position, player.position);
             if (distance < minDistance)
@@ -62,6 +74,22 @@ public class EnemyAi : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    private List<Transform> FindTarget()
+    {
+        List<Transform> ts = new();
+        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        {
+            if (item.isRed != playerController.isRed.Value)
+                ts.Add(item.transform);
+        }
+        foreach (var item in FindObjectsOfType<PlayerController>())
+        {
+            if (item.isRed.Value != playerController.isRed.Value)
+                ts.Add(item.transform);
+        }
+        return ts;
     }
 
     private void Patroling()

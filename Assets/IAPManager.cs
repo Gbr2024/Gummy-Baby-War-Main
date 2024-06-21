@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 public class IAPManager : MonoBehaviour, IDetailedStoreListener
 {
     [SerializeField] Button PurchaseButton,SelectionButton,SelectedButton;
-    [SerializeField] GameObject PurchasePanel;
+    [SerializeField] GameObject PurchasePanel,PopupMessage;
     [SerializeField] Image panelImage;
     [SerializeField] TMP_Text PurchaseButtonLabel,NameLabel;
     [SerializeField] Buyable[] buyables;
@@ -119,13 +119,22 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
     public void SetPurchaseItem(string id)
     {
-        storeController.InitiatePurchase(id);
+        try
+        {
+            storeController.InitiatePurchase(id);
+        }
+        catch
+        {
+            PopupMessage.SetActive(true);
+        }
+        
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
     {
         Debug.LogError($"Purchase of product {product.definition.id} failed due to {failureDescription.reason}");
         // Implement your logic for handling failed purchases here
+        PopupMessage.SetActive(true);
     }
 
     public void OnInitializeFailed(InitializationFailureReason error)

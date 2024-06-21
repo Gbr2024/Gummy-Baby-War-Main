@@ -44285,6 +44285,8 @@ MonoBehaviour:
   lookTransform: {fileID: 1452902920}
   AIPrefabs:
   - {fileID: 3711748741934835232, guid: c12800db47552d34bbfca5832920b529, type: 3}
+  - {fileID: -2399238065077096129, guid: e032b93b13ea5c04aabe0ff034da2e04, type: 3}
+  - {fileID: -686463102926649208, guid: 4b7c8217a172ec041b9840c44d39828d, type: 3}
   virtualCamera: {fileID: 324476350}
   Aimbutton: {fileID: 724625758}
   wheel: {fileID: 881526562}

@@ -22345,7 +22345,7 @@ MonoBehaviour:
   CrossHairScope: {fileID: 0}
   lookTransform: {fileID: 1973352874}
   AIPrefabs:
-  - {fileID: 3711748741934835232, guid: c12800db47552d34bbfca5832920b529, type: 3}
+  - {fileID: -2399238065077096129, guid: e032b93b13ea5c04aabe0ff034da2e04, type: 3}
   virtualCamera: {fileID: 9039922182225877515}
   Aimbutton: {fileID: 295755408}
   wheel: {fileID: 190821996}

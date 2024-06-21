@@ -2861,6 +2861,7 @@ GameObject:
   - component: {fileID: 4851336756950944187}
   - component: {fileID: 2276396044176748143}
   - component: {fileID: -5059944063258040098}
+  - component: {fileID: -1278838251776427384}
   m_Layer: 0
   m_Name: baby3
   m_TagString: Untagged
@@ -2901,7 +2902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1299319580
+  GlobalObjectIdHash: 4001976469
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -2969,9 +2970,11 @@ MonoBehaviour:
   controller: {fileID: 2276396044176748143}
   WeaponIndex: 1
   Front: {fileID: 2600589080664485350}
-  target: {fileID: 0}
   weapon: {fileID: 570071868900607739}
   AIname: 
+  isRed: 0
+  isaiming:
+    m_InternalValue: 0
 --- !u!114 &3964347711063106997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3194,7 +3197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: -686463102926649208}
   agent: {fileID: 3379232084386021225}
-  player: {fileID: 0}
+  players: []
   whatIsGround:
     serializedVersion: 2
     m_Bits: 65
@@ -3230,6 +3233,20 @@ CapsuleCollider:
   m_Height: 1.9250987
   m_Direction: 1
   m_Center: {x: 0, y: 0.9615854, z: 0}
+--- !u!114 &-1278838251776427384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722278759497433332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2c1fc49d296be4184a1f856cdf1868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 0}
 --- !u!1 &6830118514892369806
 GameObject:
   m_ObjectHideFlags: 0

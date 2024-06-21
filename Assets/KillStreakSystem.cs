@@ -60,7 +60,6 @@ public class KillStreakSystem : NetworkBehaviour
     internal void SetCrates()
     {
         StartCoroutine(SpawnDropsPeriodically());
-        Debug.LogError("Setting up crates");
     }
 
     private bool IsGroundUnderneath(Vector3 spawnPosition)
@@ -109,7 +108,7 @@ public class KillStreakSystem : NetworkBehaviour
         }
         foreach (var item in FindObjectsOfType<PlayerController>())
         {
-            if (item.isRed != CustomProperties.Instance.isRed)
+            if (item.isRed.Value != CustomProperties.Instance.isRed)
             {
                 item.GetComponentInChildren<marker>().EnableBody(true);
             }
@@ -209,7 +208,7 @@ public class KillStreakSystem : NetworkBehaviour
         var l = FindObjectsOfType<PlayerController>();
         foreach (var item in l)
         {
-            if (item.isRed == v)
+            if (item.isRed.Value == v)
                 return item;
         }
         return null;

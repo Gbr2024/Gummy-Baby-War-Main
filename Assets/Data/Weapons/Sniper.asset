@@ -27,7 +27,7 @@ MonoBehaviour:
   isSniper: 1
   WeaponIndex: 1
   AmmoType: ToyMachineAmmo
-  FireType: 0
+  FireType: 2
   bullet: {fileID: 4416225141524912330, guid: 1a858d125b157854ba6992fe4b0a341f, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0

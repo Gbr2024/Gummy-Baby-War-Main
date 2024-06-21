@@ -27,7 +27,7 @@ MonoBehaviour:
   isSniper: 0
   WeaponIndex: 2
   AmmoType: CorkAmmo
-  FireType: 0
+  FireType: 2
   bullet: {fileID: 3184629018253203977, guid: 27c9aacc87feb6b49996ea22d82b58eb, type: 3}
   BulletShell: {fileID: 0}
   BulletEjectingSpeed: 0
