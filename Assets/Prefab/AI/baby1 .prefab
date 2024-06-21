@@ -3514,8 +3514,11 @@ MonoBehaviour:
   Front: {fileID: 1198451101749138522}
   weapon: {fileID: 3055465076682657062}
   AIname: 
-  isRed: 0
+  isRed:
+    m_InternalValue: 0
   isaiming:
+    m_InternalValue: 0
+  bulletlayer:
     m_InternalValue: 0
 --- !u!114 &7649958806074472798
 MonoBehaviour:
@@ -3679,7 +3682,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -3787,8 +3790,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2c1fc49d296be4184a1f856cdf1868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 0}
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 3
+    OriginatingState: -542986255
+    DestinationState: -1443837865
+    TransitionDuration: 0.25
+    TriggerNameHash: 1014295797
+    TransitionIndex: 0
+  m_Animator: {fileID: 1960424647568623422}
 --- !u!1 &7094766942671647651
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,7 +4768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7992035459784967246, guid: bb2b2655909b19a468169d5aa11d75e2, type: 3}
       propertyPath: AIname
-      value: Guest76691054
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7992035459784967246, guid: bb2b2655909b19a468169d5aa11d75e2, type: 3}
       propertyPath: pool.Array.size

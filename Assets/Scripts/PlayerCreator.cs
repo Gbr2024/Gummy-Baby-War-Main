@@ -41,7 +41,7 @@ public class PlayerCreator : NetworkBehaviour
         if (IsOwner)
             Instance = this;
         if (IsOwner) OnClientConnectedServerRpc();
-
+        
         isRedTeam.OnValueChanged += (previous, current) => SetisRed(isRedTeam.Value);
         kills.OnValueChanged += (previous, current) => Setkills(kills.Value);
         playername.OnValueChanged += (previous, current) => SetName(playername.Value);

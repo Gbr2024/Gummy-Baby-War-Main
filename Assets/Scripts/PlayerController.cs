@@ -36,11 +36,17 @@ public class PlayerController : NetworkBehaviour
         base.OnNetworkSpawn();
         isaiming.OnValueChanged += (previous, current) => SetisAim(isaiming.Value);
         if (isRed.Value)
+        {
             gameObject.layer = 10;
+            controller.whatIsPlayer = 13;
+        }
         else
+        { 
             gameObject.layer = 13;
+            controller.whatIsPlayer = 10;
+        }
         isRed.OnValueChanged += (previous, current) => SetisRed(isRed.Value);
-        
+        SetSkin(LobbyManager.Instance.getSkinColor(isRed.Value));
     }
 
     private void SetisRed(bool value)

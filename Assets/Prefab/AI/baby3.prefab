@@ -2972,8 +2972,11 @@ MonoBehaviour:
   Front: {fileID: 2600589080664485350}
   weapon: {fileID: 570071868900607739}
   AIname: 
-  isRed: 0
+  isRed:
+    m_InternalValue: 0
   isaiming:
+    m_InternalValue: 0
+  bulletlayer:
     m_InternalValue: 0
 --- !u!114 &3964347711063106997
 MonoBehaviour:
@@ -3137,7 +3140,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -3245,8 +3248,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2c1fc49d296be4184a1f856cdf1868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 0}
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 3
+    OriginatingState: -542986255
+    DestinationState: -1443837865
+    TransitionDuration: 0.25
+    TriggerNameHash: 1014295797
+    TransitionIndex: 0
+  m_Animator: {fileID: 812125112052596867}
 --- !u!1 &6830118514892369806
 GameObject:
   m_ObjectHideFlags: 0

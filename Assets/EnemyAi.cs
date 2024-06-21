@@ -30,6 +30,8 @@ public class EnemyAi : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
+   
+
     private void Update()
     {
         // Find the nearest player
@@ -78,6 +80,7 @@ public class EnemyAi : MonoBehaviour
 
     private List<Transform> FindTarget()
     {
+      
         List<Transform> ts = new();
         foreach (var item in FindObjectsOfType<WBThirdPersonController>())
         {
