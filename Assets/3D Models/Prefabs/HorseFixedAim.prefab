@@ -151,6 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4600701416418544922}
   - component: {fileID: 3802898107229136845}
+  - component: {fileID: 5895998385516494214}
   m_Layer: 0
   m_Name: HorseFixedAim
   m_TagString: Untagged
@@ -194,6 +195,22 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5513031988142075759}
   m_Enabled: 1
+--- !u!208 &5895998385516494214
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788417051672172448}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5, y: 2.5, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 1.5}
+  m_TimeToStationary: 0.5
 --- !u!1 &4475352936067949751
 GameObject:
   m_ObjectHideFlags: 0

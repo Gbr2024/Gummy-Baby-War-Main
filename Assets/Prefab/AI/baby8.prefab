@@ -710,7 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4181962227
+  GlobalObjectIdHash: 2815292403
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -778,9 +778,17 @@ MonoBehaviour:
   controller: {fileID: 6058322816412412624}
   WeaponIndex: 1
   Front: {fileID: 4354904851175265445}
-  target: {fileID: 0}
+  Debugmessage: 0
+  Marker: {fileID: 0}
+  aIHealth: {fileID: 8775941842651263156}
   weapon: {fileID: 3055465076682657062, guid: c12800db47552d34bbfca5832920b529, type: 3}
   AIname: 
+  isRed:
+    m_InternalValue: 0
+  isaiming:
+    m_InternalValue: 0
+  bulletlayer:
+    m_InternalValue: 0
 --- !u!114 &8775941842651263156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,6 +803,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 100
   ragdollController: {fileID: 1788040003469826369}
+  isDead:
+    m_InternalValue: 0
   playercontroller: {fileID: -3707106584075138341}
 --- !u!114 &1788040003469826369
 MonoBehaviour:
@@ -1002,20 +1012,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: -3707106584075138341}
+  health: {fileID: 0}
+  Chest: {fileID: 0}
+  DebugMessage: 0
   agent: {fileID: 3154822009537684539}
-  player: {fileID: 0}
+  players: []
   whatIsGround:
     serializedVersion: 2
     m_Bits: 65
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 1024
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 200
   sightRange: 100
   attackRange: 30
   playerInSightRange: 0
   playerInAttackRange: 0
+  CanSeePlayer: 0
+  nearestPlayer: {fileID: 0}
 --- !u!136 &-7444427639162483406
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1031,7 +1043,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

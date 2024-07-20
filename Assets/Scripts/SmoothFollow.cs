@@ -5,7 +5,7 @@ using WeirdBrothers.ThirdPersonController;
 public class SmoothFollow : MonoBehaviour
 {
     Transform Cam; // Target transform to follow
-    [SerializeField] float followSpeed = 5f,smoothTime=.1f; // Speed of following
+    [SerializeField] float smoothTime=.1f; // Speed of following
     //Vector3 targetPosition, newPosition, veclocity=Vector3.zero;
 
 

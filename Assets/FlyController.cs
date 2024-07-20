@@ -23,8 +23,9 @@ public class FlyController : NetworkBehaviour
 
 
     [ClientRpc]
-    internal void SetTargetClientRpc(ulong id, ulong playerID, bool isRed, bool TargetAI = false)
+    internal void SetTargetClientRpc(ulong id, ulong playerID, bool isRed, bool TargetAI = false,string AIname="")
     {
+        isTargetAI = TargetAI;
         if (!isTargetAI)
         {
             foreach (var item in FindObjectsOfType<WBThirdPersonController>())
@@ -40,7 +41,7 @@ public class FlyController : NetworkBehaviour
         {
             foreach (var item in FindObjectsOfType<PlayerController>())
             {
-                if (item.OwnerClientId == id)
+                if (item.AIname == AIname)
                 {
                     gun.setLookTarget(item.transform);
                     targetAIhealth = item.GetComponent<AIHealth>();

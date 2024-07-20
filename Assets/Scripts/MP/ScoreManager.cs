@@ -100,24 +100,85 @@ public class ScoreManager : NetworkBehaviour
         var MyAIs = GetMyAIs();
         var otherTeam = GetAnotherTeamScore();
         var OtherAIs = GetOtherAIs();
-        for (int i = 0; i < myteam.Count; i++)
+
+        List<ScoreData> myTeam = new List<ScoreData>();
+        List<ScoreData> otherTeams = new List<ScoreData>();
+
+        // Populate myTeam with players and AIs
+        foreach (var item in myteam)
         {
-            MyTeamRow[i].SetData(new PlayerData(myteam[i].playername.Value.ToString(), myteam[i].kills.Value), myteam[i].IsLocalPlayer);
-        }
-        for (int i = 0; i < otherTeam.Count; i++)
-        {
-            OtherTeamRows[i].SetData(new PlayerData(otherTeam[i].playername.Value.ToString(), otherTeam[i].kills.Value), otherTeam[i].IsLocalPlayer);
-        }
-        for (int i = 0; i < MyAIs.Count; i++)
-        {
-            MyTeamRow[myteam.Count+i].SetData(new PlayerData(MyAIs[i].AIname.Value.ToString(), MyAIs[i].Kills.Value), false);
-        }
-        for (int i = 0; i < OtherAIs.Count; i++)
-        {
-            OtherTeamRows[otherTeam.Count + i].SetData(new PlayerData(OtherAIs[i].AIname.Value.ToString(), OtherAIs[i].Kills.Value), false);
+            myTeam.Add(new ScoreData
+            {
+                Name = item.playername.Value.ToString(),
+                Kills = item.kills.Value,
+                isLocalPlayer = item.IsLocalPlayer
+            });
         }
 
-        
+        foreach (var item in MyAIs)
+        {
+            myTeam.Add(new ScoreData
+            {
+                Name = item.AIname.Value.ToString(),
+                Kills = item.Kills.Value,
+                isLocalPlayer = false
+            });
+        }
+
+        // Populate otherTeams with players and AIs
+        foreach (var item in otherTeam)
+        {
+            otherTeams.Add(new ScoreData
+            {
+                Name = item.playername.Value.ToString(),
+                Kills = item.kills.Value,
+                isLocalPlayer = item.IsLocalPlayer
+            });
+        }
+
+        foreach (var item in OtherAIs)
+        {
+            otherTeams.Add(new ScoreData
+            {
+                Name = item.AIname.Value.ToString(),
+                Kills = item.Kills.Value,
+                isLocalPlayer = false
+            });
+        }
+
+        // Sort myTeam and otherTeams using Bubble Sort
+        myTeam = BubbleSort(myTeam);
+        otherTeams = BubbleSort(otherTeams);
+
+        // Set data to UI rows
+        for (int i = 0; i < myTeam.Count; i++)
+        {
+            MyTeamRow[i].SetData(new PlayerData(myTeam[i].Name, myTeam[i].Kills), myTeam[i].isLocalPlayer);
+        }
+        for (int i = 0; i < otherTeams.Count; i++)
+        {
+            OtherTeamRows[i].SetData(new PlayerData(otherTeams[i].Name, otherTeams[i].Kills), otherTeams[i].isLocalPlayer);
+        }
+    }
+
+    // Bubble sort implementation for List<ScoreData>
+    private List<ScoreData> BubbleSort(List<ScoreData> list)
+    {
+        int n = list.Count;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - i - 1; j++)
+            {
+                if (list[j].Kills < list[j + 1].Kills)
+                {
+                    // Swap list[j] and list[j + 1]
+                    ScoreData temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+            }
+        }
+        return list;
     }
 
     private List<AICreater> GetOtherAIs()
@@ -457,4 +518,11 @@ public class PlayerData
         Name = name;
         Kills = kills;
     }
+}
+
+public class ScoreData
+{
+    public string Name;
+    public int Kills;
+    public bool isLocalPlayer;
 }

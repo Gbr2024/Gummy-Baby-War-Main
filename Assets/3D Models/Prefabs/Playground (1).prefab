@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6703017258631182785}
   - component: {fileID: 3792883490564831083}
   - component: {fileID: 551598793384115980}
+  - component: {fileID: 1050728430082713770}
   m_Layer: 0
   m_Name: Playground (1)
   m_TagString: Untagged
@@ -131,3 +132,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.507431, y: 5.6706967, z: 6.8127728}
   m_Center: {x: 0.05004978, y: 2.6047552, z: 3.3714406}
+--- !u!208 &1050728430082713770
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5045468502461880340}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.2540002, y: 6, z: 3.4060001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.05, y: 0.81, z: 3.371}
+  m_TimeToStationary: 0.5

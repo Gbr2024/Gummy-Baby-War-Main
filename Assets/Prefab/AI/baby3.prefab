@@ -2769,7 +2769,7 @@ Transform:
   m_GameObject: {fileID: 6072055775037065586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.35}
+  m_LocalPosition: {x: 0, y: 1.057, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2878,7 +2878,7 @@ Transform:
   m_GameObject: {fileID: 6722278759497433332}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 127.8, y: 2.25, z: 148.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2941,16 +2941,16 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 2
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 15
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.8
-  m_BaseOffset: -0.05
+  m_BaseOffset: -0.025
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
 --- !u!114 &-686463102926649208
@@ -2968,8 +2968,11 @@ MonoBehaviour:
   animator: {fileID: 812125112052596867}
   agent: {fileID: 3379232084386021225}
   controller: {fileID: 2276396044176748143}
-  WeaponIndex: 1
+  WeaponIndex: 2
   Front: {fileID: 2600589080664485350}
+  Debugmessage: 0
+  Marker: {fileID: 8703295029577845588}
+  aIHealth: {fileID: 3964347711063106997}
   weapon: {fileID: 570071868900607739}
   AIname: 
   isRed:
@@ -2992,6 +2995,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 100
   ragdollController: {fileID: 2421645800356590110}
+  isDead:
+    m_InternalValue: 0
   playercontroller: {fileID: -686463102926649208}
 --- !u!114 &2421645800356590110
 MonoBehaviour:
@@ -3142,7 +3147,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!114 &-3034871900399901558
 MonoBehaviour:
@@ -3199,20 +3204,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: -686463102926649208}
+  health: {fileID: 3964347711063106997}
+  Chest: {fileID: 2600589080664485350}
+  DebugMessage: 0
   agent: {fileID: 3379232084386021225}
   players: []
   whatIsGround:
     serializedVersion: 2
     m_Bits: 65
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 1024
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 200
-  sightRange: 100
+  sightRange: 50
   attackRange: 30
   playerInSightRange: 0
   playerInAttackRange: 0
+  CanSeePlayer: 0
+  nearestPlayer: {fileID: 0}
 --- !u!136 &-5059944063258040098
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3228,14 +3235,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.275
-  m_Height: 1.9250987
+  m_Height: 1.8333008
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9615854, z: 0}
+  m_Center: {x: 0, y: 0.96665037, z: 0}
 --- !u!114 &-1278838251776427384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4406,6 +4413,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4480916756753285929, guid: 2f7766719536b6c45ac16f776575a09e, type: 3}
   m_PrefabInstance: {fileID: 6903618636457557105}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8703295029577845588 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2812150680796051237, guid: 2f7766719536b6c45ac16f776575a09e, type: 3}
+  m_PrefabInstance: {fileID: 6903618636457557105}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e4e3e7cc0433e4bb68f016f93f2f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7603161627448151641
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -212,9 +212,10 @@ public class LobbyManager : NetworkBehaviour
 
     private IEnumerator StartWaitTimer()
     {
-        int Timre = 5;
+        int Timre = 3;
+
         START:
-        UIManager.instance.LobbyName.text = "Waiting for Game Start...\n" + Timre.ToString() ;
+        UIManager.instance.LobbyName.text = "Waiting for Game to start...\n" + Timre.ToString() ;
         yield return new WaitForSeconds(1f);
         Timre--;
         if (Timre > 0)
@@ -256,7 +257,7 @@ public class LobbyManager : NetworkBehaviour
                 AdmobAds.Instance.DestroyBannerAd();
             }
         }
-        catch(Exception e)
+        catch
         {
             
         }
@@ -297,7 +298,7 @@ public class LobbyManager : NetworkBehaviour
                     
                     //NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = GetLocalIPAddress();
                     NetworkManager.Singleton.StartClient();
-                    UIManager.instance.LobbyName.text = "Waiting for Game Start...";
+                    UIManager.instance.LobbyName.text = "Waiting for Game to start...";
                     Debug.LogError(JoinedLobby.Players.Count);
                     CustomProperties.Instance.isRed = !(JoinedLobby.Players.Count % 2 == 0);
                     waitCor=StartCoroutine(StartWaitTimer());

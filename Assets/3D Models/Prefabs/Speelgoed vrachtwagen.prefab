@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4859905477982919403}
   - component: {fileID: 8981837068509937514}
   - component: {fileID: 3759238859381775247}
+  - component: {fileID: 5870407274043065681}
   m_Layer: 0
   m_Name: Speelgoed vrachtwagen
   m_TagString: Untagged
@@ -129,3 +130,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4859905477982919403}
   m_Enabled: 1
+--- !u!208 &5870407274043065681
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372916972879493950}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.363, y: 0.96400005, z: 1.531}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.28100002, y: 0.003, z: 0.90000004}
+  m_TimeToStationary: 0.5

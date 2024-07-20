@@ -59,6 +59,11 @@ public class RagdollController : NetworkBehaviour
     {
         SetRagdollServerRpc(NetworkObject.OwnerClientId,b);
     }
+    
+    internal void SetToAll(string name, bool b)
+    {
+        SetAIRagdollServerRpc(name,b);
+    }
 
     
 
@@ -67,11 +72,25 @@ public class RagdollController : NetworkBehaviour
     {
         SetRagdollClientRpc(id,b);
     }
+    
+    [ServerRpc(RequireOwnership =false)]
+    void SetAIRagdollServerRpc(string aIname,bool b)
+    {
+        SetAIRagdollClientRpc(aIname, b);
+    }
 
     [ClientRpc]
     void SetRagdollClientRpc(ulong id,bool b)
     {
         if (NetworkObject.OwnerClientId == id)
+            SetRagdollState(b);
+    }
+    
+    [ClientRpc]
+    void SetAIRagdollClientRpc(string id,bool b)
+    {
+        GetComponent<PlayerController>().DisableAgent();
+        if (GetComponent<PlayerController>().AIname == id)
             SetRagdollState(b);
     }
 
@@ -80,6 +99,8 @@ public class RagdollController : NetworkBehaviour
     {
         // Set the animator and colliders state
         animator.enabled = !active;
+        //if(!active)
+        //    GetComponent<Collider>().enabled = false;
 
         foreach (Rigidbody rb in rigidbodies)
         {
@@ -98,8 +119,12 @@ public class RagdollController : NetworkBehaviour
     {
         foreach (Rigidbody rb in rigidbodies)
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            if(!rb.isKinematic)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            
         }
     }
 

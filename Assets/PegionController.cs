@@ -13,6 +13,7 @@ public class PegionController : NetworkBehaviour
     bool bombset = false;
     private float speed = 40f;
     bool isTargetAI;
+    string AIName;
 
     public override void OnNetworkSpawn()
     {
@@ -60,7 +61,7 @@ public class PegionController : NetworkBehaviour
         {
             foreach (var item in FindObjectsOfType<PlayerController>())
             {
-                if (item.OwnerClientId == TargetId)
+                if (item.AIname == AIName)
                     Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
             }
         }
@@ -80,10 +81,12 @@ public class PegionController : NetworkBehaviour
     }
 
     [ClientRpc]
-    internal void SetTargetClientRpc(ulong ownerClientId, ulong id, bool isred)
+    internal void SetTargetClientRpc(ulong ownerClientId, ulong id, bool isred, bool isAI = false, string Aname = "")
     {
         isRed = isred;
         TargetId = id;
+        isTargetAI = isAI;
+        AIName = Aname;
         PlayerID = ownerClientId;
     }
 }

@@ -23,7 +23,7 @@ public class VideoController : MonoBehaviour
     {
         if(index==0)
         {
-            SkipButton.SetActive(PlayerPrefs.GetInt("FirstTime?", 0) == 1);
+            //SkipButton.SetActive(PlayerPrefs.GetInt("FirstTime?", 0) == 1);
             PlayerPrefs.SetInt("FirstTime?", 1);
             videoPlayer.clip = NextVideo;
             videoPlayer.Play();
@@ -33,8 +33,11 @@ public class VideoController : MonoBehaviour
         {
             videoPlayer.frame = (long)videoPlayer.frameCount - 1;
             //RTObject.SetActive(false);
-            SkipButton.SetActive(true);
+            index++;
         }
+
+        if(index==2)
+            SkipButton.SetActive(true);
         // Do something when the video finishes
         Debug.Log("Video has ended!");
     }
@@ -48,6 +51,11 @@ public class VideoController : MonoBehaviour
     public IEnumerator loadLevel(int i)
     {
         yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadSceneAsync(i);
+    }
+
+    public void SkipNLoad(int i)
+    {
         SceneManager.LoadSceneAsync(i);
     }
 

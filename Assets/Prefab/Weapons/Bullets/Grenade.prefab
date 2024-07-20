@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: -7480381029990493496}
   m_Layer: 0
   m_Name: Grenade
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -243,7 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393cd702b2194104a885fb921d001e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerID: 0
   range: 75
   rb: {fileID: 0}
   trail: {fileID: 4950966430255830284}

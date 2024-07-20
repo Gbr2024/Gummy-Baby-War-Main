@@ -3828,7 +3828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 64478802
+  GlobalObjectIdHash: 3630643648
   AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 1
@@ -3902,6 +3902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e979489b7eb5c7c4bac2bf936fa32942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
+  Marker: {fileID: 6546643716169621427}
   _context:
     _data: {fileID: 11400000, guid: 08ca3acc91fb6eb459403a0940abf9cf, type: 2}
     trajectoryController: {fileID: 7974376983408067419}
@@ -3943,6 +3945,7 @@ MonoBehaviour:
   _mobileInput: {fileID: 0}
   _touchSensitivity: 0.1
   HasControl: 0
+  isForLocal: 0
 --- !u!114 &2201053410814648962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4400,3 +4403,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4480916756753285929, guid: 2f7766719536b6c45ac16f776575a09e, type: 3}
   m_PrefabInstance: {fileID: 9069297348889143446}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6546643716169621427 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2812150680796051237, guid: 2f7766719536b6c45ac16f776575a09e, type: 3}
+  m_PrefabInstance: {fileID: 9069297348889143446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e4e3e7cc0433e4bb68f016f93f2f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

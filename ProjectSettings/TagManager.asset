@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Ammo
   - grenade
+  - Bullet
   layers:
   - Default
   - TransparentFX

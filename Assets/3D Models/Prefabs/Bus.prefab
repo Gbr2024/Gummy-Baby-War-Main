@@ -63,7 +63,8 @@ GameObject:
   - component: {fileID: 3194045004924176868}
   - component: {fileID: 8619572429335003128}
   - component: {fileID: 1051753952527199867}
-  - component: {fileID: 3944430310777794710}
+  - component: {fileID: 1853693353044564213}
+  - component: {fileID: 6259016411396114201}
   m_Layer: 0
   m_Name: Bus (4)-mesh-mesh
   m_TagString: Untagged
@@ -147,8 +148,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3944430310777794710
-MeshCollider:
+--- !u!208 &1853693353044564213
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719132776606110405}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 10.120001, y: 3.6520002, z: 2.9410002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 373.95602, y: 3.525, z: 46.742}
+  m_TimeToStationary: 0.5
+--- !u!65 &6259016411396114201
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,7 +182,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 9e73dd5e1a0b32b4e9da71e7f392bff6, type: 2}
+  serializedVersion: 3
+  m_Size: {x: 20.240051, y: 7.3034153, z: 5.8813744}
+  m_Center: {x: 373.95642, y: 3.525352, z: 46.74167}

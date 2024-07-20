@@ -18254,6 +18254,10 @@ MonoBehaviour:
   EmtptyTarget: {fileID: 2120421182}
   AIcreator: {fileID: 9082138812812981179, guid: bd4ff39444df9f74eaf4c67f5ee15cb6, type: 3}
   hasgoneDownY: -10
+  dropMin: {x: 325, y: 335}
+  DropMax: {x: 465, y: 405}
+  SightRange: 45
+  AttackRange: 23
 --- !u!4 &745931103
 Transform:
   m_ObjectHideFlags: 0
@@ -43703,7 +43707,7 @@ MonoBehaviour:
   - {fileID: 323623822}
   - {fileID: 2145483218}
   - {fileID: 279440109}
-  TimerClock: 600
+  TimerClock: 300
   TimeBeforeStart: 12
 --- !u!114 &1932563681
 MonoBehaviour:

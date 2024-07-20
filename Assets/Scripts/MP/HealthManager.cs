@@ -13,7 +13,8 @@ public class HealthManager : NetworkBehaviour
     [SerializeField] WBThirdPersonController controller;
     float Health = 100;
 
-    internal bool isDead = false;
+
+    public bool isDead = false;
     internal bool isActivated = false;
 
     private void Awake()

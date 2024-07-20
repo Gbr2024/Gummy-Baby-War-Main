@@ -11,6 +11,8 @@ namespace WeirdBrothers.ThirdPersonController
 {
     public class WBThirdPersonController : NetworkBehaviour
     {
+        [SerializeField] bool test = false;
+        [SerializeField] marker Marker;
         [SerializeField] private WBPlayerContext _context;
         public WBPlayerContext Context => _context;
 
@@ -48,7 +50,6 @@ namespace WeirdBrothers.ThirdPersonController
                 syncer = GetComponent<Syncer>();
                 isRed = CustomProperties.Instance.isRed;
                 SetSkin(LobbyManager.Instance.getSkinColor(isRed));
-
                 syncer.isRed.Value = isRed;
                 if (CustomProperties.Instance.isRed)
                     gameObject.layer = 10;
@@ -161,11 +162,16 @@ namespace WeirdBrothers.ThirdPersonController
         {
             if (IsOwner && transform.position.y < ItemReference.Instance?.hasgoneDownY)
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            if (IsOwner && isDataSet && !Context.health.isDead)
-                _movement.Schedule();
+                
 
             if (IsOwner && isDataSet && !Context.health.isDead)
             {
+                if(test)
+                {
+                    test = false;
+                    SetKillStreakClientRPC(Random.Range(2, 6), OwnerClientId);
+                }
+                _movement.Schedule();
                 CustomProperties.Instance.LastPositon = transform.position;
                 Array.ForEach(_playerStates.ToArray(), state =>
                 {
@@ -500,12 +506,9 @@ namespace WeirdBrothers.ThirdPersonController
             Context.Animator.SetAim(Context.isScopeOn);
             SetLookLookRotationOnWeapon();
             Debug.LogError(Context.isScopeOn);
-
+            WBUIActions.EnableSecShoot?.Invoke(Context.isScopeOn);
             if (Context.CurrentWeapon.Data.isSniper)
-            { 
                 Context.CurrentWeapon.ScopeView.gameObject.SetActive(Context.isScopeOn);
-                WBUIActions.EnableSecShoot?.Invoke(Context.isScopeOn);
-            }
             else
                 PlayerSetManager.instance.ChangeView(Context.isScopeOn ? Context.CurrentWeapon.Data.FeildView : 40f);
         }

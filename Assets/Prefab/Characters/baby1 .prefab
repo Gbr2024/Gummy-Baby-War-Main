@@ -3388,7 +3388,7 @@ Transform:
   m_GameObject: {fileID: 6861483763653670305}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 146.8, y: 2.25, z: 186.2}
+  m_LocalPosition: {x: 87.4, y: 2.15, z: 407.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3507,6 +3507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e979489b7eb5c7c4bac2bf936fa32942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
+  Marker: {fileID: 4039294354527417958}
   _context:
     _data: {fileID: 11400000, guid: 08ca3acc91fb6eb459403a0940abf9cf, type: 2}
     trajectoryController: {fileID: 6427061246290519264}
@@ -3763,6 +3765,7 @@ MonoBehaviour:
   CurrentHealth: 0
   ragdollController: {fileID: 6051020340570592689}
   controller: {fileID: 2526502865638008361}
+  isDead: 0
 --- !u!114 &-6377952352470081538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4604,6 +4607,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4480916756753285929, guid: 2f7766719536b6c45ac16f776575a09e, type: 3}
   m_PrefabInstance: {fileID: 2236231783305724227}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4039294354527417958 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2812150680796051237, guid: 2f7766719536b6c45ac16f776575a09e, type: 3}
+  m_PrefabInstance: {fileID: 2236231783305724227}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e4e3e7cc0433e4bb68f016f93f2f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3006695641568902821
 PrefabInstance:
   m_ObjectHideFlags: 0

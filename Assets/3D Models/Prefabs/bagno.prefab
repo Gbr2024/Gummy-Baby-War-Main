@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8290843351291720573}
   - component: {fileID: 46804776763340305}
   - component: {fileID: 618311172885902304}
+  - component: {fileID: 8927283963665344118}
   m_Layer: 0
   m_Name: bagno (8)-mesh-mesh
   m_TagString: Untagged
@@ -107,6 +108,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 4c640e31e1191b54a9c9ab3737f063b1, type: 2}
+--- !u!208 &8927283963665344118
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455809897102314167}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.96, y: 2.0930002, z: 2.743}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 280.457, y: 2.0930002, z: 36.574}
+  m_TimeToStationary: 0.5
 --- !u!1 &3920910571903376001
 GameObject:
   m_ObjectHideFlags: 0

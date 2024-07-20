@@ -11,6 +11,8 @@ public class ItemReference :MonoBehaviour
     public Transform EmtptyTarget;
     public AICreater AIcreator;
     public float hasgoneDownY = -10f;
+    public Vector2 dropMin, DropMax;
+    public float SightRange, AttackRange;
 
     private void Awake()
     {

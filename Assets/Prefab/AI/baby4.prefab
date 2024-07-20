@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1691499455
+  GlobalObjectIdHash: 1453055907
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -646,9 +646,17 @@ MonoBehaviour:
   controller: {fileID: -1592030641684505783}
   WeaponIndex: 1
   Front: {fileID: 6989965917301319963}
-  target: {fileID: 0}
+  Debugmessage: 0
+  Marker: {fileID: 0}
+  aIHealth: {fileID: -6834049377654422421}
   weapon: {fileID: 3055465076682657062, guid: c12800db47552d34bbfca5832920b529, type: 3}
   AIname: 
+  isRed:
+    m_InternalValue: 0
+  isaiming:
+    m_InternalValue: 0
+  bulletlayer:
+    m_InternalValue: 0
 --- !u!114 &-6834049377654422421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,6 +671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 100
   ragdollController: {fileID: -3793287960794345845}
+  isDead:
+    m_InternalValue: 0
   playercontroller: {fileID: -4887111875155826975}
 --- !u!114 &-3793287960794345845
 MonoBehaviour:
@@ -870,20 +880,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: -4887111875155826975}
+  health: {fileID: -6834049377654422421}
+  Chest: {fileID: 6989965917301319963}
+  DebugMessage: 0
   agent: {fileID: 3589811784312637880}
-  player: {fileID: 0}
+  players: []
   whatIsGround:
     serializedVersion: 2
     m_Bits: 65
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 1024
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 200
   sightRange: 100
   attackRange: 30
   playerInSightRange: 0
   playerInAttackRange: 0
+  CanSeePlayer: 0
+  nearestPlayer: {fileID: 0}
 --- !u!136 &-8420109227854532046
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -899,7 +911,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -3868,7 +3880,7 @@ Transform:
   m_GameObject: {fileID: 8044005391821584056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.35}
+  m_LocalPosition: {x: 0, y: 1.109, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

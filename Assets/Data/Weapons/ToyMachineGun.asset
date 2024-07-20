@@ -38,7 +38,7 @@ MonoBehaviour:
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 20
-  FireRate: 0.15
+  FireRate: 0.25
   MagSize: 35
   Range: 150
   RecockTime: 1.5

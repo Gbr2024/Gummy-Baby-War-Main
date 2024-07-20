@@ -10,13 +10,14 @@ public class AIHealth : NetworkBehaviour
     [SerializeField] RagdollController ragdollController;
     float Health = 100;
 
-    internal bool isDead = false;
-    internal bool isActivated = false;
+
+    public bool isDead = false;
     [SerializeField] PlayerController playercontroller;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished || !isActivated) return;
+        if (!IsServer) return;
+        if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished) return;
 
         if (collision.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
         {
@@ -59,7 +60,10 @@ public class AIHealth : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished || !isActivated) return;
+        if (!IsServer) return;
+        if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished) return;
+
+        Debug.LogError("HHHHHHH");
 
         if (other.gameObject.TryGetComponent<Impact>(out Impact impact))
         {
@@ -110,15 +114,15 @@ public class AIHealth : NetworkBehaviour
     {
         CurrentHealth -= damage;
         CustomProperties.Instance.currentHealth = CurrentHealth;
-        if (CurrentHealth < 0) CurrentHealth = 0;
+        if (CurrentHealth < 0)
+        { 
+            CurrentHealth = 0;
+            isDead = true;
+        }
         if (NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId)
         {
-            WBUIActions.UpdateHealth?.Invoke(CurrentHealth / Health);
             if (CurrentHealth == 0)
             {
-                SetKillCam(playerID);
-                WBUIActions.isPlayerActive = false;
-                WBUIActions.EnableTouch?.Invoke(false);
                 Invoke(nameof(resetPlayer), 5f);
             }
         }
@@ -126,7 +130,7 @@ public class AIHealth : NetworkBehaviour
         if (CurrentHealth == 0)
         {
             GetComponent<ClientNetworkTransform>().enabled = false;
-            ragdollController.SetToAll(true);
+            ragdollController.SetToAll(GetComponent<PlayerController>().AIname, true);
             isDead = true;
         }
     }
@@ -148,7 +152,7 @@ public class AIHealth : NetworkBehaviour
         //if (NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId)
         //    transform.position = CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[Random.Range(0, 3)].position : PlayerSetManager.instance.BlueCribs[Random.Range(0, 3)].position;
 
-        DestroyPlayerServerRPC(NetworkObject.OwnerClientId);
+        NetworkObject.Despawn();
         PlayerSetManager.instance.CreateNewAI(playercontroller.AIname,playercontroller.isRed.Value);
     }
 
@@ -162,18 +166,6 @@ public class AIHealth : NetworkBehaviour
             WBUIActions.UpdateHealth?.Invoke(CurrentHealth / Health);
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    void DestroyPlayerServerRPC(ulong id)
-    {
-        var players = FindObjectsOfType<WBThirdPersonController>();
-        foreach (var item in players)
-        {
-            if (item.NetworkObject.OwnerClientId == id)
-            {
-                item.NetworkObject.Despawn(true);
-            }
-        }
-    }
     [ServerRpc(RequireOwnership = false)]
     void DestroyAIServerRPC(ulong id)
     {

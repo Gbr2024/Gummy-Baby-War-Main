@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2872120892450682809}
   - component: {fileID: 4718346057708701399}
   - component: {fileID: 2708822225961091624}
+  - component: {fileID: 3514198411571992889}
   m_Layer: 0
   m_Name: Train enfant3
   m_TagString: Untagged
@@ -106,7 +107,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5053925668127403250, guid: 56a5469154c53824bbb0598ba2d64fb9, type: 3}
 --- !u!205 &2708822225961091624
@@ -128,3 +129,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2872120892450682809}
   m_Enabled: 1
+--- !u!208 &3514198411571992889
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385150116893267564}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.65, y: 5.0410004, z: 2.947}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.22700001, y: 0.367, z: 0.379}
+  m_TimeToStationary: 0.5

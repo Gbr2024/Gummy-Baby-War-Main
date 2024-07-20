@@ -1,18 +1,19 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using System.Collections.Generic;
 using WeirdBrothers.ThirdPersonController;
-
 public class EnemyAi : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
+    [SerializeField] AIHealth health;
+    [SerializeField] Transform Chest; // New field for enemy's chest height
+    [SerializeField] bool DebugMessage;
     public NavMeshAgent agent;
 
     public List<Transform> players;
 
-    public LayerMask whatIsGround, whatIsPlayer;
+    public LayerMask whatIsGround;
 
     //Patroling
     public Vector3 walkPoint;
@@ -22,56 +23,202 @@ public class EnemyAi : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+    public bool CanSeePlayer;
 
-    internal Transform nearestPlayer;
+    public Transform nearestPlayer;
+
+    private Vector3 lastPosition;
+    private float stuckTimer;
+    private float stuckThreshold = 2f; // Time in seconds to consider the agent stuck
+    private float stuckDistance = 0.5f;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
-   
+    private void Start()
+    {
+        sightRange = ItemReference.Instance.SightRange;
+        attackRange = ItemReference.Instance.AttackRange;
+        if (!playerController.IsServer) return;
+        InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
+    }
+
+    void findnearestPLayer()
+    {
+        nearestPlayer = FindNearestPlayer();
+    }
 
     private void Update()
     {
+        if (health.isDead) return;
+        if (!playerController.IsServer) return;
+
         // Find the nearest player
-        nearestPlayer = FindNearestPlayer();
+        if (nearestPlayer == null)
+        {
+            nearestPlayer = FindNearestPlayer();
+        }
 
-        //Check for sight and attack range
-        playerInSightRange = nearestPlayer != null && Vector3.Distance(transform.position, nearestPlayer.position) <= sightRange;
-        playerInAttackRange = nearestPlayer != null && Vector3.Distance(transform.position, nearestPlayer.position) <= attackRange;
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        if (nearestPlayer != null)
+        {
+            // Check for sight and attack range
+            playerInSightRange = Vector3.Distance(transform.position, nearestPlayer.position) <= sightRange;
+            playerInAttackRange = Vector3.Distance(transform.position, nearestPlayer.position) <= attackRange;
+
+            if (playerInAttackRange) CanSeePlayer = CheckCanSeePlayer(nearestPlayer);
+            else playerInAttackRange = false;
+
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (!playerInAttackRange && playerInSightRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange && CanSeePlayer) AttackPlayer();
+            if (playerInAttackRange && !CanSeePlayer) MoveToLOSPosition();
+        }
+        else
+        {
+            Patroling();
+        }
+    }
+
+    private void CheckIfStuck()
+    {
+        if (Vector3.Distance(transform.position, agent.destination) < 2f || agent.isStopped) return;
+        
+        float distance = Vector3.Distance(transform.position, lastPosition);
+
+        if (distance < stuckDistance)
+        {
+            stuckTimer += Time.deltaTime;
+            if (stuckTimer >= stuckThreshold)
+            {
+                if (DebugMessage) Debug.Log("Agent is stuck, taking action to move");
+                RecalculatePath();
+                stuckTimer = 0f; // Reset the stuck timer
+            }
+        }
+        else
+        {
+            stuckTimer = 0f; // Reset the stuck timer if the agent is moving
+        }
+
+        lastPosition = transform.position;
+    }
+
+    private void RecalculatePath()
+    {
+        Patroling();
+    }
+
+    private void MoveToLOSPosition()
+    {
+        if (DebugMessage) Debug.Log("Moving to LOS Position");
+
+        // Calculate the LOS position without obstacles
+        Vector3 directionToPlayer = (nearestPlayer.position - Chest.position).normalized;
+        float maxDistance = attackRange; // Adjust as needed based on your game design
+
+        RaycastHit hit;
+        Vector3 LOSPosition = transform.position;
+
+        // Perform raycast from enemy's chest to player's chest
+        if (Physics.Raycast(Chest.position, directionToPlayer, out hit, maxDistance))
+        {
+            if (hit.transform.CompareTag("Player"))
+            {
+                LOSPosition = hit.point;
+            }
+            else
+            {
+                // If hit something other than player, calculate position just before hitting obstacle
+                LOSPosition = hit.point - directionToPlayer * 1f; // Adjust offset as needed
+            }
+        }
+        else
+        {
+            LOSPosition = nearestPlayer.position;
+        }
+
+        // Check if LOSPosition is on NavMesh and within attack range
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(LOSPosition, out navHit, 2.0f, NavMesh.AllAreas))
+        {
+            // Check if the LOS position allows seeing the player
+            if (CheckCanSeePlayer(nearestPlayer, LOSPosition))
+            {
+                agent.isStopped = false;
+                agent.SetDestination(navHit.position);
+            }
+            else
+            {
+                if (DebugMessage) Debug.Log("Cannot see player from LOS position, continue patrolling");
+                Patroling(); // Continue patrolling if LOS position does not allow seeing the player
+            }
+        }
+        else
+        {
+            if (DebugMessage) Debug.Log("No valid LOS position found, continue patrolling");
+            Patroling(); // Continue patrolling if LOS position is not valid
+        }
+    }
+
+    private bool CheckCanSeePlayer(Transform player)
+    {
+        RaycastHit hit;
+        Vector3 directionToPlayer = (player.position - Chest.position).normalized;
+
+        // Adjusted raycast to check from chest height to player's chest height
+        Vector3 rayStart = Chest.position;
+        Vector3 rayEnd = player.position + Vector3.up * 1.25f; // Adjust this offset to player's chest height
+
+        if (Physics.Raycast(rayStart, (rayEnd - rayStart).normalized, out hit, sightRange))
+        {
+            if (hit.transform == player)
+                return true;
+        }
+        return false;
+    }
+    private bool CheckCanSeePlayer(Transform player, Vector3 LOSPosition)
+    {
+        RaycastHit hit;
+        Vector3 directionToPlayer = (player.position - LOSPosition).normalized;
+
+        // Raycast from LOSPosition to player's chest height
+        Vector3 rayStart = LOSPosition;
+        Vector3 rayEnd = player.position + Vector3.up * 1.25f; // Adjust this offset to player's chest height
+
+        if (Physics.Raycast(rayStart, (rayEnd - rayStart).normalized, out hit, sightRange))
+        {
+            if (hit.transform == player)
+                return true;
+        }
+        return false;
     }
 
     private Transform FindNearestPlayer()
     {
         Transform nearest = null;
-        float minDistance = Mathf.Infinity;
-
         foreach (var item in players)
         {
-            if(item==null)
+            if (item == null)
             {
                 players = FindTarget();
                 break;
             }
         }
-        
-        foreach (Transform player in players)
+        float dis = Mathf.Infinity;
+
+        foreach (var item in players)
         {
-           
-            if (transform.TryGetComponent(out HealthManager H)) if (H.isDead) continue;
-            if (transform.TryGetComponent(out AIHealth A)) if (A.isDead) continue;
-
-
-            float distance = Vector3.Distance(transform.position, player.position);
-            if (distance < minDistance)
+            if (item.TryGetComponent(out AIHealth health)) if (health.isDead) continue;
+            if (item.TryGetComponent(out HealthManager h)) if (h.isDead) continue;
+            float td = Vector3.Distance(transform.position, item.position);
+            if (td < dis)
             {
-                minDistance = distance;
-                nearest = player;
+                dis = td;
+                nearest = item;
             }
         }
 
@@ -80,7 +227,6 @@ public class EnemyAi : MonoBehaviour
 
     private List<Transform> FindTarget()
     {
-      
         List<Transform> ts = new();
         foreach (var item in FindObjectsOfType<WBThirdPersonController>())
         {
@@ -100,31 +246,45 @@ public class EnemyAi : MonoBehaviour
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
+        {
+            agent.isStopped = false;
             agent.SetDestination(walkPoint);
+        }
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        float distanceToWalkPoint = Vector3.Distance(transform.position, walkPoint);
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint < 5f)
             walkPointSet = false;
     }
 
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        Vector3 randomPoint;
+        NavMeshHit hit;
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        do
+        {
+            float randomX = Random.Range(ItemReference.Instance.dropMin.x, ItemReference.Instance.DropMax.x);
+            float randomZ = Random.Range(ItemReference.Instance.dropMin.y, ItemReference.Instance.DropMax.y);
+            randomPoint = new Vector3(randomX, transform.position.y, randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
+            // Check if the random point is on the NavMesh
+        } while (!NavMesh.SamplePosition(randomPoint, out hit, 2.0f, NavMesh.AllAreas));
+
+        walkPoint = hit.position;
+        walkPointSet = true;
     }
 
     private void ChasePlayer()
     {
         if (nearestPlayer != null)
+        {
+            if (DebugMessage) Debug.LogError("Chasing");
+            transform.LookAt(nearestPlayer);
+            agent.isStopped = false;
             agent.SetDestination(nearestPlayer.position);
+        }
     }
 
     private void AttackPlayer()
@@ -132,8 +292,11 @@ public class EnemyAi : MonoBehaviour
         if (nearestPlayer != null)
         {
             //Make sure enemy doesn't move
-            agent.SetDestination(transform.position);
             transform.LookAt(nearestPlayer);
+            if (DebugMessage) Debug.LogError("Attacking");
+            agent.isStopped = true;
+            agent.SetDestination(transform.position);
+            agent.velocity = Vector3.zero;
         }
     }
 

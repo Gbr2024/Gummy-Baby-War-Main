@@ -119,6 +119,7 @@ public class KillStreakSystem : NetworkBehaviour
     [ServerRpc (RequireOwnership =false)]
     internal void SetChopperandTargetServerRpc(ulong id,bool isRed)
     {
+        if (!IsServer) return;
         START:
         var item = GetRandomObject(!isRed);
 
@@ -138,7 +139,7 @@ public class KillStreakSystem : NetworkBehaviour
             var path = Instantiate(Chopperpath);
             var Chopper = NetworkManager.Instantiate(Chopperprefab);
             Chopper.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
-            Chopper.SetTargetClientRpc(id, item1.OwnerClientId, isRed,true);
+            Chopper.SetTargetClientRpc(id, item1.OwnerClientId, isRed,true,item1.AIname);
             Chopper.SetPath(path);
             
         }
@@ -151,6 +152,7 @@ public class KillStreakSystem : NetworkBehaviour
     [ServerRpc (RequireOwnership =false)]
     internal void SetPlaneandTargetServerRpc(ulong id,bool isRed)
     {
+        if(!IsServer) return;
         var item = GetRandomObject(!isRed);
         if (item != null)
         {
@@ -165,7 +167,7 @@ public class KillStreakSystem : NetworkBehaviour
         {
             var plane = NetworkManager.Instantiate(planePrefab);
             plane.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
-            plane.SetTargetClientRpc(id, item1.OwnerClientId, isRed);
+            plane.SetTargetClientRpc(id, item1.OwnerClientId, isRed,true,item1.AIname);
             plane.SetTarget(item1.transform.position,true);
         }
     }
@@ -173,6 +175,7 @@ public class KillStreakSystem : NetworkBehaviour
     [ServerRpc (RequireOwnership =false)]
     internal void SetPlgeoonandTargetServerRpc(ulong id,bool isRed)
     {
+        if (!IsServer) return;
         var item = GetRandomObject(!isRed);
         if (item!=null)
         {
@@ -187,7 +190,7 @@ public class KillStreakSystem : NetworkBehaviour
         {
             var plane = NetworkManager.Instantiate(pegionController);
             plane.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
-            plane.SetTargetClientRpc(id, item1.OwnerClientId, isRed);
+            plane.SetTargetClientRpc(id, item1.OwnerClientId, isRed,true,item1.AIname);
             plane.SetTarget(item1.transform, true);
         }
     }

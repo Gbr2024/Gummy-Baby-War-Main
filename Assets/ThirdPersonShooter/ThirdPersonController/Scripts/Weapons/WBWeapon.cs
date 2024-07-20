@@ -61,6 +61,7 @@ namespace WeirdBrothers.ThirdPersonController
         {
             setStartData();
             //Setpool();
+            _nextFire = Time.time + Data.FireRate;
         }
         
         internal void setStartData()
@@ -88,6 +89,18 @@ namespace WeirdBrothers.ThirdPersonController
 
         internal void Setpool(int layer,ulong ID)
         {
+            if(pool.Length>0)
+            {
+                foreach (var item in pool)
+                {
+                    if(item!=null)
+                    {
+                        Destroy(item.gameObject);
+                    }
+                    
+                }
+            }
+            
             id = ID;
             pool = new Bullet[Data.MagSize+ (int)Data.MagSize/2];
             for (int i = 0; i < Data.MagSize + ((int)Data.MagSize / 2); i++)
@@ -149,12 +162,18 @@ namespace WeirdBrothers.ThirdPersonController
             _currentAmmo--;
             pool[poolIndex].gameObject.SetActive(false);
             pool[poolIndex].resetBullet();
-            _audioSource.PlayOneShotAudioClip(Data.FireSound);
+            if(_audioSource!=null)
+            {
+                _audioSource.clip = Data.FireSound;
+                _audioSource.Play();
+            }
             pool[poolIndex].transform.position = pos;
             pool[poolIndex].transform.forward = transform.forward;
             pool[poolIndex].gameObject.SetActive(true);
             pool[poolIndex].moveBullet(hitPoint, RotationToUse);
             pool[poolIndex].isRed = isRed;
+            if (isRed) pool[poolIndex].gameObject.layer = 9;
+            else pool[poolIndex].gameObject.layer = 12;
             pool[poolIndex].isAI = isAI;
             pool[poolIndex].AIname = AIname;
             poolIndex++;

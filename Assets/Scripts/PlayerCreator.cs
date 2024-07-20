@@ -53,7 +53,7 @@ public class PlayerCreator : NetworkBehaviour
         {
             Invoke(nameof(CloseLobby), 30f);
         }
-
+       
     }
 
 

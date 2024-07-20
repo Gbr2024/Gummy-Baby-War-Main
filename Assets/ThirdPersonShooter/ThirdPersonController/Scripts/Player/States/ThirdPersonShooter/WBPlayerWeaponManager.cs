@@ -72,7 +72,7 @@ namespace WeirdBrothers.ThirdPersonController
                 //_context.ShooterController.resetAim();
             }
             
-            if (_context.Input.GetButtonUp(WBInputKeys.KillStreak))
+            if (_context.Input.GetButtonDown(WBInputKeys.KillStreak))
             {
                 KillStreakSystem.Instance.SetKillstreak(_context.ShooterController.OwnerClientId, CustomProperties.Instance.isRed, PlayerCreator.Instance.killstreak);
             }

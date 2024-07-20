@@ -13,6 +13,7 @@ public class PlanerController : NetworkBehaviour
     bool bombset = false;
     public float speed=150f;
     bool isTargetAI;
+    string AIname;
 
     private void Update()
     {
@@ -22,9 +23,10 @@ public class PlanerController : NetworkBehaviour
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
             if (Vector3.Distance(transform.position,targetpos)<10f && !bombset)
             {
+                bombset = true;
                 targetpos = Vector3.zero;
                 SetBombServerRpc();
-                bombset = true;
+                
             }
             Invoke(nameof(Desp), 30f);
         }
@@ -42,14 +44,20 @@ public class PlanerController : NetworkBehaviour
         isTargetAI = target;
     }
 
+    int i = 0;
+
     [ServerRpc]
     void SetBombServerRpc()
     {
+        Debug.LogError(i);
+        if (!IsServer || i>0) return;
+        i++;
+
         if(isTargetAI)
         {
             foreach (var item in FindObjectsOfType<PlayerController>())
             {
-                if (item.OwnerClientId == TargetId)
+                if (item.AIname == AIname)
                     Bomb.transform.position = new Vector3(item.transform.position.x, 60f, item.transform.position.z);
             }
         }
@@ -63,17 +71,32 @@ public class PlanerController : NetworkBehaviour
 
         }
 
-        var drop = NetworkManager.Instantiate(Bomb);
-        drop.id = PlayerID;
-        drop.isRed = isRed;
-        drop.NetworkObject.Spawn();
+        
+        try
+        {
+            var drop = NetworkManager.Instantiate(Bomb);
+            drop.id = PlayerID;
+            drop.isRed = isRed;
+
+            drop.NetworkObject.Spawn();
+            Debug.LogError("spawned");
+        }
+        catch(Exception e)
+        {
+            Debug.LogError("something went wrong");
+            Debug.LogError(e.Message);
+        }
+        
+
     }
 
     [ClientRpc]
-    internal void SetTargetClientRpc(ulong ownerClientId, ulong id, bool isred)
+    internal void SetTargetClientRpc(ulong ownerClientId, ulong id, bool isred,bool isAI=false,string Aname="")
     {
         isRed = isred;
         TargetId = id;
         PlayerID = ownerClientId;
+        isTargetAI = isAI;
+        AIname = Aname;
     }
 }
