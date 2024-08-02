@@ -83,6 +83,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 7ae0a0fe3160be340aadd99687110efb, type: 2}
   Body: {fileID: 1471906431035474781}
+  isAI: 0
+  AIname: 
   WeaponSlot: 1
   LeftHandRef: {fileID: 984786428746740863}
   _shellSpawnPoint: {fileID: 7467228216954512241}
@@ -163,7 +165,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.48333332
+      value: 0.4861111
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -299,7 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde59b2017ecd1b42b49097248c845fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 50
   smoothTime: 0
 --- !u!1 &3691597546338790457
 GameObject:

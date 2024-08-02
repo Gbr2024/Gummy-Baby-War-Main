@@ -11,8 +11,10 @@ namespace WeirdBrothers
     {
         public static void PlayOneShotAudioClip(this AudioSource source, AudioClip clip)
         {
+            if (source.isPlaying) return;
             source.clip = null;
             if (source.loop) source.loop = false;
+            source.Stop();
             if (source && clip)
             {
                 source.PlayOneShot(clip);

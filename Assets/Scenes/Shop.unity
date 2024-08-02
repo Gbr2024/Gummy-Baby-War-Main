@@ -5357,7 +5357,7 @@ Transform:
   m_GameObject: {fileID: 338620190}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.225758, y: 1.9477228, z: -23.32}
+  m_LocalPosition: {x: 14.225996, y: 1.9477228, z: -23.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16934,7 +16934,7 @@ Transform:
   m_GameObject: {fileID: 1201230942}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.225758, y: 1.9477228, z: -23.32}
+  m_LocalPosition: {x: 14.225996, y: 1.9477228, z: -23.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22338,27 +22338,27 @@ MonoBehaviour:
   PurchaseButtonLabel: {fileID: 598519004}
   NameLabel: {fileID: 762803640}
   buyables:
-  - Name: Cork Gun
+  - Name: Cork Gun Toy
     Id: com.ArcadezProductions.GummyBabyWar.CorkGun
     Price: 1.99
     index: 0
     image: {fileID: 1087227910, guid: 9a3009f5595eaef4380c12609b6e7d40, type: 3}
-  - Name: Revolver
+  - Name: Revolver Toy
     Id: com.ArcadezProductions.GummyBabyWar.Revolver
     Price: 2.99
     index: 1
     image: {fileID: -1495522365, guid: 2cdf6c156d0ab9347aa27d3ab131d037, type: 3}
-  - Name: Assault Rifle
+  - Name: Assault Rifle Toy
     Id: com.ArcadezProductions.GummyBabyWar.AssaultRifle
     Price: 3.99
     index: 3
     image: {fileID: -1471479015, guid: 4acb340553ec8494aac76d0bf29d8f71, type: 3}
-  - Name: Grenade Launcher
+  - Name: Grenade Launcher Toy
     Id: com.ArcadezProductions.GummyBabyWar.GrenadeLauncher
     Price: 4.99
     index: 2
     image: {fileID: 834819111, guid: e9b1d45c5eba8a140b59a825fce83504, type: 3}
-  - Name: Sniper Rifle
+  - Name: Sniper Rifle Toy
     Id: com.ArcadezProductions.GummyBabyWar.SniperRifle
     Price: 5.99
     index: 4
@@ -36915,7 +36915,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde59b2017ecd1b42b49097248c845fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 50
   smoothTime: 0.1
 --- !u!1 &3695356376073369814
 GameObject:
@@ -39790,7 +39789,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde59b2017ecd1b42b49097248c845fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 50
   smoothTime: 0
 --- !u!4 &5243246584411879807
 Transform:
@@ -41613,7 +41611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde59b2017ecd1b42b49097248c845fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 50
   smoothTime: 0
 --- !u!33 &6125179058763055522
 MeshFilter:
@@ -42686,7 +42683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde59b2017ecd1b42b49097248c845fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 50
   smoothTime: 0
 --- !u!4 &6709255760725235797
 Transform:

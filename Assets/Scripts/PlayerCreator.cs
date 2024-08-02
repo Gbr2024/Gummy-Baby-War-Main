@@ -139,10 +139,12 @@ public class PlayerCreator : NetworkBehaviour
     {
         var t=isRed ? PlayerSetManager.instance.RedCribs[index] : PlayerSetManager.instance.BlueCribs[index];
         ItemReference.Instance.characters.Characters[charindex].transform.position = t.position;
-        ItemReference.Instance.characters.Characters[charindex].transform.rotation = t.rotation;
-        GameObject player = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[charindex]);
+        ItemReference.Instance.characters.Characters[charindex].transform.forward = t.forward;
+
+        GameObject player = NetworkManager.Instantiate(ItemReference.Instance.characters.Characters[charindex],t.position,t.rotation);
         player.GetComponent<NetworkObject>().SpawnWithOwnership(id, true);
         player.GetComponent<WBThirdPersonController>().bulletlayer = bulletLayer;
+        player.transform.forward = t.forward;
        
     }
     
@@ -194,7 +196,7 @@ public class PlayerCreator : NetworkBehaviour
         var tmp= CustomProperties.Instance.isRed ? PlayerSetManager.instance.RedCribs[index] :PlayerSetManager.instance.BlueCribs[index];
 
         ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.position = tmp.transform.position;
-        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.rotation = tmp.transform.rotation;
+        ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.forward = tmp.transform.forward;
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0),index,bulletlayer, CustomProperties.Instance.isRed);
         killstreak = 0;
         WBUIActions.EnableKillstreakButton?.Invoke(false);

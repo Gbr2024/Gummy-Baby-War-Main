@@ -20,7 +20,7 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] GameObject Tick,SecShootButton;
         [SerializeField] TMP_Text tickTimer;
         [SerializeField] TMP_Text MyKills,killstreaklabel;
-        [SerializeField] GameObject BlackPanel,GrenadeButton,KillstreakButton,Map;
+        [SerializeField] GameObject BlackPanel,GrenadeButton,KillstreakButton,Map,BrokenScreen;
         [SerializeField] Sprite GunSprite, GrenadeSprite;
         [SerializeField] Image ShootImage;
         [SerializeField] WBTouchLook DisableTouch;
@@ -37,6 +37,7 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.UpdateHealth += UpdateHealth;
             WBUIActions.UpdatelocalScore += UpdateMykills;
             WBUIActions.EnableBlackPanel += EnableBlackPanel;
+            WBUIActions.EnableBrokenScreen += EnableBrokenScreen;
             WBUIActions.EnableGrenadeTime += StartTick;
             WBUIActions.EnableGrenadeButton += EnableGrenadeButton;
             WBUIActions.ChangeFireIcon += SetButtonIcon;
@@ -45,6 +46,11 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.EnableTouch += EnableTouch;
             WBUIActions.ChangeKillstreak += SetStreakLabel;
             WBUIActions.EnableSecShoot += SetSecShootbtn;
+        }
+
+        private void EnableBrokenScreen(bool obj)
+        {
+            BrokenScreen.SetActive(obj);
         }
 
         private void SetSecShootbtn(bool obj)
@@ -83,6 +89,7 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.UpdateHealth -= UpdateHealth;
             WBUIActions.UpdatelocalScore -= UpdateMykills;
             WBUIActions.EnableBlackPanel -= EnableBlackPanel;
+            WBUIActions.EnableBrokenScreen -= EnableBrokenScreen;
             WBUIActions.EnableGrenadeButton -= EnableGrenadeButton;
             WBUIActions.EnableGrenadeTime -= StartTick;
             WBUIActions.ChangeFireIcon -= SetButtonIcon;

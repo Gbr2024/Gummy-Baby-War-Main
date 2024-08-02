@@ -192,6 +192,8 @@ namespace WeirdBrothers.CharacterController
         public void Jump(float force)
         {
             //Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, force, Rigidbody.velocity.z);
+            Rigidbody.velocity = Vector3.zero;
+            Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.AddForce(Vector3.up * force, ForceMode.VelocityChange);
         }
 

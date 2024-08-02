@@ -91,7 +91,10 @@ public class RagdollController : NetworkBehaviour
     {
         GetComponent<PlayerController>().DisableAgent();
         if (GetComponent<PlayerController>().AIname == id)
-            SetRagdollState(b);
+        {
+            GetComponent<AIHealth>().isDead = true;
+            SetRagdollState(b); 
+        }
     }
 
     

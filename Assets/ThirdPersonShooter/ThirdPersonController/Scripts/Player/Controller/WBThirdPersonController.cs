@@ -163,10 +163,14 @@ namespace WeirdBrothers.ThirdPersonController
             if (IsOwner && transform.position.y < ItemReference.Instance?.hasgoneDownY)
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
                 
-
+            
             if (IsOwner && isDataSet && !Context.health.isDead)
             {
-                if(test)
+                if(ScoreManager.Instance.GameHasFinished && Context.CurrentWeapon.ScopeView.gameObject.activeSelf)
+                {
+                    Context.CurrentWeapon.ScopeView.gameObject.SetActive(false);
+                }
+                if (test)
                 {
                     test = false;
                     SetKillStreakClientRPC(Random.Range(2, 6), OwnerClientId);
@@ -554,6 +558,17 @@ namespace WeirdBrothers.ThirdPersonController
                 }
             }
         }
+        
+        [ClientRpc]
+        internal void BreakCameraClientRPC(ulong clientID)
+        {
+            if( IsOwner && OwnerClientId==clientID)
+            {
+                WBUIActions.EnableBrokenScreen?.Invoke(true);
+            }
+        }
+
+
 
        
 

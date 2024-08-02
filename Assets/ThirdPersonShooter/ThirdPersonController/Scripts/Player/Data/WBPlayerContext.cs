@@ -79,6 +79,7 @@ namespace WeirdBrothers.ThirdPersonController
         [HideInInspector] public float Speed;
         internal bool isAiming = false;
         internal bool isRecoking;
+        internal int jumpindex = 0;
 
         public void SetData(Transform transform)
         {

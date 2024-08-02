@@ -11,6 +11,7 @@ namespace WeirdBrothers.ThirdPersonController
         public static Action<float> UpdateHealth;
         public static Action<int> UpdatelocalScore;
         public static Action<bool> EnableBlackPanel;
+        public static Action<bool> EnableBrokenScreen;
         public static Action<bool> EnableGrenadeTime;
         public static Action<bool> EnableGrenadeButton;
         public static Action<bool> EnableKillstreakButton;

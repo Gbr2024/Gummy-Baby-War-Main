@@ -19,6 +19,8 @@ public class PlayerController : NetworkBehaviour
     public WBWeapon weapon;
     public string AIname;
 
+    public EnemyAi GetEnemyAi { get { return controller; } }
+
     public NetworkVariable<bool> isRed = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isaiming = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
@@ -47,6 +49,7 @@ public class PlayerController : NetworkBehaviour
             gameObject.layer = 13;
             n = 12;
         }
+      
         SetSkin(LobbyManager.Instance.getSkinColor(isRed.Value));
         controller.players = FindTarget();
         weapon.Setpool(n, NetworkObject.OwnerClientId);

@@ -17,7 +17,7 @@ MonoBehaviour:
   AllowPlayerMovement: 0.05
   DesireRotationSpeed: 2
   MoveSpeed: 7
-  JumpForce: 5
+  JumpForce: 7.5
   DamageLayer:
     serializedVersion: 2
     m_Bits: 27713

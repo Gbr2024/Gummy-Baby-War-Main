@@ -10,6 +10,7 @@ namespace WeirdBrothers.CharacterController
         public float Radius = 0.5f;
         public float Height= 2f;
         public Vector3 Center = Vector3.up;
+        public PhysicMaterial material;
     }
 
     [System.Serializable]
@@ -58,6 +59,7 @@ namespace WeirdBrothers.CharacterController
             collider.radius = data.Radius;
             collider.height = data.Height;
             collider.center = data.Center;
+            collider.material = data.material;
         }
 
         public static bool CompareCollider(this CapsuleCollider collider, CapsuleColliderData data) 

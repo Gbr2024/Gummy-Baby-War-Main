@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
-  - component: {fileID: 4542134103091121431}
+  - component: {fileID: 6192841060269264474}
   m_Layer: 0
   m_Name: baum ld0 mobile
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &4542134103091121431
+--- !u!208 &6192841060269264474
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,9 +95,9 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.4, y: 0.2, z: 0.4}
+  m_Extents: {x: 0.35, y: 0.35, z: 0.35}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.08400001, y: 0, z: 0.064}
   m_TimeToStationary: 0.5

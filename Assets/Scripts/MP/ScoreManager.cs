@@ -63,7 +63,11 @@ public class ScoreManager : NetworkBehaviour
 
     private void LookForWinner()
     {
-        if (RedScore>=WinThreshold)
+        if(RedScore==BlueScore && RedScore==WinThreshold)
+        {
+            ShowWinnerClientRpc(isDraw:true);
+        }
+        else if (RedScore>=WinThreshold)
         {
             ShowWinnerClientRpc();
         }
@@ -74,12 +78,16 @@ public class ScoreManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void ShowWinnerClientRpc(bool isRedteamWon=true)
+    private void ShowWinnerClientRpc(bool isRedteamWon = true, bool isDraw = false)
     {
        Debug.LogError("HTTH");
        WinnerAnnouncementPanel.SetActive(true);
         GameHasFinished = true;
-        if (isRedteamWon)
+        if(isDraw)
+        {
+            WinnerTitle.text =  "DRAW";
+        }
+        else if (isRedteamWon)
         {
             WinnerTitle.text = CustomProperties.Instance.isRed?"VICTORY": "DEFEAT";
         }
@@ -91,6 +99,7 @@ public class ScoreManager : NetworkBehaviour
         AnotherTeamWinnerPanelScore.text = CustomProperties.Instance.isRed ? BlueScore.ToString() : RedScore.ToString();
         SetPlayerScores();
         WBUIActions.EnableBlackPanel?.Invoke(false);
+        WBUIActions.EnableBrokenScreen?.Invoke(false);
         AdmobAds.Instance.ShowInterstitialAd();
     }
 
@@ -318,6 +327,7 @@ public class ScoreManager : NetworkBehaviour
                 TimeBeforeStart = 0;
                 LobbyManager.Instance.GameHasStarted = true;
                 KillStreakSystem.Instance.SetCrates();
+                KillStreakSystem.Instance.SetGranny();
                 DisableTimerStart();
             }
             if(LobbyManager.Instance.GameHasStarted)
@@ -396,11 +406,15 @@ public class ScoreManager : NetworkBehaviour
             else
                 blues++;
         }
-        for (int i = 0; i < 5-reds; i++)
+
+        //for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 5 - reds; i++)
         {
             PlayerCreator.Instance.SpawnAIServerRpc();
         }
-        for (int i = 0; i < 5-blues; i++)
+       
+        //for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 5 - blues; i++)
         {
             PlayerCreator.Instance.SpawnAIServerRpc(isRed:false);
         }
@@ -413,7 +427,9 @@ public class ScoreManager : NetworkBehaviour
         UpdateTimerClientRpc(time);
         if(time==0)
         {
-            if (RedScore < BlueScore)
+            if(RedScore==BlueScore)
+                ShowWinnerClientRpc(isDraw:true);
+            else if (RedScore < BlueScore)
                 ShowWinnerClientRpc(false);
             else
                 ShowWinnerClientRpc();

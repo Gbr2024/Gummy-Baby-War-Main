@@ -72,6 +72,27 @@ public class HealthManager : NetworkBehaviour
             }
             controller.AddDamage(slime.Damage, NetworkObject.OwnerClientId, slime.id);
         }
+        //if (collision.gameObject.GetComponent<Granny>() || collision.gameObject.GetComponentInParent<Granny>())
+        //{
+        //    Vector3 v = (collision.transform.forward * 15f) + (collision.transform.up * 10f);
+        //    SetIsDeadandResetServerRpc(OwnerClientId,v);
+        //}
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetIsDeadandResetServerRpc(ulong id,Vector3 force)
+    {
+        if (OwnerClientId== id)
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().AddForce(force, ForceMode.VelocityChange);
+            WBUIActions.EnableBrokenScreen?.Invoke(true);
+
+            //isDead=true;
+            //ragdollController.SetToAll( true);
+            //if (NetworkManager.LocalClientId==id)
+            //    Invoke(nameof(resetPlayer), 5f);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -2839,6 +2839,37 @@ Transform:
   - {fileID: 8207680833888908164}
   m_Father: {fileID: 8678746574281594412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6703070781819030709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890984169802706846}
+  m_Layer: 13
+  m_Name: Groundcheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &890984169802706846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6703070781819030709}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6197380002687736398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6722278759497433332
 GameObject:
   m_ObjectHideFlags: 0
@@ -2862,9 +2893,10 @@ GameObject:
   - component: {fileID: 2276396044176748143}
   - component: {fileID: -5059944063258040098}
   - component: {fileID: -1278838251776427384}
+  - component: {fileID: 5639312770900097302}
   m_Layer: 0
   m_Name: baby3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2888,6 +2920,7 @@ Transform:
   - {fileID: 1798266176440875289}
   - {fileID: 7053198446143061848}
   - {fileID: 2600589080664485350}
+  - {fileID: 890984169802706846}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3851122153373788900
@@ -2995,8 +3028,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHealth: 100
   ragdollController: {fileID: 2421645800356590110}
-  isDead:
-    m_InternalValue: 0
+  DebugMessage: 0
+  isDead: 0
   playercontroller: {fileID: -686463102926649208}
 --- !u!114 &2421645800356590110
 MonoBehaviour:
@@ -3219,6 +3252,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   CanSeePlayer: 0
+  isKicked: 0
   nearestPlayer: {fileID: 0}
 --- !u!136 &-5059944063258040098
 CapsuleCollider:
@@ -3264,6 +3298,26 @@ MonoBehaviour:
     TriggerNameHash: 1014295797
     TransitionIndex: 0
   m_Animator: {fileID: 812125112052596867}
+--- !u!114 &5639312770900097302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722278759497433332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16000a2c6b35eaa43b3a792a096ce6c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundCheckerData:
+    GroundChecker: {fileID: 890984169802706846}
+    Radius: 0.1
+    Layer:
+      serializedVersion: 2
+      m_Bits: 65
+  animator: {fileID: 812125112052596867}
+  DebugMessage: 0
 --- !u!1 &6830118514892369806
 GameObject:
   m_ObjectHideFlags: 0

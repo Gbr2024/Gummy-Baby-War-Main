@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6147905629321658564}
   - component: {fileID: 5220338542813078190}
   - component: {fileID: 6616544581485025827}
+  - component: {fileID: 2320275778769955862}
   m_Layer: 0
   m_Name: FerrisWheelFixed (1)-mesh-mesh
   m_TagString: Untagged
@@ -107,6 +108,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ec9d138857cee6c4790bdbfaaa58bec7, type: 2}
+--- !u!208 &2320275778769955862
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784510597196237404}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 10.0720005, y: 10.628, z: 4.8}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 63.412003, y: 10.512, z: 47.001003}
+  m_TimeToStationary: 0.5
 --- !u!1 &3376947068252759740
 GameObject:
   m_ObjectHideFlags: 0

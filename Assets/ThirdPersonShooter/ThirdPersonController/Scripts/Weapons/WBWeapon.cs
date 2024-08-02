@@ -165,8 +165,8 @@ namespace WeirdBrothers.ThirdPersonController
             if(_audioSource!=null)
             {
                 _audioSource.clip = Data.FireSound;
-                _audioSource.Play();
             }
+            _audioSource.Play();
             pool[poolIndex].transform.position = pos;
             pool[poolIndex].transform.forward = transform.forward;
             pool[poolIndex].gameObject.SetActive(true);

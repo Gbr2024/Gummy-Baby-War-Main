@@ -2891,7 +2891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1113820623
+  GlobalObjectIdHash: 3858200511
   AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 1
@@ -2943,6 +2943,7 @@ MonoBehaviour:
     Radius: 0.275
     Height: 1.8
     Center: {x: 0, y: 0.9, z: 0}
+    material: {fileID: 13400000, guid: b9e31ac80018e2742a847108f33a11c8, type: 2}
   _rigidBodyData:
     Mass: 90
     Drag: 0
@@ -3223,6 +3224,7 @@ MonoBehaviour:
   CurrentHealth: 0
   ragdollController: {fileID: 5875857464610700728}
   controller: {fileID: 1538161442095039702}
+  isDead: 0
 --- !u!114 &-5761385213782717413
 MonoBehaviour:
   m_ObjectHideFlags: 0
