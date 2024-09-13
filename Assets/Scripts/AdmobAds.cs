@@ -235,6 +235,7 @@ public class AdmobAds : MonoBehaviour
         {
             Debug.Log("Interstitial ad full screen content closed.");
             actionafterInterstial?.Invoke();
+            LoadInterstitialAd();
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>
@@ -242,6 +243,7 @@ public class AdmobAds : MonoBehaviour
             Debug.LogError("Interstitial ad failed to open full screen content " +
                            "with error : " + error);
             actionafterInterstial?.Invoke();
+            LoadInterstitialAd();
         };
     }
 
