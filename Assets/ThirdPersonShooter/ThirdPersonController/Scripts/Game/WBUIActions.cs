@@ -21,6 +21,9 @@ namespace WeirdBrothers.ThirdPersonController
         public static Action<bool> EnableSecShoot;
         public static Action<string> ChangeFireIcon;
         public static Action<string> ChangeKillstreak;
+        public static Action<Chat> PlayClip;
+        public static Action<string,string> SetMessage;
+        public static Action<string> SendChat;
        
 
         internal static bool isPlayerActive = true;

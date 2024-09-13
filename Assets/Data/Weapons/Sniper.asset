@@ -47,4 +47,4 @@ MonoBehaviour:
   MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}
   BoltSound: {fileID: 0}
   FeildView: 17
-  TouchRatioOnScope: 0.35
+  TouchRatioOnScope: 0.25

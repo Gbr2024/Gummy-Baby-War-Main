@@ -43,7 +43,10 @@ namespace WeirdBrothers.ThirdPersonController
 
             }
             else
-                _aimPoint = Cam.GetChild(0).position; //Cam.forward*_context.CurrentWeapon.Data.Range;
+            {  
+                _aimPoint = Camera.main.transform.GetChild(0).position; //Cam.forward*_context.CurrentWeapon.Data.Range;
+                if (_context.CurrentWeapon != null) _context.CurrentWeapon.ScopeView.LookAt(_aimPoint);
+            }
 
             if (_context.Animator.IsSwitching())
                 return;
@@ -74,29 +77,36 @@ namespace WeirdBrothers.ThirdPersonController
             
             if (_context.Input.GetButtonDown(WBInputKeys.KillStreak))
             {
+                _context.ShooterController.GetAudioManager.PlaySpecialAttacks(PlayerCreator.Instance.killstreak);
                 KillStreakSystem.Instance.SetKillstreak(_context.ShooterController.OwnerClientId, CustomProperties.Instance.isRed, PlayerCreator.Instance.killstreak);
             }
-
+               
 
             else if (_context.CurrentWeapon.Data.FireType == FireType.Auto)
             {
+               
                 if (_context.Input.GetButton(WBInputKeys.Fire))
                 {
+                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
                 if (_context.Input.GetButton(WBInputKeys.Fire1))
                 {
+                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
             }
             else if (_context.CurrentWeapon.Data.FireType == FireType.Semi)
             {
+               
                 if (_context.Input.GetButtonDown(WBInputKeys.Fire))
                 {
+                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
                 if (_context.Input.GetButtonDown(WBInputKeys.Fire1))
                 {
+                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
             }
@@ -111,6 +121,8 @@ namespace WeirdBrothers.ThirdPersonController
                     _context.Animator.OnMeleeAttack();
                 }
             }
+
+           
             
         }
 

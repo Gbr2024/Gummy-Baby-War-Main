@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36e50309b3333f42be82753456fdff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Revolver
+  id: Revolver Toy
 --- !u!1 &62707164
 GameObject:
   m_ObjectHideFlags: 0
@@ -7948,7 +7948,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500590885}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b9e31ac80018e2742a847108f33a11c8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -17771,7 +17771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36e50309b3333f42be82753456fdff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Grenade Launcher
+  id: Grenade Launcher Toy
 --- !u!1 &1241292582
 GameObject:
   m_ObjectHideFlags: 0
@@ -20526,7 +20526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36e50309b3333f42be82753456fdff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Cork Gun
+  id: Cork Gun Toy
 --- !u!1 &1428207124
 GameObject:
   m_ObjectHideFlags: 0
@@ -22142,7 +22142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36e50309b3333f42be82753456fdff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Sniper Rifle
+  id: Sniper Rifle Toy
 --- !u!1 &1519630318
 GameObject:
   m_ObjectHideFlags: 0
@@ -26979,7 +26979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36e50309b3333f42be82753456fdff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Assault Rifle
+  id: Assault Rifle Toy
 --- !u!1001 &1945354430
 PrefabInstance:
   m_ObjectHideFlags: 0

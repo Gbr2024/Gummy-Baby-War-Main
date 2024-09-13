@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class ItemReference :MonoBehaviour
     public WeaponsData weaponsData;
     public ColorReference colorReference;
     public CharactersData characters;
+    public ChatScriptable chatData;
     public Transform EmtptyTarget;
     public AICreater AIcreator;
     public float hasgoneDownY = -10f;
@@ -22,5 +24,14 @@ public class ItemReference :MonoBehaviour
     private void OnEnable()
     {
         Instance = this;
+    }
+
+    internal AudioClip getclip(string message)
+    {
+        foreach (var item in chatData.chats)
+        {
+            if (item.ID == message) return item.Clip;
+        }
+        return null;
     }
 }

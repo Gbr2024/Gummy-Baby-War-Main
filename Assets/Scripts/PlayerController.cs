@@ -203,7 +203,7 @@ public class PlayerController : NetworkBehaviour
             if (item.AIname == name)
                 try
                 {
-                    weapon.FireBullet(point, Quaternion.identity, weapon.GetMuzzleFlah.position, isRed.Value, true);
+                    weapon.FireBullets(point, Quaternion.identity, weapon.GetMuzzleFlah.position, isRed.Value, true);
                 }
                 catch
                 {

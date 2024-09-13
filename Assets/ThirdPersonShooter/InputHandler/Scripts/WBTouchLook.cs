@@ -32,7 +32,7 @@ public class WBTouchLook : MonoBehaviour//, IPointerDownHandler, IPointerUpHandl
         Sensitivity = PlayerPrefs.GetFloat("Aim",.75f);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!WBUIActions.isPlayerActive)
         {

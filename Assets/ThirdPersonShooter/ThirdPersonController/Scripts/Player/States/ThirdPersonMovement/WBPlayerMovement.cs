@@ -64,7 +64,7 @@ namespace WeirdBrothers.ThirdPersonController
                                                                 Time.deltaTime * 5);
                 _context.Animator.Move(0, 0, _context.Data.StopAnimTime);
             }
-            _context.Controller.Move(_desiredMoveDirection * _context.Data.MoveSpeed);
+            _context.Controller.Move(_desiredMoveDirection.normalized * _context.Data.MoveSpeed);
         }
     }
 

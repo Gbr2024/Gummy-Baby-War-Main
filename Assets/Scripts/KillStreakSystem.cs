@@ -245,5 +245,8 @@ public class KillStreakSystem : NetworkBehaviour
         }
     }
 
-    
+    internal void SetGrannySetup()
+    {
+        Invoke(nameof(SetGranny), 120f);
+    }
 }

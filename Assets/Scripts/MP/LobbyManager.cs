@@ -212,7 +212,7 @@ public class LobbyManager : NetworkBehaviour
 
     private IEnumerator StartWaitTimer()
     {
-        int Timre = 3;
+        int Timre = 30;
 
         START:
         UIManager.instance.LobbyName.text = "Waiting for Game to start...\n" + Timre.ToString() ;

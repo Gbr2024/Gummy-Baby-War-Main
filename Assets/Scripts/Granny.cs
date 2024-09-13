@@ -42,6 +42,15 @@ public class Granny : NetworkBehaviour
         
         if (!IsServer) return;
         InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
+        Invoke(nameof(DespawnGranny), 119f);
+
+    }
+
+    
+
+    private void DespawnGranny()
+    {
+        NetworkObject.Despawn(true);
     }
 
     void findnearestPLayer()
@@ -212,16 +221,9 @@ public class Granny : NetworkBehaviour
     private Transform FindNearestPlayer()
     {
         Transform nearest = null;
-        foreach (var item in players)
-        {
-            if (item == null)
-            {
-                players = FindTarget();
-                break;
-            }
-        }
-        if (players.Count == 0)
-            players = FindTarget();
+        players = FindTarget();
+
+
         float dis = Mathf.Infinity;
 
         foreach (var item in players)
@@ -355,8 +357,8 @@ public class Granny : NetworkBehaviour
                 Vector3 forceDirection = direction.normalized * 50f + Vector3.up * 25f;
                 float forceMagnitude = rb.mass*15f/.35f;
                 Vector3 force = forceDirection.normalized * forceMagnitude;
-                rb.AddForce(force, ForceMode.Impulse);
-                item.BreakCameraClientRPC(playerID);
+               
+                item.BreakCameraClientRPC(playerID, force);
             }
         }
     }

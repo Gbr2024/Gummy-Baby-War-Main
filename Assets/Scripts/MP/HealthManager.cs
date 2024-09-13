@@ -38,10 +38,13 @@ public class HealthManager : NetworkBehaviour
     {
         if (isDead || !LobbyManager.Instance.GameHasStarted || ScoreManager.Instance.GameHasFinished || !isActivated) return;
        
+
         if (collision.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
         {
             if (!NetworkManager.Singleton.IsServer) return;
             if (bullet.isRed == controller.isRed) return;
+
+            controller.GetAudioManager.PlaygettingHit();
             if (CurrentHealth - bullet.damage <= 0)
             {
                 isDead = true;

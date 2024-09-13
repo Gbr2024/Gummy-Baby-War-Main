@@ -219,7 +219,11 @@ namespace WeirdBrothers.CharacterController
             CheckForGrounded();
             if (_moveVector.magnitude > 0.1f)
             {
-                Rigidbody.MovePosition(Rigidbody.position + _moveVector * Time.fixedDeltaTime);
+                Rigidbody.velocity = new Vector3(0,Rigidbody.velocity.y,0);
+                Rigidbody.angularVelocity = new Vector3(0,Rigidbody.angularVelocity.y,0);
+                //Rigidbody.velocity = _moveVector;
+                Rigidbody.velocity = new Vector3(_moveVector.x, Rigidbody.velocity.y, _moveVector.z); 
+                //Rigidbody.MovePosition(Rigidbody.position + _moveVector * Time.fixedDeltaTime);
             }
         }
 

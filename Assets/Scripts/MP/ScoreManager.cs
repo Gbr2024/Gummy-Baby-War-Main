@@ -327,7 +327,7 @@ public class ScoreManager : NetworkBehaviour
                 TimeBeforeStart = 0;
                 LobbyManager.Instance.GameHasStarted = true;
                 KillStreakSystem.Instance.SetCrates();
-                KillStreakSystem.Instance.SetGranny();
+                KillStreakSystem.Instance.SetGrannySetup();
                 DisableTimerStart();
             }
             if(LobbyManager.Instance.GameHasStarted)
@@ -462,6 +462,7 @@ public class ScoreManager : NetworkBehaviour
     [ClientRpc]
     void DisableStartTimerClientRpc()
     {
+        Debug.LogError("Here in Client RPC");
         LobbyManager.Instance.GameHasStarted = true;
         StartTimeLabel.gameObject.SetActive(false);
     }
@@ -471,9 +472,11 @@ public class ScoreManager : NetworkBehaviour
         LobbyManager.Instance.Getout();
     }
 
+
     [ClientRpc]
     private void SpawnAllAgainClientRpc()
     {
+        Debug.LogError("Here in Client RPC");
         PlayerSetManager.instance.ChangeView(40f);
         if (PlayerPrefs.GetInt("WeaponSelected", 0) == 0)
             PlayerSetManager.instance.SpinTheWheel();

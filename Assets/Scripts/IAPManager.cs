@@ -220,6 +220,11 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
     public void LoadMenu()
     {
+        AdmobAds.Instance.ShowInterstitialAd(Loadmenu);
+    }
+
+    public void Loadmenu()
+    {
         SceneManager.LoadScene(1);
     }
 

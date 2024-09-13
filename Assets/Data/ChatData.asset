@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6a6fe29aaf02b418fb2372c80e10dd, type: 3}
+  m_Name: ChatData
+  m_EditorClassIdentifier: 
+  chats:
+  - ID: be quiet
+    Clip: {fileID: 8300000, guid: 334eab4a79d6c074295c42cf9d8c0d25, type: 3}
+  - ID: bye bye
+    Clip: {fileID: 8300000, guid: 48ba5e7241cb2d844b46f938652f9d2d, type: 3}
+  - ID: fall back
+    Clip: {fileID: 8300000, guid: d7b12256d2b0a3f4f969dcd8fff8671a, type: 3}
+  - ID: follow me
+    Clip: {fileID: 8300000, guid: 909586bc9fa84de429f48243cdc740e2, type: 3}
+  - ID: hello
+    Clip: {fileID: 8300000, guid: 9f48976482417e34097584dd69d7dc9a, type: 3}
+  - ID: help
+    Clip: {fileID: 8300000, guid: 404181f3c3d333d44abc45ac01ac544f, type: 3}
+  - ID: i need a sniper
+    Clip: {fileID: 8300000, guid: 01bc1372d04cdc544ae752957b4252a9, type: 3}
+  - ID: i need an airstrike
+    Clip: {fileID: 8300000, guid: 3fcd227e856ba7e45bd4ac53e6f6bf96, type: 3}
+  - ID: lets regroup
+    Clip: {fileID: 8300000, guid: ada02aa3e8075c84d946501d9b7b0ea7, type: 3}
+  - ID: no
+    Clip: {fileID: 8300000, guid: e88d25336dfd05847a2c1f1d91972e66, type: 3}
+  - ID: reloading
+    Clip: {fileID: 8300000, guid: 89bb12d99b78e254c932e21f031c192c, type: 3}
+  - ID: retreat
+    Clip: {fileID: 8300000, guid: 9bc280e0b426007428cb6e2d0fd337a1, type: 3}
+  - ID: stay alert
+    Clip: {fileID: 8300000, guid: 2ad0e4036b858fc46bc22551855209b0, type: 3}
+  - ID: throw some baby bottles
+    Clip: {fileID: 8300000, guid: abb05da42c32bdf4f821dc349170ecca, type: 3}
+  - ID: yes
+    Clip: {fileID: 8300000, guid: 55f9acc70b5f49948bf099e68a9bdd67, type: 3}
+  - ID: attack
+    Clip: {fileID: 8300000, guid: 4e4463dfb2124844eb3ad6825a467f5d, type: 3}

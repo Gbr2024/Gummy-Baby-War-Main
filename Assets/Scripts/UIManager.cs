@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
         }
         PlayerNameLabel.text= PlayerPrefs.GetString("PlayerName");
         ProfileImage.sprite = babyImages[PlayerPrefs.GetInt("BabyImage")];
-        AdmobAds.Instance.LoadBannerAd();
+        //AdmobAds.Instance.LoadBannerAd();
         AdmobAds.Instance.LoadInterstitialAd();
         Aim.value = PlayerPrefs.GetFloat("Aim", .75f);
         if (PlayerPrefs.GetInt("Music", 1) == 1) Music.Play();
@@ -141,7 +141,13 @@ public class UIManager : MonoBehaviour
 
     public void LeadShop()
     {
-        SceneManager.LoadSceneAsync("Shop");
+        AdmobAds.Instance.ShowInterstitialAd(loadShop);
+        
     }
     
+
+    void loadShop()
+    {
+        SceneManager.LoadSceneAsync("Shop");
+    }    
 }

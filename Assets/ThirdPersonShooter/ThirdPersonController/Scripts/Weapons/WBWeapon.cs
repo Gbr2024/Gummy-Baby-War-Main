@@ -157,6 +157,40 @@ namespace WeirdBrothers.ThirdPersonController
 
         public void FireBullet(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos,bool isRed,bool isOwner=false)
         {
+            if (Time.time > _nextFire)
+            {
+                if (poolIndex >= pool.Length) poolIndex = 0;
+                _nextFire = Time.time + Data.FireRate;
+                _currentAmmo--;
+                pool[poolIndex].gameObject.SetActive(false);
+                pool[poolIndex].resetBullet();
+                if (_audioSource != null)
+                {
+                    _audioSource.clip = Data.FireSound;
+                }
+                _audioSource.Play();
+                pool[poolIndex].transform.position = pos;
+                pool[poolIndex].transform.forward = transform.forward;
+                pool[poolIndex].gameObject.SetActive(true);
+                pool[poolIndex].moveBullet(hitPoint, RotationToUse);
+                pool[poolIndex].isRed = isRed;
+                if (isRed) pool[poolIndex].gameObject.layer = 9;
+                else pool[poolIndex].gameObject.layer = 12;
+                pool[poolIndex].isAI = isAI;
+                pool[poolIndex].AIname = AIname;
+                poolIndex++;
+                if (isOwner) CustomProperties.Instance.currentAmmo = _currentAmmo;
+                if (poolIndex >= pool.Length) poolIndex = 0;
+
+                if (Cylinder != null)
+                {
+                    //Debug.LogError(Cylinder.localEulerAngles.z);
+                    Cylinder.DOLocalRotate(new Vector3(Cylinder.localEulerAngles.x, Cylinder.localEulerAngles.y, Cylinder.localEulerAngles.z - CylinderRotation), Data.FireRate * .8f);
+                }
+            }
+        }
+        public void FireBullets(Vector3 hitPoint,Quaternion RotationToUse,Vector3 pos,bool isRed,bool isOwner=false)
+        {
             if (poolIndex >= pool.Length) poolIndex = 0;
             _nextFire = Time.time + Data.FireRate;
             _currentAmmo--;

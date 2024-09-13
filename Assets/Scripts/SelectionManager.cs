@@ -54,6 +54,12 @@ public class SelectionManager : MonoBehaviour
 
     public void Save()
     {
+        AdmobAds.Instance.ShowInterstitialAd(SaveTheData);
+        
+    }
+
+    private void SaveTheData()
+    {
         PlayerPrefs.SetInt("CharacterIndex", CharacterIndex);
         PlayerPrefs.SetInt("WeaponIndex", WeaponIndex);
         PlayerPrefs.SetInt("ColorIndex", ColorIndex);
@@ -186,6 +192,10 @@ public class SelectionManager : MonoBehaviour
 
     public int GetSky()
     {
-        return Random.Range(0, ColorData.skyboxes.Length);
+        PlayerPrefs.SetInt("SkyboxLoad", PlayerPrefs.GetInt("SkyboxLoad", 0) + 1);
+        if (ColorData.skyboxes.Length<= PlayerPrefs.GetInt("SkyboxLoad", 0))
+            PlayerPrefs.SetInt("SkyboxLoad",0);
+
+        return PlayerPrefs.GetInt("SkyboxLoad", 0);
     }
 }

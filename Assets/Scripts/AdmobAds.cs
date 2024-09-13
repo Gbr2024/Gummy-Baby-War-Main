@@ -145,6 +145,8 @@ public class AdmobAds : MonoBehaviour
 
     #region Interstitial
 
+    Action actionafterInterstial;
+
     public void LoadInterstitialAd()
     {
 
@@ -183,6 +185,22 @@ public class AdmobAds : MonoBehaviour
             LoadInterstitialAd();
             print("Intersititial ad not ready!!");
             if(interstitialAd != null && interstitialAd.CanShowAd()) ShowInterstitialAd();
+           
+        }
+    }
+    public void ShowInterstitialAd(Action load)
+    {
+        actionafterInterstial = load;
+        if (interstitialAd != null && interstitialAd.CanShowAd())
+        {
+            interstitialAd.Show();
+        }
+        else
+        {
+            LoadInterstitialAd();
+            print("Intersititial ad not ready!!");
+            if(interstitialAd != null && interstitialAd.CanShowAd()) ShowInterstitialAd();
+            else { actionafterInterstial?.Invoke(); }
         }
     }
 
@@ -216,12 +234,14 @@ public class AdmobAds : MonoBehaviour
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Interstitial ad full screen content closed.");
+            actionafterInterstial?.Invoke();
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
             Debug.LogError("Interstitial ad failed to open full screen content " +
                            "with error : " + error);
+            actionafterInterstial?.Invoke();
         };
     }
 
