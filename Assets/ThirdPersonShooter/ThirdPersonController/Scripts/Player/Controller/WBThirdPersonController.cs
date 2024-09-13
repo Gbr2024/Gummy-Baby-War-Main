@@ -68,6 +68,13 @@ namespace WeirdBrothers.ThirdPersonController
                 WBUIActions.EnableGrenadeButton?.Invoke(true);
                 WBUIActions.EnableTouch?.Invoke(true);
                 FindObjectOfType<WBTouchLook>().context = Context;
+                if (LobbyManager.Instance.GameHasStarted)
+                    audioManager.PlayIntro();
+                else
+                    audioManager.PlayCatchPhrase();
+                WBUIActions.PlayClip += PlayAudio;
+                WBUIActions.SendChat += SendChat;
+
             }
             else
             {
@@ -85,22 +92,74 @@ namespace WeirdBrothers.ThirdPersonController
             transform.LookAt(ItemReference.Instance?.EmtptyTarget);
         }
 
+        private void SendChat(string message)
+        {
+            SendChatServerRpc(message, PlayerPrefs.GetString("PlayerName"),isRed);
+        }
+
         private void PlayAudio(Chat chat)
         {
+            PLayerRadioServerRpc(chat.ID, PlayerPrefs.GetString("PlayerName"),isRed);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void PLayerRadioServerRpc(ulong id, string meessage, string sender, bool isred)
+        public void PLayerRadioServerRpc(string meessage, string sender, bool isred)
         {
+            PLayRadioClientRpc(meessage, PlayerPrefs.GetString("PlayerName"), isRed);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void SendChatServerRpc(string meessage, string sender, bool isred)
+        {
+            SendChatClientRpc(meessage, PlayerPrefs.GetString("PlayerName"), isRed);
         }
 
         [ClientRpc]
-        public void PLayRadioClientRpc(ulong id, string message, string sender, bool isred)
+        public void PLayRadioClientRpc(string message, string sender, bool isred)
         {
+            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+            {
+                if(item.IsLocalPlayer && isRed==isred)
+                {
+                    item.PlayerRadio(message,sender);
+                    break;
+                }
+            }
         }
 
-        internal void PlayerRadio(ulong id, string message, string sender, bool isred)
+        [ClientRpc]
+        public void SendChatClientRpc(string message, string sender, bool isred)
         {
+            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+            {
+                if (item.IsLocalPlayer && isRed == isred)
+                {
+                    SendChat(message, sender);
+                    break;
+                }
+            }
+        }
+
+        internal void PlayerRadio(string message, string sender)
+        {
+            float vol = 0.7f;
+            if (sender == PlayerPrefs.GetString("PlayerName"))
+            {
+                vol = 1f;
+                sender = "You";
+            }
+
+            var clip = ItemReference.Instance.getclip(message);
+            audioManager.PlayRadio(clip,vol);
+            WBUIActions.SetMessage(message, sender);
+        }
+        internal void SendChat(string message, string sender)
+        {
+            if (sender == PlayerPrefs.GetString("PlayerName"))
+            {
+                sender = "You";
+            }
+            WBUIActions.SetMessage(message, sender);
         }
 
 
@@ -586,13 +645,18 @@ namespace WeirdBrothers.ThirdPersonController
             if( IsOwner && OwnerClientId==clientID)
             {
                 WBUIActions.EnableBrokenScreen?.Invoke(true);
-
+                Context.Controller.Rigidbody.AddForce(force, ForceMode.Impulse);
             }
         }
 
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            WBUIActions.PlayClip -= PlayAudio;
+            WBUIActions.SendChat -= SendChat;
+        }
 
 
-       
 
     }
 }

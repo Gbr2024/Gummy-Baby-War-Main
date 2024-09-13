@@ -59,10 +59,12 @@ public class ChatScript : MonoBehaviour
 
     public void OpenChatPanel()
     {
+        ChatInput.gameObject.SetActive(false);
         Chats.SetActive(!Chats.activeSelf);
     }
     public void OpenChatInput()
     {
+        Chats.SetActive(false);
         ChatInput.gameObject.SetActive(!ChatInput.gameObject.activeSelf);
     }
 
