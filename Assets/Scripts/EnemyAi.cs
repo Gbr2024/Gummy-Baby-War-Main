@@ -58,7 +58,6 @@ public class EnemyAi : MonoBehaviour
     {
         if (health.isDead) return;
         if (!playerController.IsServer) return;
-        if (isKicked) return;
 
         // Find the nearest player
         if (nearestPlayer == null)

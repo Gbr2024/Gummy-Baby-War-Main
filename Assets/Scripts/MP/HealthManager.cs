@@ -44,7 +44,7 @@ public class HealthManager : NetworkBehaviour
             if (!NetworkManager.Singleton.IsServer) return;
             if (bullet.isRed == controller.isRed) return;
 
-            controller.GetAudioManager.PlaygettingHit();
+            
             if (CurrentHealth - bullet.damage <= 0)
             {
                 isDead = true;

@@ -13,6 +13,7 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] CharactersData characterData;
     [SerializeField] WeaponsData weaponData;
     [SerializeField] ColorReference ColorData;
+    [SerializeField] AudioSource Audios;
     [SerializeField]Transform CharacterMaster, WeaponMaster;
     [SerializeField] Material mat;
     [SerializeField] GameObject ColorPanel;
@@ -88,8 +89,15 @@ public class SelectionManager : MonoBehaviour
         else if (CharacterIndex > characterData.CharactersOnShow.Length - 1)
             CharacterIndex = characterData.CharactersOnShow.Length - 1;
         SetCharacterOnShow();
+        Audios.Stop();
+        Audios.clip = characterData.ChatchPhrases[CharacterIndex];
+        Audios.Play();
         CharacterMaster.localPosition = new Vector3(5f * i, CharacterMaster.localPosition.y, 0);
-        CharacterMaster.DOLocalMoveX(0 , 1f).OnComplete(() => { moving = false; });
+        
+        CharacterMaster.DOLocalMoveX(0 , 1f).OnComplete(() => { 
+            moving = false;
+          
+        });
     }
     
     public void SetNextPrevWeapon(int i)
@@ -102,8 +110,14 @@ public class SelectionManager : MonoBehaviour
         else if (WeaponIndex > weaponData.WeaponsOnShow.Length - 1)
             WeaponIndex = weaponData.WeaponsOnShow.Length - 1;
         SetWeaponOnShow();
+        Audios.Stop();
+        Audios.clip = characterData.ChatchPhrases[CharacterIndex];
+        Audios.Play();
         WeaponMaster.localPosition = new Vector3(5f * i, WeaponMaster.localPosition.y, 0);
-        WeaponMaster.DOLocalMoveX(0, 1f).OnComplete(()=> { moving = false; });
+        WeaponMaster.DOLocalMoveX(0, 1f).OnComplete(()=> { 
+            moving = false;
+          
+        });
     }
    
     public void ShowColorPanel()
@@ -192,10 +206,14 @@ public class SelectionManager : MonoBehaviour
 
     public int GetSky()
     {
-        PlayerPrefs.SetInt("SkyboxLoad", PlayerPrefs.GetInt("SkyboxLoad", 0) + 1);
-        if (ColorData.skyboxes.Length<= PlayerPrefs.GetInt("SkyboxLoad", 0))
-            PlayerPrefs.SetInt("SkyboxLoad",0);
+        int currentSkyboxIndex = PlayerPrefs.GetInt("SkyboxLoad", 0);  // Get the current value
+        currentSkyboxIndex++;  // Increment the index
 
-        return PlayerPrefs.GetInt("SkyboxLoad", 0);
+        if (currentSkyboxIndex >= ColorData.skyboxes.Length)  // Check if it exceeds array length
+            currentSkyboxIndex = 0;  // Reset to 0 if necessary
+
+        PlayerPrefs.SetInt("SkyboxLoad", currentSkyboxIndex);  // Store the new value
+
+        return currentSkyboxIndex;  // Return the updated index
     }
 }

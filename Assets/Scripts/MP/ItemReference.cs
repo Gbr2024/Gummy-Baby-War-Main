@@ -34,4 +34,12 @@ public class ItemReference :MonoBehaviour
         }
         return null;
     }
+    internal Chat GetChat(string message)
+    {
+        foreach (var item in chatData.chats)
+        {
+            if (item.ID == message) return item;
+        }
+        return null;
+    }
 }

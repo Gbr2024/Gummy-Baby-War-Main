@@ -462,7 +462,6 @@ public class ScoreManager : NetworkBehaviour
     [ClientRpc]
     void DisableStartTimerClientRpc()
     {
-        Debug.LogError("Here in Client RPC");
         LobbyManager.Instance.GameHasStarted = true;
         StartTimeLabel.gameObject.SetActive(false);
     }

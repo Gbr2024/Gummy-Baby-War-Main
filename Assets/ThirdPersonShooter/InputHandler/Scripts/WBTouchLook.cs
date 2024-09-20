@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using WeirdBrothers.ThirdPersonController;
@@ -40,8 +41,10 @@ public class WBTouchLook : MonoBehaviour//, IPointerDownHandler, IPointerUpHandl
             return;
         }
         // Check if there are any touches
+
         if (Input.touchCount > 0)
         {
+            if (IsPointerOverUI()) return;
             foreach (Touch touch in Input.touches)
             {
                 if (touch.position.x > Screen.width / 2)
@@ -61,5 +64,39 @@ public class WBTouchLook : MonoBehaviour//, IPointerDownHandler, IPointerUpHandl
                
             }
         }
+    }
+
+    public static bool IsPointerOverUI()
+    {
+
+        if (Input.touchCount > 0)
+        {
+            // Use the first touch
+            Touch touch = Input.GetTouch(0);
+
+            // Create a pointer event data instance for the touch position
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+            {
+                position = touch.position
+            };
+
+            // Create a list to hold the results of the raycast
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            // Perform the raycast using the event system
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+            // Iterate through the raycast results
+            foreach (RaycastResult result in results)
+            {
+                // Check if the raycast hit a UI element with a Button component
+                if (result.gameObject.tag == "RestrictInput")
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

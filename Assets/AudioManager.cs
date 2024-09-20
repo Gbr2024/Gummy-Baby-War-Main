@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] AudioSource Radio, Mouth;
+    [SerializeField] AudioSource Radio, Mouth,Mought2;
     [SerializeField] AudioClip CatchPhrase, Intro;
     [SerializeField] AudioClip[] ShootingTime, grenade;
     [SerializeField] AudioClip[] GotHit,specialAttacks;
 
+    [SerializeField] bool Test = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,20 +20,29 @@ public class AudioManager : MonoBehaviour
 
     internal void PlayRadio(AudioClip clip,float volume)
     {
-        Debug.LogError("PLayRadioClientRpc onplay"+ Mouth.isPlaying+"  "+Radio.isPlaying );
-        Debug.LogError("PLayRadioClientRpc onplay"+ clip );
-        Debug.LogError("PLayRadioClientRpc onplay"+ volume );
-        if (Mouth.isPlaying || Radio.isPlaying) return;
+        //Debug.LogError("PLayRadioClientRpc onplay"+ Mouth.isPlaying+"  "+Radio.isPlaying );
+        //Debug.LogError("PLayRadioClientRpc onplay"+ clip );
+        //Debug.LogError("PLayRadioClientRpc onplay"+ volume );
 
         Radio.Stop();
         Radio.clip = clip;
         Radio.volume = volume;
         Radio.Play();
     }
-    
-    internal void SetDialogue(AudioClip clip,float volume)
+
+    private void FixedUpdate()
     {
-        if (Mouth.isPlaying) return;
+        if(Test)
+        {
+            Test = false;
+            PlaygettingHit();
+        }
+    }
+
+    internal void SetDialogue(AudioClip clip,float volume, bool Overlap=false)
+    {
+        if (Mouth.isPlaying && !Overlap) return;
+
         Mouth.Stop();
         Mouth.clip = clip;
         Mouth.volume = volume;
@@ -53,10 +63,17 @@ public class AudioManager : MonoBehaviour
     {
         SetDialogue(ShootingTime[Random.Range(0, ShootingTime.Length)], .8f);
     }
+
+    
     
     internal void PlaygettingHit()
     {
-        SetDialogue(GotHit[Random.Range(0,GotHit.Length)], .8f);
+        if (Mouth.isPlaying) return;
+        Mought2.Stop();
+        Mought2.clip = GotHit[Random.Range(0, GotHit.Length)];
+        Mought2.volume = .8f;
+        Mought2.Play();
+        //SetDialogue(GotHit[Random.Range(0,GotHit.Length)], .8f,true);
     }
     
     internal void PlayGrenade()
@@ -66,7 +83,8 @@ public class AudioManager : MonoBehaviour
 
     internal void PlaySpecialAttacks(int i)
     {
-
+        Debug.LogError("Here");
+        SetDialogue(specialAttacks[i], 1f,true);
     }
     
 }

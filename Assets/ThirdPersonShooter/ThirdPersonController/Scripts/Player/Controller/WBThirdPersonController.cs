@@ -72,6 +72,7 @@ namespace WeirdBrothers.ThirdPersonController
                     audioManager.PlayIntro();
                 else
                     audioManager.PlayCatchPhrase();
+
                 WBUIActions.PlayClip += PlayAudio;
                 WBUIActions.SendChat += SendChat;
 
@@ -97,15 +98,19 @@ namespace WeirdBrothers.ThirdPersonController
             SendChatServerRpc(message, PlayerPrefs.GetString("PlayerName"),isRed);
         }
 
-        private void PlayAudio(Chat chat)
+        internal void PlayAudio(Chat chat)
         {
-            PLayerRadioServerRpc(chat.ID, PlayerPrefs.GetString("PlayerName"),isRed);
+
+            if (chat == null) return;
+            audioManager.PlayRadio(chat.Clip, 1f);
+            WBUIActions.SetMessage(chat.ID, "You");
+            PLayerRadioServerRpc(OwnerClientId,chat.ID, PlayerPrefs.GetString("PlayerName"),isRed);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void PLayerRadioServerRpc(string meessage, string sender, bool isred)
+        public void PLayerRadioServerRpc(ulong Id, string meessage, string sender, bool isred)
         {
-            PLayRadioClientRpc(meessage, PlayerPrefs.GetString("PlayerName"), isRed);
+            PLayRadioClientRpc(Id,meessage, PlayerPrefs.GetString("PlayerName"), isRed);
         }
 
         [ServerRpc(RequireOwnership = false)]
@@ -115,11 +120,11 @@ namespace WeirdBrothers.ThirdPersonController
         }
 
         [ClientRpc]
-        public void PLayRadioClientRpc(string message, string sender, bool isred)
+        public void PLayRadioClientRpc(ulong id, string message, string sender, bool isred)
         {
             foreach (var item in FindObjectsOfType<WBThirdPersonController>())
             {
-                if(item.IsLocalPlayer && isRed==isred)
+                if(item.IsOwner && CustomProperties.Instance.isRed==isred && item.OwnerClientId!=id)
                 {
                     item.PlayerRadio(message,sender);
                     break;
@@ -132,7 +137,7 @@ namespace WeirdBrothers.ThirdPersonController
         {
             foreach (var item in FindObjectsOfType<WBThirdPersonController>())
             {
-                if (item.IsLocalPlayer && isRed == isred)
+                if (item.IsOwner && CustomProperties.Instance.isRed == isred)
                 {
                     SendChat(message, sender);
                     break;
@@ -143,12 +148,6 @@ namespace WeirdBrothers.ThirdPersonController
         internal void PlayerRadio(string message, string sender)
         {
             float vol = 0.7f;
-            if (sender == PlayerPrefs.GetString("PlayerName"))
-            {
-                vol = 1f;
-                sender = "You";
-            }
-
             var clip = ItemReference.Instance.getclip(message);
             audioManager.PlayRadio(clip,vol);
             WBUIActions.SetMessage(message, sender);
@@ -494,6 +493,7 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void OnMagOut()
         {
+
             _context.CurrentWeapon.MagOut();
         }
 
@@ -540,10 +540,12 @@ namespace WeirdBrothers.ThirdPersonController
 
         internal void AddDamage(float damage,ulong clientId, ulong playerID)
         {
+            audioManager.PlaygettingHit();
             AddDamageServerRpc(clientId, damage,playerID);
         }
         internal void AddDamage(float damage,ulong clientId, string AIname, bool isAI=false)
         {
+            audioManager.PlaygettingHit();
             AddDamageServerRpc(clientId, damage, AIname,isAI);
         }
 

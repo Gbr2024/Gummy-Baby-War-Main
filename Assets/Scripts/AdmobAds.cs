@@ -200,7 +200,10 @@ public class AdmobAds : MonoBehaviour
             LoadInterstitialAd();
             print("Intersititial ad not ready!!");
             if(interstitialAd != null && interstitialAd.CanShowAd()) ShowInterstitialAd();
-            else { actionafterInterstial?.Invoke(); }
+            else { 
+                actionafterInterstial?.Invoke();
+                actionafterInterstial = null;
+            }
         }
     }
 
@@ -235,6 +238,7 @@ public class AdmobAds : MonoBehaviour
         {
             Debug.Log("Interstitial ad full screen content closed.");
             actionafterInterstial?.Invoke();
+            actionafterInterstial = null;
             LoadInterstitialAd();
         };
         // Raised when the ad failed to open full screen content.
@@ -243,6 +247,7 @@ public class AdmobAds : MonoBehaviour
             Debug.LogError("Interstitial ad failed to open full screen content " +
                            "with error : " + error);
             actionafterInterstial?.Invoke();
+            actionafterInterstial = null;
             LoadInterstitialAd();
         };
     }

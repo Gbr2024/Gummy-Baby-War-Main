@@ -30,3 +30,12 @@ MonoBehaviour:
   - {fileID: 18117196153303457, guid: 060cce06320da2144a3eb8654626af41, type: 3}
   - {fileID: 6948371361103056873, guid: c9f9b8f51547f6244ae5c3e9690c62fe, type: 3}
   - {fileID: 2789268468294918076, guid: 7ce0b36a0d9837d478998573ca78d10b, type: 3}
+  ChatchPhrases:
+  - {fileID: 8300000, guid: 94c4cf5b2003467409d527450681a284, type: 3}
+  - {fileID: 8300000, guid: bad7ae14b1037c0429a8c08a1232c0dc, type: 3}
+  - {fileID: 8300000, guid: f32db5c362973f844b4d21b704c64429, type: 3}
+  - {fileID: 8300000, guid: ca7c37a2fbf38da4bb36422757316de3, type: 3}
+  - {fileID: 8300000, guid: 77f78a2633f0fac4da6889f08663d52b, type: 3}
+  - {fileID: 8300000, guid: 4d44859ec17fc8748863535ff5b99973, type: 3}
+  - {fileID: 8300000, guid: 48322d1d207aa66428b64a17368bf8e7, type: 3}
+  - {fileID: 8300000, guid: ea688decaa197444ba2277512c6492a2, type: 3}

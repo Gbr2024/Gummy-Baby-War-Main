@@ -7,4 +7,5 @@ public class CharactersData : ScriptableObject
 {
     public GameObject[] Characters;
     public GameObject[] CharactersOnShow;
+    public AudioClip[] ChatchPhrases;
 }

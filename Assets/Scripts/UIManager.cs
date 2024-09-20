@@ -97,6 +97,11 @@ public class UIManager : MonoBehaviour
         LevelSelection.SetActive(true);
     }
 
+    public void ShowInterstialAd()
+    {
+        AdmobAds.Instance.ShowInterstitialAd();
+    }
+
     public void OpenPanel(int i)
     {
         MainPanel.SetActive(true);

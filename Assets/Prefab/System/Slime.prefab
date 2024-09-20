@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 011dc0f195fed4047afa042f5848c990, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 455.43848
+      value: 194.23227
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 011dc0f195fed4047afa042f5848c990, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 011dc0f195fed4047afa042f5848c990, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 385.22678
+      value: 143.241
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 011dc0f195fed4047afa042f5848c990, type: 3}
       propertyPath: m_LocalRotation.w
@@ -641,6 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 3869250369
+  InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 1
@@ -674,6 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ae050cf3e6d847957db8346213bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 1

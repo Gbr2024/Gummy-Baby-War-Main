@@ -94,6 +94,7 @@ public class KillStreakSystem : NetworkBehaviour
 
     internal void SetKillstreak(ulong id,bool isred,int index)
     {
+        
         switch(index)
         {
             case 2:

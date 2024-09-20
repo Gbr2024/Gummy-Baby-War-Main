@@ -10,6 +10,7 @@ TagManager:
   - Ammo
   - grenade
   - Bullet
+  - RestrictInput
   layers:
   - Default
   - TransparentFX

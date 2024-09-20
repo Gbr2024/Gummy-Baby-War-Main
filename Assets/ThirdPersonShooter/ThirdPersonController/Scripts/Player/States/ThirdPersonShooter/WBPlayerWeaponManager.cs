@@ -77,7 +77,7 @@ namespace WeirdBrothers.ThirdPersonController
             
             if (_context.Input.GetButtonDown(WBInputKeys.KillStreak))
             {
-                _context.ShooterController.GetAudioManager.PlaySpecialAttacks(PlayerCreator.Instance.killstreak);
+               if(PlayerCreator.Instance.killstreak>=2) _context.ShooterController.GetAudioManager.PlaySpecialAttacks(PlayerCreator.Instance.killstreak);
                 KillStreakSystem.Instance.SetKillstreak(_context.ShooterController.OwnerClientId, CustomProperties.Instance.isRed, PlayerCreator.Instance.killstreak);
             }
                
@@ -87,12 +87,11 @@ namespace WeirdBrothers.ThirdPersonController
                
                 if (_context.Input.GetButton(WBInputKeys.Fire))
                 {
-                    _context.ShooterController.GetAudioManager.PlayShooting();
+                    
                     OnFire(_aimPoint);
                 }
                 if (_context.Input.GetButton(WBInputKeys.Fire1))
                 {
-                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
             }
@@ -101,12 +100,10 @@ namespace WeirdBrothers.ThirdPersonController
                
                 if (_context.Input.GetButtonDown(WBInputKeys.Fire))
                 {
-                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
                 if (_context.Input.GetButtonDown(WBInputKeys.Fire1))
                 {
-                    _context.ShooterController.GetAudioManager.PlayShooting();
                     OnFire(_aimPoint);
                 }
             }
@@ -174,7 +171,8 @@ namespace WeirdBrothers.ThirdPersonController
             
             if (_context.GrenadeSet)
             {
-                 ResetGrenade();
+                _context.ShooterController.GetAudioManager.PlayGrenade();
+                ResetGrenade();
                 _context.trajectory.CalculatePointsOnCurve();
                 _context.Animator._animator.SetBool("GrenadeThrow",true);
                 _context.trajectory.ThrowObject();
@@ -185,7 +183,7 @@ namespace WeirdBrothers.ThirdPersonController
                 return;
             }
 
-
+            _context.ShooterController.GetAudioManager.PlayShooting();
 
             if (!_context.CurrentWeapon.Body.activeSelf) return;
 
