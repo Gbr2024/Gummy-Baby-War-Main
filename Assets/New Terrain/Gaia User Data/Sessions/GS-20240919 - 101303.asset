@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e251860fcd970734c9f14ebd98a146c3, type: 3}
+  m_Name: GS-20240919 - 101303
+  m_EditorClassIdentifier: 
+  m_name: Session 20240919-101303
+  m_description: 'Rocking out at Creativity Central!
+
+
+    If you like Gaia please
+    consider rating it :)'
+  m_previewImage: {fileID: 0}
+  m_dateCreated: 9/19/2024 10:13:03 AM
+  m_terrainWidth: 256
+  m_terrainDepth: 256
+  m_terrainHeight: 256
+  m_seaLevel: 6.25
+  m_spawnDensity: 0.8
+  m_isLocked: 0
+  m_previewImageBytes: 
+  m_previewImageWidth: 0
+  m_previewImageHeight: 0
+  m_operations:
+  - m_description: Clear World
+    m_operationType: 10
+    m_isActive: 1
+    m_affectedTerrainNames: []
+    m_operationDateTime: 9/19/2024 10:13:24 AM
+    scriptableObjectAssetGUID: 
+    m_isFoldedOut: 1
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Creating World: 1 x 1 tiles, tile size: 256'
+    m_operationType: 0
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20240919 - 101325
+    m_operationDateTime: 9/19/2024 10:13:26 AM
+    scriptableObjectAssetGUID: 1423191597a534849ba17782f610b11f
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Multiple Spawners (11)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20240919 - 101325
+    m_operationDateTime: 9/19/2024 10:13:48 AM
+    scriptableObjectAssetGUID: 801f9a6331de52845b654769c37ee31c
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Alpine Meadow-Flower(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20240919 - 101325
+    m_operationDateTime: 9/19/2024 10:19:43 AM
+    scriptableObjectAssetGUID: 186abdab1a4de2a4e9ccf575f6da5c32
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Alpine Meadow-Flower(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20240919 - 101325
+    m_operationDateTime: 9/19/2024 10:19:55 AM
+    scriptableObjectAssetGUID: 4890de57b1ef50b4a8fce78d9224ef42
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Alpine Meadow-Flower(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20240919 - 101325
+    m_operationDateTime: 9/19/2024 10:20:14 AM
+    scriptableObjectAssetGUID: fb254b8cf2f748d4a80f8a24a799a0d1
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  m_terrainMinMaxCache:
+  - guid: 801a3b31929a849408b2468f0af3ef5e
+    isWorldmap: 0
+    recalculate: 0
+    min: 0
+    max: 27.43792
+  - guid: Worldmap
+    isWorldmap: 1
+    recalculate: 0
+    min: 0
+    max: 0
+  m_bakedMaskCacheEntries:
+  - fileName: Terrain_0_0-20240919 - 101325_LayerGameObject_3584_1
+    assetPath: Assets/Procedural Worlds/Gaia/TerrainCollisionData/Terrain_0_0-20240919
+      - 101325/Terrain_0_0-20240919 - 101325_LayerGameObject_3584_1
+    fullPath: F:/unity projects/orders/Gaia Pro Test/Assets/Procedural Worlds/Gaia/TerrainCollisionData/Terrain_0_0-20240919
+      - 101325/Terrain_0_0-20240919 - 101325_LayerGameObject_3584_1
+    texture: {fileID: 0}
+  m_worldBiomeMaskSettings: {fileID: 0}
