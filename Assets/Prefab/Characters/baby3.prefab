@@ -3131,7 +3131,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 987db4f92d47bdb4caf31cdf459bbff0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3151,7 +3151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1113820623
+  GlobalObjectIdHash: 3858200511
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
@@ -3550,6 +3550,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dbed169e975c2714880d6db7a29fe30d, type: 3}
   - {fileID: 8300000, guid: 39f2628184614b945b587bd73978b9bb, type: 3}
   - {fileID: 8300000, guid: ff201a1d53a251f43a8916e8c53764f6, type: 3}
+  Test: 0
 --- !u!1 &6830118514892369806
 GameObject:
   m_ObjectHideFlags: 0

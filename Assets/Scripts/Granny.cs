@@ -9,6 +9,7 @@ public class Granny : NetworkBehaviour
 {
     [SerializeField] bool DebugMessage;
     [SerializeField] Animator animator;
+    [SerializeField] bool isItTeamGranny;
     public NavMeshAgent agent;
 
     public List<Transform> players;
@@ -41,8 +42,12 @@ public class Granny : NetworkBehaviour
     {
         
         if (!IsServer) return;
-        InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
-        Invoke(nameof(DespawnGranny), 119f);
+        if(!isItTeamGranny)
+        {
+            InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
+            Invoke(nameof(DespawnGranny), 119f);
+        }
+        
 
     }
 

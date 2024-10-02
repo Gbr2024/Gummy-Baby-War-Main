@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+using DG.Tweening;
 
 namespace WeirdBrothers.ThirdPersonController
 {
@@ -28,6 +30,14 @@ namespace WeirdBrothers.ThirdPersonController
         [Header("Weapon Icons")]
         [SerializeField] private GameObject _weaponPanels;
 
+
+        [Header("Speacial Kill Button")]
+        [SerializeField] GameObject SpecialKillButton,SkillList;
+        [SerializeField] Transform SpecialKillMaster;
+        [SerializeField] Button SpecialKillEffect;
+        [SerializeField] Button SpecialKillSetBtn;
+        [SerializeField] Image SpecialKillCover;
+
         private void OnEnable()
         {
            // if (!IsOwner) return;
@@ -46,6 +56,37 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.EnableTouch += EnableTouch;
             WBUIActions.ChangeKillstreak += SetStreakLabel;
             WBUIActions.EnableSecShoot += SetSecShootbtn;
+            WBUIActions.SetSpecialKill += SetSpecialKill;
+        }
+
+        private void SetSpecialKill(List<string> obj)
+        {
+            foreach (var item in obj)
+            {
+                var g=Instantiate(SpecialKillButton, SpecialKillMaster).GetComponent<Button>();
+                var kill = item;
+                g.onClick.AddListener(() => OnSkillInvoked(kill));
+                g.transform.GetComponentInChildren<TMP_Text>().text = kill;
+            }
+            SpecialKillButton.SetActive(true);
+        }
+
+        private void OnSkillInvoked(string kill)
+        {
+            WBUIActions.OnKillInvoked?.Invoke(kill);
+            SpecialKillSetBtn.interactable = false;
+            SpecialKillCover.fillAmount = 1f;
+            SpecialKillCover.gameObject.SetActive(true);
+            SpecialKillCover.DOFillAmount(0, 60f).OnComplete(() =>
+            {
+                SpecialKillCover.gameObject.SetActive(false);
+                SpecialKillSetBtn.interactable = true;
+            });
+        }
+
+        public void OpenSkillList()
+        {
+            SkillList.SetActive(!SkillList.activeSelf);
         }
 
         private void EnableBrokenScreen(bool obj)
@@ -98,6 +139,7 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.EnableTouch -= EnableTouch;
             WBUIActions.ChangeKillstreak -= SetStreakLabel;
             WBUIActions.EnableSecShoot -= SetSecShootbtn;
+            WBUIActions.SetSpecialKill -= SetSpecialKill;
         }
 
         private void Start()

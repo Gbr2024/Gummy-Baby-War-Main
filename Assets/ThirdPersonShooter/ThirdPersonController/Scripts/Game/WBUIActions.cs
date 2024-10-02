@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace WeirdBrothers.ThirdPersonController
 {
     public static class WBUIActions
     {
+        
         public static Action<bool, Sprite, string> ShowItemPickUp;
         public static Action<int, Sprite, int, int> SetPrimaryWeaponUI;
         public static Action<bool> SetWeaponUI;
@@ -24,6 +26,8 @@ namespace WeirdBrothers.ThirdPersonController
         public static Action<Chat> PlayClip;
         public static Action<string,string> SetMessage;
         public static Action<string> SendChat;
+        public static Action<List<string>> SetSpecialKill;
+        public static Action<string> OnKillInvoked;
        
 
         internal static bool isPlayerActive = true;

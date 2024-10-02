@@ -16,7 +16,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     [SerializeField] GameObject PurchasePanel,PopupMessage;
     [SerializeField] Image panelImage;
     [SerializeField] TMP_Text PurchaseButtonLabel,NameLabel;
-    [SerializeField] Buyable[] buyables;
+    [SerializeField] Buyable[] buyables,SpecialAttacks;
     UnlockedWeapons SetWeapons;
 
     private IStoreController storeController;
@@ -82,7 +82,42 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                                     PurchaseButton.onClick.AddListener(() => { SetPurchaseItem(item.Id); });
                                     
                                 }
-                               
+                            }
+                        }
+                        foreach (var item in SpecialAttacks)
+                        {
+                            if (shopitem.id == item.Name)
+                            {
+                                panelImage.sprite = item.image;
+                                PurchasePanel.SetActive(true);
+                                NameLabel.text = item.Name;
+                                SelectionButton.onClick.RemoveAllListeners();
+                                SelectionButton.onClick.AddListener(() => { SelectWeapon(item.index); });
+                                if (SetWeapons.unlockedWeapons.Contains(item.index))
+                                {
+
+                                    if (PlayerPrefs.GetInt("WeaponIndex") == item.index)
+                                    {
+                                        PurchaseButton.gameObject.SetActive(false);
+                                        SelectionButton.gameObject.SetActive(false);
+                                        SelectedButton.gameObject.SetActive(true);
+                                        return;
+                                    }
+                                    PurchaseButton.gameObject.SetActive(false);
+                                    SelectionButton.gameObject.SetActive(true);
+                                    SelectedButton.gameObject.SetActive(false);
+                                }
+
+                                else
+                                {
+                                    PurchaseButton.gameObject.SetActive(true);
+                                    SelectionButton.gameObject.SetActive(false);
+                                    SelectedButton.gameObject.SetActive(false);
+                                    PurchaseButtonLabel.text = item.Price + "$";
+                                    PurchaseButton.onClick.RemoveAllListeners();
+                                    PurchaseButton.onClick.AddListener(() => { SetPurchaseItem(item.Id); });
+
+                                }
                             }
                         }
                     }
