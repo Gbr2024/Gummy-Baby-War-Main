@@ -85,9 +85,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    internal void AddDamage(float damage, ulong ownerClientId, ulong playerID)
+    internal void AddDamage(float damage)
     {
-        GetComponent<AIHealth>().AddDamage(damage, playerID);
+        GetComponent<AIHealth>().AddDamage(damage);
     }
 
     void CalculateFOV()

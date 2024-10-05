@@ -32,7 +32,8 @@ namespace WeirdBrothers.ThirdPersonController
 
 
         [Header("Speacial Kill Button")]
-        [SerializeField] GameObject SpecialKillButton,SkillList;
+        [SerializeField] GameObject SpecialKillButton;
+        [SerializeField] GameObject SkillList;
         [SerializeField] Transform SpecialKillMaster;
         [SerializeField] Button SpecialKillEffect;
         [SerializeField] Button SpecialKillSetBtn;
@@ -61,11 +62,19 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void SetSpecialKill(List<string> obj)
         {
+            while (SpecialKillMaster.childCount>0)
+            {
+                DestroyImmediate(SpecialKillMaster.GetChild(0).gameObject);
+            }
             foreach (var item in obj)
             {
-                var g=Instantiate(SpecialKillButton, SpecialKillMaster).GetComponent<Button>();
+                if (item == "Granny" && !KillStreakSystem.Instance.getSpawnGranny)
+                    continue;
+
+                var g=Instantiate(SpecialKillEffect, SpecialKillMaster);
                 var kill = item;
-                g.onClick.AddListener(() => OnSkillInvoked(kill));
+                Debug.LogError(g);
+                g.onClick.AddListener(() => { OnSkillInvoked(kill); });
                 g.transform.GetComponentInChildren<TMP_Text>().text = kill;
             }
             SpecialKillButton.SetActive(true);
@@ -77,11 +86,12 @@ namespace WeirdBrothers.ThirdPersonController
             SpecialKillSetBtn.interactable = false;
             SpecialKillCover.fillAmount = 1f;
             SpecialKillCover.gameObject.SetActive(true);
-            SpecialKillCover.DOFillAmount(0, 60f).OnComplete(() =>
+            SpecialKillCover.DOFillAmount(0, 90f).OnComplete(() =>
             {
                 SpecialKillCover.gameObject.SetActive(false);
                 SpecialKillSetBtn.interactable = true;
             });
+            SkillList.SetActive(false);
         }
 
         public void OpenSkillList()

@@ -36,7 +36,13 @@ public class ScoreManager : NetworkBehaviour
     {
         LobbyManager.Instance.StopCoroutineofWait();
         NetworkManager.Singleton.OnClientDisconnectCallback += HandleDisconnection;
-        RenderSettings.skybox = ItemReference.Instance.colorReference.skyboxes[int.Parse(LobbyManager.Instance.JoinedLobby.Data["Skybox"].Value)];
+        int i = int.Parse(LobbyManager.Instance.JoinedLobby.Data["Skybox"].Value);
+        RenderSettings.skybox = ItemReference.Instance.colorReference.skyboxes[i];
+        if (ItemReference.Instance.colorReference.VideoIndex[i]>=0)
+        {
+            ItemReference.Instance.VideoPlayer.GetChild(ItemReference.Instance.colorReference.VideoIndex[i]).gameObject.SetActive(true);
+        }
+
     }
 
     private void HandleDisconnection(ulong obj)

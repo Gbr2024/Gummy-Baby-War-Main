@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip CatchPhrase, Intro;
     [SerializeField] AudioClip[] ShootingTime, grenade;
     [SerializeField] AudioClip[] GotHit,specialAttacks;
+    [SerializeField] SpecialKillAudio[] SpecialKills;
 
     [SerializeField] bool Test = false;
     // Start is called before the first frame update
@@ -86,5 +87,23 @@ public class AudioManager : MonoBehaviour
         Debug.LogError("Here");
         SetDialogue(specialAttacks[i], 1f,true);
     }
+
+    internal void PlaySpecialKill(string id)
+    {
+        foreach (var item in SpecialKills)
+        {
+            if(item.Id==id)
+            {
+                SetDialogue(item.clip, 1f, true);
+            }
+        }
+    }
     
+}
+
+[System.Serializable]
+public class SpecialKillAudio
+{
+    public string Id;
+    public AudioClip clip;
 }

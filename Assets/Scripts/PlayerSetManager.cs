@@ -16,7 +16,7 @@ public class PlayerSetManager : MonoBehaviour
     [SerializeField] RectTransform CrossHair, CrossHairScope;
     [SerializeField] Transform lookTransform;
     public PlayerController[] AIPrefabs;
-    public CinemachineVirtualCamera virtualCamera;//,ScopeCinemachine;
+    public CinemachineVirtualCamera virtualCamera,RocketCamera;//,ScopeCinemachine;
     [SerializeField] Button Aimbutton;
 
     public PickerWheel wheel;
@@ -65,6 +65,8 @@ public class PlayerSetManager : MonoBehaviour
         //go.GetComponent<WBThirdPersonController>().SetWeaponData();
         virtualCamera.LookAt = go.transform;
         virtualCamera.Follow = go.transform;
+        RocketCamera.LookAt = go.transform;
+        RocketCamera.Follow = go.transform;
         go.GetComponent<WBInputHandler>().SetInput(InputControl);
 
         //Debug.LogError("data Set");

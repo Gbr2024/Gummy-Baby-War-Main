@@ -18,7 +18,8 @@ public class CloudManager : MonoBehaviour
     }
     void Start()
     {
-        EnableRain();
+        
+        if(LobbyManager.Instance.GetStorm()==1) EnableRain();
     }
 
     void ChangeColorAndIntensity()

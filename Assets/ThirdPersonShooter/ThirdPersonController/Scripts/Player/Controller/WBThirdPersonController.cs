@@ -16,7 +16,11 @@ namespace WeirdBrothers.ThirdPersonController
         [SerializeField] private WBPlayerContext _context;
         [SerializeField] AudioManager audioManager;
 
+
+        SpecialKillController specialKillController;
+
         public WBPlayerContext Context => _context;
+        
 
 
         [SerializeField] private PlayerState[] _states;
@@ -32,7 +36,7 @@ namespace WeirdBrothers.ThirdPersonController
         internal bool isRed = false;
         internal int bulletlayer;
         bool isDataSet = false;
-        
+        private bool restrictInput;
 
         private void Awake()
         {
@@ -75,7 +79,9 @@ namespace WeirdBrothers.ThirdPersonController
 
                 WBUIActions.PlayClip += PlayAudio;
                 WBUIActions.SendChat += SendChat;
-
+                specialKillController = GetComponent<SpecialKillController>();
+                WBUIActions.OnKillInvoked += OnKillInvoked;
+                specialKillController.SetKills();
             }
             else
             {
@@ -91,6 +97,24 @@ namespace WeirdBrothers.ThirdPersonController
                 GetComponentInChildren<marker>().SetColor(Color.red);
 
             transform.LookAt(ItemReference.Instance?.EmtptyTarget);
+        }
+
+        internal void DeactiveRestriction()
+        {
+            restrictInput = false;
+            Context.Controller.Rigidbody.isKinematic = false;
+        }
+
+        internal void RestrictInput()
+        {
+            restrictInput = true;
+            Context.Controller.Rigidbody.isKinematic = true;
+        }
+
+        private void OnKillInvoked(string obj)
+        {
+            specialKillController.InvokeKill(obj);
+            audioManager.PlaySpecialKill(obj);
         }
 
         private void SendChat(string message)
@@ -239,8 +263,11 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void Update()
         {
+            
             if (IsOwner && transform.position.y < ItemReference.Instance?.hasgoneDownY)
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            if (restrictInput)
+                return;
                 
             
             if (IsOwner && isDataSet && !Context.health.isDead)
@@ -365,11 +392,16 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void LateUpdate()
         {
+            if (restrictInput)
+                return;
+
             if (isDataSet && !Context.health.isDead)
             {
                 _ikHandler.Schedule();
             }
-            if(_context.CurrentWeapon!=null)
+           
+
+            if (_context.CurrentWeapon!=null)
             {
                 if (_context.CurrentWeapon.transform.localPosition != _context.CurrentWeapon.Data.WeaponHandPosition.Position) _context.CurrentWeapon.transform.localPosition = _context.CurrentWeapon.Data.WeaponHandPosition.Position;
                 if (_context.CurrentWeapon.transform.localRotation != Quaternion.Euler(_context.CurrentWeapon.Data.WeaponHandPosition.Rotation)) _context.CurrentWeapon.transform.localRotation = Quaternion.Euler(_context.CurrentWeapon.Data.WeaponHandPosition.Rotation);
@@ -394,6 +426,7 @@ namespace WeirdBrothers.ThirdPersonController
         }
 
         bool weaponSet = false;
+        
 
         internal void SetWeaponData(int weaponindex,int layer)
         {
@@ -656,6 +689,7 @@ namespace WeirdBrothers.ThirdPersonController
             base.OnDestroy();
             WBUIActions.PlayClip -= PlayAudio;
             WBUIActions.SendChat -= SendChat;
+            WBUIActions.OnKillInvoked -= OnKillInvoked;
         }
 
 

@@ -12,8 +12,11 @@ public class Impact : NetworkBehaviour
 
     internal float DamagetoApply;
 
-    internal ulong PlayerID;
-    internal bool isRed;
+    public NetworkVariable<bool> isRed = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<ulong> PlayerID = new NetworkVariable<ulong>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    //internal ulong PlayerID;
+    //internal bool isRed;
     Vector3 startPos;
 
 
@@ -22,7 +25,7 @@ public class Impact : NetworkBehaviour
     void Start()
     {
         DOTween.To(() => Scollider.radius, x => Scollider.radius = x, RadiusToInc, 0.7f)
-               .OnUpdate(() => DamagetoApply = Damage / Scollider.radius).OnComplete(() => { Scollider.enabled = false; });
+               .OnUpdate(() => DamagetoApply = Damage / Scollider.radius).OnComplete(() => { Scollider.enabled = false; }).SetDelay(.25f);
         Invoke(nameof(Destroyimpact), 3f);
     }
 

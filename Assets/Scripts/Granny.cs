@@ -33,6 +33,9 @@ public class Granny : NetworkBehaviour
     private float stuckThreshold = 2f; // Time in seconds to consider the agent stuck
     private float stuckDistance = 0.5f;
 
+    ulong SetScoreToPlayer;
+    bool  isTargetRed;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -42,9 +45,10 @@ public class Granny : NetworkBehaviour
     {
         
         if (!IsServer) return;
-        if(!isItTeamGranny)
+        InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
+
+        if (!isItTeamGranny)
         {
-            InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
             Invoke(nameof(DespawnGranny), 119f);
         }
         
@@ -249,14 +253,27 @@ public class Granny : NetworkBehaviour
     private List<Transform> FindTarget()
     {
         List<Transform> ts = new();
-        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        
+        if(isItTeamGranny)
         {
-            ts.Add(item.transform);
+            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+            {
+               
+                if(item.isRed==isTargetRed)ts.Add(item.transform);
+            }
+            foreach (var item in FindObjectsOfType<PlayerController>())
+            {
+                if (item.isRed.Value == isTargetRed) ts.Add(item.transform);
+            }
         }
-        //foreach (var item in FindObjectsOfType<PlayerController>())
-        //{
-        //    ts.Add(item.transform);
-        //}
+        else
+        {
+            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+            {
+                ts.Add(item.transform);
+            }
+        }
+
         return ts;
     }
 
@@ -293,6 +310,12 @@ public class Granny : NetworkBehaviour
 
         walkPoint = hit.position;
         walkPointSet = true;
+    }
+
+    internal void SetData(ulong ClientId, bool v)
+    {
+         SetScoreToPlayer= ClientId;
+         isTargetRed=v;
     }
 
     private void ChasePlayer()
@@ -362,8 +385,14 @@ public class Granny : NetworkBehaviour
                 Vector3 forceDirection = direction.normalized * 50f + Vector3.up * 25f;
                 float forceMagnitude = rb.mass*15f/.35f;
                 Vector3 force = forceDirection.normalized * forceMagnitude;
-               
-                item.BreakCameraClientRPC(playerID, force);
+                if(isItTeamGranny)
+                {
+                    item.BreakCameraClientRPC(playerID, force);
+                    item.AddDamage(1000f, item.OwnerClientId, SetScoreToPlayer);
+                    ScoreManager.Instance.SetKillServerRpc(SetScoreToPlayer);
+                    Invoke(nameof(DespawnGranny), 5f);
+                }
+                
             }
         }
     }
@@ -374,8 +403,13 @@ public class Granny : NetworkBehaviour
         {
             if (item.AIname == playerID)
             {
-                string name = item.AIname;
-                StartCoroutine(ResetAI(name));
+                item.AddDamage(1000f);
+                if(isItTeamGranny)
+                {
+                    ScoreManager.Instance.SetKillServerRpc(SetScoreToPlayer);
+                    Invoke(nameof(DespawnGranny), 5f);
+                }
+                
             }
         }
     }

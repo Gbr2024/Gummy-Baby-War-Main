@@ -7711,7 +7711,7 @@ MonoBehaviour:
   SkillList: {fileID: 8711086757595674878}
   SpecialKillMaster: {fileID: 4809020134834847803}
   SpecialKillEffect: {fileID: 2192225086931162895, guid: 84fcaf430bd80944498740f13f79d4d1, type: 3}
-  SpecialKillBtn: {fileID: 6275903079914747267}
+  SpecialKillSetBtn: {fileID: 6275903079914747267}
   SpecialKillCover: {fileID: 6438777925715498753}
 --- !u!1 &4374958553632728931
 GameObject:
@@ -8456,9 +8456,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2783201492523797901}
   - {fileID: 87002208605093136}
   - {fileID: 4063267084194515905}
-  - {fileID: 2783201492523797901}
   m_Father: {fileID: 537351518135492550}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}

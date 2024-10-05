@@ -106,13 +106,15 @@ public class HealthManager : NetworkBehaviour
         {
             //Debug.LogError(impact.DamagetoApply);
             if (!NetworkManager.Singleton.IsServer) return;
+            if (impact.isRed.Value == controller.isRed) return;
 
-            if (CurrentHealth - impact.DamagetoApply <= 0 && controller.isRed!=impact.isRed)
+
+            if (CurrentHealth - impact.DamagetoApply <= 0 && controller.isRed!=impact.isRed.Value)
             {
                 isDead = true;
-                ScoreManager.Instance.SetKillServerRpc(impact.PlayerID);
+                ScoreManager.Instance.SetKillServerRpc(impact.PlayerID.Value);
             }
-            controller.AddDamage(impact.DamagetoApply, NetworkObject.OwnerClientId, impact.PlayerID);
+            controller.AddDamage(impact.DamagetoApply, NetworkObject.OwnerClientId, impact.PlayerID.Value);
         }
     }
 

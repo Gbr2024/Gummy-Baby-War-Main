@@ -38,8 +38,8 @@ public class Slime : NetworkBehaviour
     {
         impact.transform.position = transform.position;
         var effect = NetworkManager.Instantiate(impact).GetComponent<Impact>();
-        effect.PlayerID = id;
-        effect.isRed = isRed;
+        effect.PlayerID.Value = id;
+        effect.isRed.Value = isRed;
         effect.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
         NetworkObject.Despawn(true);
     }

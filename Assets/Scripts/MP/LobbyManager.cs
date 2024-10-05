@@ -26,6 +26,8 @@ public class LobbyManager : NetworkBehaviour
     private readonly string KEY_SKYBOX_Code="Skybox";
     private readonly string KEY_LEVEL_CODE="Level";
     private readonly string KEY_AI_NAME="AIname";
+    private readonly string KEYSTORM="EnableStorm";
+
     internal Lobby JoinedLobby;
     internal bool GameSceneHasLoaded = false;
     bool isLobbyHost = false;
@@ -183,6 +185,7 @@ public class LobbyManager : NetworkBehaviour
                     {KEY_BLUECOLOR_CODE,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetColor(n)) },
                     {KEY_SKYBOX_Code,new DataObject(DataObject.VisibilityOptions.Public,SelectionManager.Instance.GetSky().ToString()) },
                     {KEY_AI_NAME,new DataObject(DataObject.VisibilityOptions.Public,"Guest_"+GenerateRandomNumberString(8)) },
+                    {KEYSTORM,new DataObject(DataObject.VisibilityOptions.Public,Random.Range(0,2).ToString() )},
                 }
             });
             await RelayManager.Instance.CreateRelay(MaxPlayers);
@@ -338,6 +341,10 @@ public class LobbyManager : NetworkBehaviour
     internal int GetSkybox()
     {
         return int.Parse(JoinedLobby.Data[KEY_SKYBOX_Code].Value);
+    }
+    internal int GetStorm()
+    {
+        return int.Parse(JoinedLobby.Data[KEYSTORM].Value);
     }
 
 

@@ -24,7 +24,7 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: ScopeView
+  - m_From: RocketCamera
     m_To: '**ANY CAMERA**'
     m_Blend:
       m_Style: 1

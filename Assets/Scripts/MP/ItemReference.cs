@@ -10,7 +10,7 @@ public class ItemReference :MonoBehaviour
     public ColorReference colorReference;
     public CharactersData characters;
     public ChatScriptable chatData;
-    public Transform EmtptyTarget;
+    public Transform EmtptyTarget,VideoPlayer;
     public AICreater AIcreator;
     public float hasgoneDownY = -10f;
     public Vector2 dropMin, DropMax;

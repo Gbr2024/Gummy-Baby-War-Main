@@ -18,9 +18,14 @@ public class KillStreakSystem : NetworkBehaviour
     [SerializeField] PathCreator Chopperpath;
     [SerializeField] PegionController pegionController;
     [SerializeField] int testNumber = 0;
+
+    
+
     [SerializeField] bool test,SpawnGranny;
     [SerializeField] Transform[] GrannyPos;
-    [SerializeField] Granny grannyPrefab;
+    [SerializeField] Granny grannyPrefab,teamGranny;
+
+    public bool getSpawnGranny { get { return SpawnGranny; }}
 
     // Start is called before the first frame update
 
@@ -249,5 +254,13 @@ public class KillStreakSystem : NetworkBehaviour
     internal void SetGrannySetup()
     {
         Invoke(nameof(SetGranny), 120f);
+    }
+
+    internal void SpawnTeamGranny(ulong ownerClientId, bool value)
+    {
+        teamGranny.transform.position = GrannyPos[Random.Range(0, GrannyPos.Length)].position;
+        Granny go = NetworkManager.Instantiate(grannyPrefab, grannyPrefab.transform.position, Quaternion.identity).GetComponent<Granny>();
+        go.NetworkObject.Spawn(true);
+        teamGranny.SetData(ownerClientId, !value);
     }
 }

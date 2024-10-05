@@ -60,8 +60,8 @@ public class Grenade : NetworkBehaviour
         Effect.transform.position = transform.position;
         var effect = NetworkManager.Instantiate(Effect).GetComponent<Impact>() ;
         
-        effect.PlayerID=id;
-        effect.isRed=isRed;
+        effect.PlayerID.Value=id;
+        effect.isRed.Value=isRed;
         effect.NetworkObject.SpawnWithOwnership(OwnerClientId, true);
         NetworkObject.Despawn(true);
     }

@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 3048151971
+  InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 1
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 1
@@ -162,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropMin: {x: 25, y: 150}
   DropMax: {x: 115, y: 400}
+  restTime: 20
   layertocheck:
     serializedVersion: 2
     m_Bits: 64
@@ -177,6 +179,12 @@ MonoBehaviour:
   planePrefab: {fileID: 7755358527941364868, guid: 855ec3ce06300d94795e91f6d7f0fb95, type: 3}
   Chopperpath: {fileID: 6468590637564902803, guid: c55e12aa7ae7ab349865a7b39304a39a, type: 3}
   pegionController: {fileID: 1576442797086343453, guid: 599a234f50bb9fc4b87ad7630bd7061e, type: 3}
+  testNumber: 0
+  test: 0
+  SpawnGranny: 0
+  GrannyPos: []
+  grannyPrefab: {fileID: 0}
+  teamGranny: {fileID: 736534764298558801, guid: 0d00ba50788401c43a6d3df511c00fd7, type: 3}
 --- !u!1 &4814230067678280931
 GameObject:
   m_ObjectHideFlags: 0

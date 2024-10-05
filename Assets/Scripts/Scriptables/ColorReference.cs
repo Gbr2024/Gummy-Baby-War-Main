@@ -7,6 +7,7 @@ public class ColorReference : ScriptableObject
 {
     public ColorReferences[] CharacterColors;
     public Material[] skyboxes;
+    public int[] VideoIndex;
 }
 
 [System.Serializable]

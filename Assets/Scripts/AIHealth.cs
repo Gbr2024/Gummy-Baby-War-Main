@@ -38,7 +38,7 @@ public class AIHealth : NetworkBehaviour
                     ScoreManager.Instance.SetKillServerRpc(bullet.AIname);
                 }
             }
-            playercontroller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.PlayerID);
+            playercontroller.AddDamage(bullet.damage);
         }
         if (collision.gameObject.TryGetComponent<Slime>(out Slime slime))
         {
@@ -57,7 +57,7 @@ public class AIHealth : NetworkBehaviour
                     ScoreManager.Instance.SetKillServerRpc(bullet.AIname);
                 }
             }
-            playercontroller.AddDamage(slime.Damage, NetworkObject.OwnerClientId, slime.id);
+            playercontroller.AddDamage(slime.Damage);
         }
         //if (collision.gameObject.GetComponent<Granny>() || collision.gameObject.GetComponentInParent<Granny>())
         //{
@@ -78,12 +78,12 @@ public class AIHealth : NetworkBehaviour
             //Debug.LogError(impact.DamagetoApply);
             if (!NetworkManager.Singleton.IsServer) return;
 
-            if (CurrentHealth - impact.DamagetoApply <= 0 && playercontroller.isRed.Value != impact.isRed)
+            if (CurrentHealth - impact.DamagetoApply <= 0 && playercontroller.isRed.Value != impact.isRed.Value)
             {
                 isDead = true;
-                ScoreManager.Instance.SetKillServerRpc(impact.PlayerID);
+                ScoreManager.Instance.SetKillServerRpc(impact.PlayerID.Value);
             }
-            playercontroller.AddDamage(impact.DamagetoApply, NetworkObject.OwnerClientId, impact.PlayerID);
+            playercontroller.AddDamage(impact.DamagetoApply);
         }
 
         if (other.gameObject.TryGetComponent<Bullet>(out Bullet bullet))
@@ -102,7 +102,7 @@ public class AIHealth : NetworkBehaviour
                     ScoreManager.Instance.SetKillServerRpc(bullet.AIname);
                 }
             }
-            playercontroller.AddDamage(bullet.damage, NetworkObject.OwnerClientId, bullet.PlayerID);
+            playercontroller.AddDamage(bullet.damage);
         }
         if (other.gameObject.TryGetComponent<Slime>(out Slime slime))
         {
@@ -114,7 +114,7 @@ public class AIHealth : NetworkBehaviour
                 isDead = true;
                 ScoreManager.Instance.SetKillServerRpc(slime.id);
             }
-            playercontroller.AddDamage(slime.Damage, NetworkObject.OwnerClientId, slime.id);
+            playercontroller.AddDamage(slime.Damage);
         }
         //if (other.gameObject.GetComponent<Granny>() || other.gameObject.GetComponentInParent<Granny>())
         //{
@@ -143,7 +143,7 @@ public class AIHealth : NetworkBehaviour
 
     
 
-    internal void AddDamage(float damage, ulong playerID)
+    internal void AddDamage(float damage)
     {
         CurrentHealth -= damage;
         CustomProperties.Instance.currentHealth = CurrentHealth;
