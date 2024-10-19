@@ -23,7 +23,8 @@ public class KillStreakSystem : NetworkBehaviour
 
     [SerializeField] bool test,SpawnGranny;
     [SerializeField] Transform[] GrannyPos;
-    [SerializeField] Granny grannyPrefab,teamGranny;
+    [SerializeField] Granny grannyPrefab;
+    [SerializeField] SuperGranny teamGranny;
 
     public bool getSpawnGranny { get { return SpawnGranny; }}
 
@@ -258,9 +259,20 @@ public class KillStreakSystem : NetworkBehaviour
 
     internal void SpawnTeamGranny(ulong ownerClientId, bool value)
     {
-        teamGranny.transform.position = GrannyPos[Random.Range(0, GrannyPos.Length)].position;
-        Granny go = NetworkManager.Instantiate(grannyPrefab, grannyPrefab.transform.position, Quaternion.identity).GetComponent<Granny>();
+        List<Transform> ts = new();
+        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
+        {
+            if (item.isRed == !value) ts.Add(item.transform);
+        }
+        foreach (var item in FindObjectsOfType<PlayerController>())
+        {
+            if (item.isRed.Value == !value) ts.Add(item.transform);
+        }
+        var t = ts[Random.Range(0, ts.Count)].transform.position;
+        var tmp = new Vector3(t.x, t.y + 50f, t.z);
+        teamGranny.transform.position = tmp;
+        SuperGranny go = NetworkManager.Instantiate(teamGranny, tmp, Quaternion.identity).GetComponent<SuperGranny>();
         go.NetworkObject.Spawn(true);
-        teamGranny.SetData(ownerClientId, !value);
+        teamGranny.SetData(ownerClientId,!value);
     }
 }

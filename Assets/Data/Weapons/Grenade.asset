@@ -24,7 +24,8 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  isSniper: 0
+  HasScope: 0
+  IsBoltAction: 0
   WeaponIndex: 1
   AmmoType: GrenadeAmmo
   FireType: 2
@@ -34,13 +35,14 @@ MonoBehaviour:
   BulletHole: {fileID: 0}
   CrossHairSpread: 0.5
   RecoilDuration: 0.1
-  VerticalRecoil: 0.015
+  VerticalRecoil: 0.005
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 80
   FireRate: 0.05
   MagSize: 10
   Range: 75
+  RecockTime: 1.5
   FireSound: {fileID: 8300000, guid: f229fdc2562deac428f04a0ef329c51a, type: 3}
   MagOutSound: {fileID: 8300000, guid: e7eec80bb1c05f5428550d15f82e9f7f, type: 3}
   MagInSound: {fileID: 8300000, guid: fdc0552d93bab4848b6282b3f028e086, type: 3}

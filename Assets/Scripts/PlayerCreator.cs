@@ -117,6 +117,7 @@ public class PlayerCreator : NetworkBehaviour
         if (killstreak >= 2)
         { 
             WBUIActions.EnableKillstreakButton?.Invoke(true);
+            
             WBUIActions.ChangeKillstreak?.Invoke(killstreak.ToString());
         }
         WBUIActions.UpdatelocalScore?.Invoke(kills.Value);

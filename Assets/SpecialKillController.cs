@@ -10,10 +10,11 @@ using Cinemachine;
 
 public class SpecialKillController : NetworkBehaviour
 {
-    public List<string> SpecialKill = new();
+    public List<string> Speckills;
     public NetworkVariable<bool> DummyActivated = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [SerializeField] GameObject DummyRocket;
+    [SerializeField] AudioClip RocketStart, RocketEnd;
 
     WBThirdPersonController controller;
     [SerializeField] Impact impact;
@@ -33,8 +34,7 @@ public class SpecialKillController : NetworkBehaviour
 
     public void SetKills()
     {
-        
-        WBUIActions.SetSpecialKill(SpecialKill);
+        WBUIActions.SetSpecialKill(Speckills);
     }
 
     public override void OnNetworkSpawn()
@@ -58,8 +58,10 @@ public class SpecialKillController : NetworkBehaviour
             case "Granny":
                 SetGrannyforTeamServerRpc();
                 break;
-            default:
+            case "Rocket":
                 SetRocket();
+                break;
+            default:
                 break;
         }
 
@@ -92,13 +94,19 @@ public class SpecialKillController : NetworkBehaviour
             }
         }
         if (target== null) return;
-
+        Debug.LogError(PlayerPrefs.GetInt("SFX", 1));
+        
         PlayerSetManager.instance.virtualCamera.gameObject.SetActive(false);
         PlayerSetManager.instance.RocketCamera.gameObject.SetActive(true);
         pos = target.position;
         DummyActivated.Value = true;
+        if (PlayerPrefs.GetInt("SFX", 1) == 1)
+        { 
+            DummyRocket.GetComponent<AudioSource>().clip=RocketStart; 
+            DummyRocket.GetComponent<AudioSource>().Play(); 
+        }
         controller.RestrictInput();
-        var tpos=new Vector3(transform.position.x, 75f, transform.position.z);
+        var tpos=new Vector3(transform.position.x, 100f, transform.position.z);
         transform.DOLookAt(tpos, .35f);
         transform.DOMove(tpos, 5f).OnComplete(() => { Invoke(nameof(SetRocketTarget), .35f); });
     }
@@ -107,20 +115,29 @@ public class SpecialKillController : NetworkBehaviour
     {
         if(target!=null)
             pos = target.position;
-        float time = 1f * (Vector3.Distance(transform.position, pos) / 50f);
-        transform.DOLookAt(pos, .35f);
-        transform.DOMove(pos, time).OnUpdate(()=> { 
-            if(Vector3.Distance(transform.position, pos)<2f)
+        float time = 1f * (Vector3.Distance(transform.position, pos) / 150f);
+        transform.DOLookAt(pos, 1f).OnComplete(()=> {
+            if (PlayerPrefs.GetInt("SFX", 1) == 1)
             {
-                DummyActivated.Value = false;
-                BlastServerRpc(OwnerClientId, controller.isRed, pos);
-                animator.SetBool("StopFlying", true);
+                DummyRocket.GetComponent<AudioSource>().clip = RocketEnd;
+                DummyRocket.GetComponent<AudioSource>().Play();
             }
-        }).OnComplete(() => { 
-            controller.DeactiveRestriction();
-            PlayerSetManager.instance.virtualCamera.gameObject.SetActive(true);
-            PlayerSetManager.instance.RocketCamera.gameObject.SetActive(false);
+            transform.DOMove(pos, time).OnUpdate(() => {
+                transform.LookAt(pos);
+                if (Vector3.Distance(transform.position, pos) < 2f)
+                {
+                    DummyActivated.Value = false;
+                    BlastServerRpc(OwnerClientId, controller.isRed, pos);
+                    animator.SetBool("StopFlying", true);
+                }
+            }).OnComplete(() => {
+                controller.DeactiveRestriction();
+                PlayerSetManager.instance.virtualCamera.gameObject.SetActive(true);
+                PlayerSetManager.instance.RocketCamera.gameObject.SetActive(false);
+            });
+
         });
+        
 
     }
 
@@ -141,4 +158,14 @@ public class SpecialKillController : NetworkBehaviour
         effect.isRed.Value = isRed;
 
     }
+
+  
+  
+}
+
+[System.Serializable]
+public class SpecialKill
+{
+    public int index;
+    public string SpecialKillName;
 }

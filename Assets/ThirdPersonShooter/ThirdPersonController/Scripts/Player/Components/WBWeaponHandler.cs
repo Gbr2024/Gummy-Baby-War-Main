@@ -233,8 +233,17 @@ namespace WeirdBrothers.ThirdPersonController
             var weaponImage = currentPickUpWeapon.gameObject.GetItemImage();
             var currentAmmo = currentPickUpWeapon.CurrentAmmo;
             var totalAmmo = context.Inventory.GetAmmo(currentPickUpWeapon.Data.AmmoType);
-            if(context.ShooterController.IsOwner)
-                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
+            if (context.ShooterController.IsOwner)
+            {
+                var currAmmo = currentAmmo;
+                var ttlAmmo = totalAmmo;
+                if (currentPickUpWeapon.Data.IsShotGun)
+                { 
+                    currAmmo /= currentPickUpWeapon.Data.ShotGunSlug;
+                    ttlAmmo /= currentPickUpWeapon.Data.ShotGunSlug;
+                }
+                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currAmmo, ttlAmmo);
+            }
 
 
             // if (context.ShooterController.IsLocalPlayer)

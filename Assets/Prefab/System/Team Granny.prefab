@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 480
+      value: 431.0368
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 49.984158
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 272.63
+      value: 230.60913
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -91,22 +91,16 @@ PrefabInstance:
       addedObject: {fileID: 2068712201314276250}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2547137514685516747}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 731212014399536942}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2051565948052342923}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 736534764298558801}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7430623388798982690}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1366333403400581287}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3300753710936217461}
     - targetCorrespondingSourceObject: {fileID: 4085219199758159379, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3796514060002720846}
@@ -156,9 +150,9 @@ MonoBehaviour:
   SyncRotAngleX: 1
   SyncRotAngleY: 1
   SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
@@ -189,28 +183,6 @@ MonoBehaviour:
     TriggerNameHash: -1092128709
     TransitionIndex: 0
   m_Animator: {fileID: 5791418026898583947}
---- !u!195 &2547137514685516747
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005635852217938251}
-  m_Enabled: 1
-  m_AgentTypeID: -1372625422
-  m_Radius: 0.0035
-  m_Speed: 16
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 4
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.025
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!82 &731212014399536942
 AudioSource:
   m_ObjectHideFlags: 0
@@ -320,61 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _footSteps: {fileID: 8300000, guid: 1f50e3d361e2b554d8a8a8c2a1e0bc07, type: 3}
---- !u!114 &736534764298558801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005635852217938251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5bc3b6235736224eaef90ca86194676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DebugMessage: 1
-  animator: {fileID: 5791418026898583947}
-  isItTeamGranny: 1
-  agent: {fileID: 2547137514685516747}
-  players: []
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 65
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 200
-  sightRange: 130
-  attackRange: 4
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  CanSeePlayer: 0
-  nearestPlayer: {fileID: 0}
---- !u!54 &7430623388798982690
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005635852217938251}
-  serializedVersion: 4
-  m_Mass: 1000
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!136 &1366333403400581287
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -388,16 +305,35 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 130999
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.003
+  m_Radius: 0.005
   m_Height: 0.0253
   m_Direction: 1
   m_Center: {x: -0.000035996436, y: 0.01137487, z: -0.0003240243}
+--- !u!114 &-3300753710936217461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005635852217938251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6353a1fea54e84e9d987091c2172a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5791418026898583947}
+  thudSound: {fileID: 8300000, guid: 1f50e3d361e2b554d8a8a8c2a1e0bc07, type: 3}
+  players: []
+  speed: 30
+  attackRange: 4
+  playerInAttackRange: 0
+  nearestPlayer: {fileID: 0}
 --- !u!1 &4144517394555273737 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4085219199758159379, guid: 10746523cc6f2464c86cc857bfe29e3e, type: 3}

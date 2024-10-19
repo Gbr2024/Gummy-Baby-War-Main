@@ -44,7 +44,7 @@ public class CameraFreeflight : MonoBehaviour
         if (forward != 0.0f)  
         {
             float speed = Input.GetKey(KeyCode.LeftShift) ? speedFast : speedNormal;
-            Vector3 trans = new Vector3(0.0f, 0.0f, forward * speed * Time.deltaTime);
+            Vector3 trans = new(0.0f, 0.0f, forward * speed * Time.deltaTime);
             gameObject.transform.localPosition += gameObject.transform.localRotation * trans;
         }
 

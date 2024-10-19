@@ -24,7 +24,8 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  isSniper: 0
+  HasScope: 0
+  IsBoltAction: 0
   WeaponIndex: 2
   AmmoType: PistolAmmo
   FireType: 2
@@ -34,7 +35,7 @@ MonoBehaviour:
   BulletHole: {fileID: 0}
   CrossHairSpread: 0.5
   RecoilDuration: 0.1
-  VerticalRecoil: 0.005
+  VerticalRecoil: 0.0025
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 35

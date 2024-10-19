@@ -19,7 +19,12 @@ namespace WeirdBrothers.ThirdPersonController
         [Space]
         [Header("Weapon Data")]
         public WBWeaponType WeaponType;
-        public bool isSniper = false;
+        public bool HasScope = false;
+        public bool IsBoltAction = false;
+        public bool IsShotGun = false;
+        public int ShotGunSlug = 5;
+        public float ShotGunSpread = .2f;
+
         public int WeaponIndex;
         public string AmmoType;
         public FireType FireType;

@@ -325,7 +325,7 @@ namespace WeirdBrothers.ThirdPersonController
                 ShootServerRpc(NetworkObject.OwnerClientId, hitPoint, camRot,Context.CurrentWeapon.GetMuzzleFlah.position,isRed);
                 _context.CurrentWeapon.FireBullet(hitPoint, camRot, Context.CurrentWeapon.GetMuzzleFlah.position,isRed,true);
             }
-            if(_context.CurrentWeapon.Data.isSniper && Context.isScopeOn)
+            if(_context.CurrentWeapon.Data.IsBoltAction && Context.isScopeOn)
             {
                 Context.Animator._animator.SetTrigger("DummyReload");
                 Context.isRecoking = true;
@@ -626,7 +626,7 @@ namespace WeirdBrothers.ThirdPersonController
             SetLookLookRotationOnWeapon();
             Debug.LogError(Context.isScopeOn);
             WBUIActions.EnableSecShoot?.Invoke(Context.isScopeOn);
-            if (Context.CurrentWeapon.Data.isSniper)
+            if (Context.CurrentWeapon.Data.HasScope)
                 Context.CurrentWeapon.ScopeView.gameObject.SetActive(Context.isScopeOn);
             else
                 PlayerSetManager.instance.ChangeView(Context.isScopeOn ? Context.CurrentWeapon.Data.FeildView : 40f);
@@ -680,7 +680,7 @@ namespace WeirdBrothers.ThirdPersonController
             if( IsOwner && OwnerClientId==clientID)
             {
                 WBUIActions.EnableBrokenScreen?.Invoke(true);
-                Context.Controller.Rigidbody.AddForce(force, ForceMode.Impulse);
+                Context.Controller.Rigidbody.velocity = new Vector3(force.x /9f, force.y / 22f, force.z / 9f);
             }
         }
 

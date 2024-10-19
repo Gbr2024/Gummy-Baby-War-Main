@@ -183,8 +183,8 @@ MonoBehaviour:
   test: 0
   SpawnGranny: 0
   GrannyPos: []
-  grannyPrefab: {fileID: 0}
-  teamGranny: {fileID: 736534764298558801, guid: 0d00ba50788401c43a6d3df511c00fd7, type: 3}
+  grannyPrefab: {fileID: 736534764298558801, guid: b0c00008feede4f43adfd02d7eb8561c, type: 3}
+  teamGranny: {fileID: -3300753710936217461, guid: 0d00ba50788401c43a6d3df511c00fd7, type: 3}
 --- !u!1 &4814230067678280931
 GameObject:
   m_ObjectHideFlags: 0

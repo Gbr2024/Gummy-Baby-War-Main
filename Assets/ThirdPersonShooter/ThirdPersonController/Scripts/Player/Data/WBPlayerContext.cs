@@ -166,7 +166,18 @@ namespace WeirdBrothers.ThirdPersonController
             var currentAmmo = weapon.CurrentAmmo;
             var totalAmmo = Inventory.GetAmmo(weapon.Data.AmmoType);
             if (ShooterController.IsOwner)
-                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
+            {
+                var currAmmo = currentAmmo;
+                var ttlAmmo = totalAmmo;
+                if (weapon.Data.IsShotGun)
+                { 
+                    currAmmo /= weapon.Data.ShotGunSlug;
+                    ttlAmmo /= weapon.Data.ShotGunSlug;
+                }
+
+                WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currAmmo, ttlAmmo);
+            }
+                
         }
 
         public void UpdateAmmo()
@@ -198,8 +209,17 @@ namespace WeirdBrothers.ThirdPersonController
                 var weaponImage = weapon.gameObject.GetItemImage();
                 var currentAmmo = weapon.CurrentAmmo;
                 var totalAmmo = Inventory.GetAmmo(weapon.Data.AmmoType);
-                if(ShooterController.IsOwner)
-                    WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currentAmmo, totalAmmo);
+                if (ShooterController.IsOwner)
+                {
+                    var currAmmo = currentAmmo;
+                    var ttlAmmo = totalAmmo;
+                    if (weapon.Data.IsShotGun)
+                    { 
+                        currAmmo /= weapon.Data.ShotGunSlug;
+                        ttlAmmo /= weapon.Data.ShotGunSlug;
+                    }
+                    WBUIActions.SetPrimaryWeaponUI?.Invoke(index, weaponImage, currAmmo, ttlAmmo); 
+                }
             });
         }
 

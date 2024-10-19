@@ -62,36 +62,34 @@ namespace WeirdBrothers.ThirdPersonController
 
         private void SetSpecialKill(List<string> obj)
         {
-            while (SpecialKillMaster.childCount>0)
+            while (SpecialKillMaster.childCount > 0)
             {
                 DestroyImmediate(SpecialKillMaster.GetChild(0).gameObject);
             }
             foreach (var item in obj)
             {
-                if (item == "Granny" && !KillStreakSystem.Instance.getSpawnGranny)
-                    continue;
-
-                var g=Instantiate(SpecialKillEffect, SpecialKillMaster);
+                var g = Instantiate(SpecialKillEffect, SpecialKillMaster);
                 var kill = item;
                 Debug.LogError(g);
                 g.onClick.AddListener(() => { OnSkillInvoked(kill); });
                 g.transform.GetComponentInChildren<TMP_Text>().text = kill;
             }
-            SpecialKillButton.SetActive(true);
         }
 
         private void OnSkillInvoked(string kill)
         {
             WBUIActions.OnKillInvoked?.Invoke(kill);
-            SpecialKillSetBtn.interactable = false;
-            SpecialKillCover.fillAmount = 1f;
-            SpecialKillCover.gameObject.SetActive(true);
-            SpecialKillCover.DOFillAmount(0, 90f).OnComplete(() =>
-            {
-                SpecialKillCover.gameObject.SetActive(false);
-                SpecialKillSetBtn.interactable = true;
-            });
+            //SpecialKillSetBtn.interactable = false;
+            //SpecialKillCover.fillAmount = 1f;
+            //SpecialKillCover.gameObject.SetActive(true);
+            //SpecialKillCover.DOFillAmount(0, 90f).OnComplete(() =>
+            //{
+            //    SpecialKillCover.gameObject.SetActive(false);
+            //    SpecialKillSetBtn.interactable = true;
+            //});
             SkillList.SetActive(false);
+            SpecialKillButton.SetActive(false);
+            KillstreakButton.SetActive(false);
         }
 
         public void OpenSkillList()
@@ -151,6 +149,8 @@ namespace WeirdBrothers.ThirdPersonController
             WBUIActions.EnableSecShoot -= SetSecShootbtn;
             WBUIActions.SetSpecialKill -= SetSpecialKill;
         }
+
+       
 
         private void Start()
         {
@@ -274,6 +274,8 @@ namespace WeirdBrothers.ThirdPersonController
         private void SetKillStreakButton(bool obj)
         {
             KillstreakButton.SetActive(obj);
+            SpecialKillButton.SetActive(obj);
+            if(!obj)SkillList.SetActive(false);
         }
     }
 

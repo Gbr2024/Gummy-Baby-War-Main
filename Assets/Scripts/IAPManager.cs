@@ -27,6 +27,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     {
         setupBuilder();
         LoadResources();
+        //PlayerPrefs.SetInt("WeaponSelected", 4);
     }
 
     private void Update()

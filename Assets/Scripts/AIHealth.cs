@@ -78,10 +78,10 @@ public class AIHealth : NetworkBehaviour
             //Debug.LogError(impact.DamagetoApply);
             if (!NetworkManager.Singleton.IsServer) return;
 
-            if (CurrentHealth - impact.DamagetoApply <= 0 && playercontroller.isRed.Value != impact.isRed.Value)
+            if (CurrentHealth - impact.DamagetoApply <= 0)
             {
                 isDead = true;
-                ScoreManager.Instance.SetKillServerRpc(impact.PlayerID.Value);
+                if(playercontroller.isRed.Value != impact.isRed.Value) ScoreManager.Instance.SetKillServerRpc(impact.PlayerID.Value);
             }
             playercontroller.AddDamage(impact.DamagetoApply);
         }

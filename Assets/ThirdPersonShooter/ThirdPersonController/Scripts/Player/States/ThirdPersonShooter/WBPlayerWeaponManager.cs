@@ -226,9 +226,18 @@ namespace WeirdBrothers.ThirdPersonController
                 _index = 4;
             }
             if (_context.ShooterController.IsOwner)
+            {
+                var currAmmo = _context.CurrentWeapon.CurrentAmmo;
+                var ttlAmmo = _context.Inventory.GetAmmo(_context.CurrentWeapon.Data.AmmoType);
+                if (_context.CurrentWeapon.Data.IsShotGun)
+                {
+                    currAmmo /= _context.CurrentWeapon.Data.ShotGunSlug;
+                    ttlAmmo /= _context.CurrentWeapon.Data.ShotGunSlug;
+                }
+
                 WBUIActions.SetPrimaryWeaponUI?.Invoke(_index, _context.CurrentWeapon.Data.WeaponImage,
-             _context.CurrentWeapon.CurrentAmmo,
-            _context.Inventory.GetAmmo(_context.CurrentWeapon.Data.AmmoType));
+              currAmmo,ttlAmmo);
+            }
         }
 
         internal void SetRotationLookForCurrentWeapon()

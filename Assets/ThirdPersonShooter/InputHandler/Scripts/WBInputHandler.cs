@@ -21,7 +21,7 @@ public class WBInputHandler : MonoBehaviour
     [SerializeField] private float _touchSensitivity;
     [SerializeField] private bool HasControl = false,isForLocal=false; 
 
-    private FixedJoystick _joystick;
+    private Joystick _joystick;
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class WBInputHandler : MonoBehaviour
         {
             _mobileInput?.SetActive(true);
             CinemachineCore.GetInputAxis = HandleAxisInputDelegate;
-            _joystick = FindObjectOfType<FixedJoystick>();
+            _joystick = FindObjectOfType<Joystick>();
         }
         else
         {

@@ -437,37 +437,55 @@ MonoBehaviour:
   tickAudioClip: {fileID: 0}
   volume: 0.5
   pitch: 1
-  spinDuration: 5
+  spinDuration: 4
   wheelSize: 0.66
   wheelPieces:
   - Icon: {fileID: 1087227910, guid: 9a3009f5595eaef4380c12609b6e7d40, type: 3}
-    Label: Cork Gun
+    Label: Cork Gun Toy
     Amount: 0
-    Chance: 50
+    Chance: 100
     Index: 0
     _weight: 0
   - Icon: {fileID: -1495522365, guid: 2cdf6c156d0ab9347aa27d3ab131d037, type: 3}
-    Label: Pistol
+    Label: Pistol Toy
     Amount: 1
-    Chance: 65
+    Chance: 100
     Index: 0
     _weight: 0
   - Icon: {fileID: 834819111, guid: e9b1d45c5eba8a140b59a825fce83504, type: 3}
-    Label: Grenade Launcher
+    Label: Grenade Launcher Toy
     Amount: 2
-    Chance: 90
+    Chance: 100
     Index: 0
     _weight: 0
   - Icon: {fileID: -1471479015, guid: 4acb340553ec8494aac76d0bf29d8f71, type: 3}
-    Label: Machine Gun
+    Label: Machine Gun Toy
     Amount: 3
     Chance: 100
     Index: 0
     _weight: 0
   - Icon: {fileID: -753205654, guid: 0e023c5f4198a61488c0e297052491b3, type: 3}
-    Label: Sniper
+    Label: Sniper Toy
     Amount: 4
-    Chance: 80
+    Chance: 100
+    Index: 0
+    _weight: 0
+  - Icon: {fileID: 21300000, guid: 9a5e26f847e03b841abb5c12ef104e30, type: 3}
+    Label: DragonFire Red
+    Amount: 5
+    Chance: 100
+    Index: 0
+    _weight: 0
+  - Icon: {fileID: 21300000, guid: 9a5e26f847e03b841abb5c12ef104e30, type: 3}
+    Label: DragonFire Blue
+    Amount: 6
+    Chance: 100
+    Index: 0
+    _weight: 0
+  - Icon: {fileID: 1589832045, guid: 64651ca5dd7aaf94091df33e45f9cbb5, type: 3}
+    Label: Shotgun
+    Amount: 7
+    Chance: 100
     Index: 0
     _weight: 0
 --- !u!1 &1743374398951528

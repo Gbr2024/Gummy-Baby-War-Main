@@ -67,6 +67,8 @@ public class PlayerSetManager : MonoBehaviour
         virtualCamera.Follow = go.transform;
         RocketCamera.LookAt = go.transform;
         RocketCamera.Follow = go.transform;
+        virtualCamera.gameObject.SetActive(true);
+        RocketCamera.gameObject.SetActive(false);
         go.GetComponent<WBInputHandler>().SetInput(InputControl);
 
         //Debug.LogError("data Set");

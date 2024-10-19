@@ -24,7 +24,8 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0}
   WeaponType: 0
-  isSniper: 0
+  HasScope: 0
+  IsBoltAction: 0
   WeaponIndex: 1
   AmmoType: ToyMachineAmmo
   FireType: 1
@@ -34,12 +35,12 @@ MonoBehaviour:
   BulletHole: {fileID: 0}
   CrossHairSpread: 0.5
   RecoilDuration: 0.1
-  VerticalRecoil: 0.005
+  VerticalRecoil: 0.0025
   HorizontalRecoil: 0
   WeaponSpread: 0
   Damage: 20
   FireRate: 0.05
-  MagSize: 35
+  MagSize: 40
   Range: 150
   RecockTime: 1.5
   FireSound: {fileID: 8300000, guid: 328927f678e90594f990334d0ce94526, type: 3}

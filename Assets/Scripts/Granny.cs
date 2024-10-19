@@ -9,7 +9,6 @@ public class Granny : NetworkBehaviour
 {
     [SerializeField] bool DebugMessage;
     [SerializeField] Animator animator;
-    [SerializeField] bool isItTeamGranny;
     public NavMeshAgent agent;
 
     public List<Transform> players;
@@ -47,11 +46,8 @@ public class Granny : NetworkBehaviour
         if (!IsServer) return;
         InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
 
-        if (!isItTeamGranny)
-        {
-            Invoke(nameof(DespawnGranny), 119f);
-        }
-        
+        Invoke(nameof(DespawnGranny), 119f);
+
 
     }
 
@@ -253,25 +249,10 @@ public class Granny : NetworkBehaviour
     private List<Transform> FindTarget()
     {
         List<Transform> ts = new();
-        
-        if(isItTeamGranny)
+
+        foreach (var item in FindObjectsOfType<WBThirdPersonController>())
         {
-            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
-            {
-               
-                if(item.isRed==isTargetRed)ts.Add(item.transform);
-            }
-            foreach (var item in FindObjectsOfType<PlayerController>())
-            {
-                if (item.isRed.Value == isTargetRed) ts.Add(item.transform);
-            }
-        }
-        else
-        {
-            foreach (var item in FindObjectsOfType<WBThirdPersonController>())
-            {
-                ts.Add(item.transform);
-            }
+            ts.Add(item.transform);
         }
 
         return ts;
@@ -382,16 +363,11 @@ public class Granny : NetworkBehaviour
                 var rb = item.GetComponent<Rigidbody>();
                 Vector3 direction = (nearestPlayer.position - transform.position).normalized;
                 direction.y = 0.0f; // Flatten direction vector on the horizontal plane
-                Vector3 forceDirection = direction.normalized * 50f + Vector3.up * 25f;
+                Vector3 forceDirection = direction.normalized * 125f + Vector3.up * 25f;
                 float forceMagnitude = rb.mass*15f/.35f;
                 Vector3 force = forceDirection.normalized * forceMagnitude;
-                if(isItTeamGranny)
-                {
-                    item.BreakCameraClientRPC(playerID, force);
-                    item.AddDamage(1000f, item.OwnerClientId, SetScoreToPlayer);
-                    ScoreManager.Instance.SetKillServerRpc(SetScoreToPlayer);
-                    Invoke(nameof(DespawnGranny), 5f);
-                }
+                item.BreakCameraClientRPC(playerID, force);
+                
                 
             }
         }
@@ -404,11 +380,7 @@ public class Granny : NetworkBehaviour
             if (item.AIname == playerID)
             {
                 item.AddDamage(1000f);
-                if(isItTeamGranny)
-                {
-                    ScoreManager.Instance.SetKillServerRpc(SetScoreToPlayer);
-                    Invoke(nameof(DespawnGranny), 5f);
-                }
+                
                 
             }
         }
