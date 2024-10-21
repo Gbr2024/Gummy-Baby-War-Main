@@ -55,8 +55,18 @@ public class SelectionManager : MonoBehaviour
 
     public void Save()
     {
-        AdmobAds.Instance.ShowInterstitialAd(SaveTheData);
-        
+        //AdmobAds.Instance.ShowInterstitialAd(SaveTheData);
+        SaveTheData();
+    }
+
+    public void ShowAndCloseSelection()
+    {
+        AdmobAds.Instance.ShowInterstitialAd(CloseSelection);
+    }
+
+    void CloseSelection()
+    {
+        UIManager.instance.OpenPanel(0);
     }
 
     private void SaveTheData()
@@ -206,12 +216,7 @@ public class SelectionManager : MonoBehaviour
 
     public int GetSky()
     {
-        int currentSkyboxIndex = PlayerPrefs.GetInt("SkyboxLoad", 0);  // Get the current value
-        currentSkyboxIndex++;  // Increment the index
-
-        if (currentSkyboxIndex >= ColorData.skyboxes.Length)  // Check if it exceeds array length
-            currentSkyboxIndex = 0;  // Reset to 0 if necessary
-
+        int currentSkyboxIndex = Random.Range(0, ColorData.skyboxes.Length);// Get the current valu
         PlayerPrefs.SetInt("SkyboxLoad", currentSkyboxIndex);  // Store the new value
 
         return currentSkyboxIndex;  // Return the updated index

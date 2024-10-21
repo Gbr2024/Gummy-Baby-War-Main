@@ -58,6 +58,8 @@ public class LobbyManager : NetworkBehaviour
         //NetworkManager.Singleton.OnClientStarted += ClientStarted;
         isLobbyHost = false;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Screen.SetResolution(Screen.width, Screen.height, true);
+        Application.targetFrameRate = 30;
     }
 
     private void Test(ulong obj)

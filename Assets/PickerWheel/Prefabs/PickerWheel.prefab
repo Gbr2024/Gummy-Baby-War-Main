@@ -470,13 +470,13 @@ MonoBehaviour:
     Chance: 100
     Index: 0
     _weight: 0
-  - Icon: {fileID: 21300000, guid: 9a5e26f847e03b841abb5c12ef104e30, type: 3}
+  - Icon: {fileID: 21300000, guid: 9156fc245eca46643ab88fb97a2c8675, type: 3}
     Label: DragonFire Red
     Amount: 5
     Chance: 100
     Index: 0
     _weight: 0
-  - Icon: {fileID: 21300000, guid: 9a5e26f847e03b841abb5c12ef104e30, type: 3}
+  - Icon: {fileID: 21300000, guid: 6057bd6bbc85f3b43be1368f88750f55, type: 3}
     Label: DragonFire Blue
     Amount: 6
     Chance: 100
