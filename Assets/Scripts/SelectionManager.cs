@@ -74,7 +74,7 @@ public class SelectionManager : MonoBehaviour
         PlayerPrefs.SetInt("CharacterIndex", CharacterIndex);
         PlayerPrefs.SetInt("WeaponIndex", WeaponIndex);
         PlayerPrefs.SetInt("ColorIndex", ColorIndex);
-        UIManager.instance.OpenPanel(0);
+        //UIManager.instance.OpenPanel(0);
     }
 
     public void SeNextPrevColor(string id)
