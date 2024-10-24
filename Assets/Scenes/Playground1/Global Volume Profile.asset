@@ -933,10 +933,10 @@ MonoBehaviour:
     dimension: 1
   bloomIntensity:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0.25
   bloomThreshold:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.25
   bloomConservativeThreshold:
     m_OverrideState: 0
     m_Value: 0

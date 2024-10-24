@@ -51,13 +51,11 @@ namespace WeirdBrothers.ThirdPersonController
             return false;
         }
 
-        private void FixedUpdate()
-        {
-            _movement.Schedule();
-        }
+       
 
         private void Update()
         {
+            _movement.Schedule();
             Array.ForEach(_playerStates.ToArray(), state =>
             {
                 state.Schedule();

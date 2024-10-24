@@ -9,6 +9,8 @@ namespace WeirdBrothers.ThirdPersonController
         private float _hor, _ver, _speed;
         private Vector3 _desiredMoveDirection, _forward, _right;
 
+       
+
         public WBPlayerMovement(WBPlayerContext context)
         {
             _context = context;
@@ -18,6 +20,7 @@ namespace WeirdBrothers.ThirdPersonController
             _forward = Vector3.zero;
             _right = Vector3.zero;
             _desiredMoveDirection = Vector3.zero;
+            
         }
 
         public void Execute()
@@ -38,8 +41,8 @@ namespace WeirdBrothers.ThirdPersonController
 
             if (_context.isScopeOn)
             {
-                _hor /= 5f;
-                _ver /= 5f;
+                _hor /= 3f;
+                _ver /= 3f;
             }
             
             if (_speed > _context.Data.AllowPlayerMovement)

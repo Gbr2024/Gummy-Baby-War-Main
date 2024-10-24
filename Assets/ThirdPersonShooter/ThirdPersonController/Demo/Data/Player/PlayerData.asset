@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee01c7854ce90409889028510c0d60, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  StartAnimTime: 0.3
-  StopAnimTime: 0.15
-  AllowPlayerMovement: 0.05
+  StartAnimTime: 0.5
+  AnimeSmoothTime: 0.5
+  StopAnimTime: 0.12
+  AllowPlayerMovement: 0.15
   DesireRotationSpeed: 2
   MoveSpeed: 7
   JumpForce: 7.5

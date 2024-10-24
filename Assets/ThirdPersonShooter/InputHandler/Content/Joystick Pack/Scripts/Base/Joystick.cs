@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,9 +7,12 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
-    public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
+    public float Horizontal { get { return (snapX) ? SnapFloat(currentInput.x, AxisOptions.Horizontal) : currentInput.x; } }
+    public float Vertical { get { return (snapY) ? SnapFloat(currentInput.y, AxisOptions.Vertical) : currentInput.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
+
+    bool isLocked = false;
+    DateTime StartTime;
 
     public float HandleRange
     {
@@ -22,7 +26,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         set { deadZone = Mathf.Abs(value); }
     }
 
-    public AxisOptions AxisOptions { get { return AxisOptions; } set { axisOptions = value; } }
+    public AxisOptions AxisOptions { get { return axisOptions; } set { axisOptions = value; } }
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
 
@@ -40,10 +44,12 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     private Camera cam;
 
     internal Vector2 input = Vector2.zero;
+    internal Vector2 currentInput = Vector2.zero; // New variable for damped input
+
+    float dampingSpeed = 4f; // Speed of damping
 
     Color BgColor;
     Color HanlderColor;
-
 
     protected virtual void Start()
     {
@@ -74,7 +80,13 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         HanlderColor.a = 1f;
         background.GetComponent<Image>().color = BgColor;
         handle.GetComponent<Image>().color = HanlderColor;
+        handle.anchoredPosition = Vector2.zero;
+        input = Vector2.zero;
+        currentInput = Vector2.zero;
+        isLocked = false;
+        StartTime = DateTime.Now;
         OnDrag(eventData);
+        
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -100,6 +112,13 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         else
             input = Vector2.zero;
+
+        // Smoothly interpolate the currentInput towards the input
+        //Debug.LogError(currentInput);
+        if (currentInput.magnitude < .85f)
+            currentInput = Vector2.Lerp(currentInput, input, Time.deltaTime * dampingSpeed);
+        else
+            currentInput =input;
     }
 
     private void FormatInput()
@@ -150,10 +169,17 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         HanlderColor.a = .1f;
         background.GetComponent<Image>().color = BgColor;
         handle.GetComponent<Image>().color = HanlderColor;
-        input = Vector2.zero;
-        handle.anchoredPosition = Vector2.zero;
-        
-
+        if((DateTime.Now-StartTime).TotalSeconds>2f && currentInput.y>.925f)
+        {
+            isLocked = true;
+        }
+        else
+        {
+            input = Vector2.zero;
+            currentInput = Vector2.zero;
+            handle.anchoredPosition = Vector2.zero;
+        }
+       
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)

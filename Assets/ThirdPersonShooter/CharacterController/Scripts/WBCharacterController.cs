@@ -182,6 +182,10 @@ namespace WeirdBrothers.CharacterController
 
         #region Move
 
+        float dampTime = 0.15f; // Time to smooth the movement
+        Vector3 _velocity = Vector3.zero; // Used by SmoothDamp
+        Vector3 _currentMoveVector;
+
         private Vector3 _moveVector = Vector3.zero;
 
         public void Move(Vector3 moveVector)
@@ -195,6 +199,7 @@ namespace WeirdBrothers.CharacterController
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.AddForce(Vector3.up * force, ForceMode.VelocityChange);
+            
         }
 
         #endregion
@@ -221,9 +226,20 @@ namespace WeirdBrothers.CharacterController
             {
                 Rigidbody.velocity = new Vector3(0,Rigidbody.velocity.y,0);
                 Rigidbody.angularVelocity = new Vector3(0,Rigidbody.angularVelocity.y,0);
+                Rigidbody.velocity = new Vector3(_moveVector.x, Rigidbody.velocity.y, _moveVector.z);
+
+                //Rigidbody.MovePosition(Rigidbody.position + new Vector3(_moveVector.x, Rigidbody.velocity.y, _moveVector.z) * Time.fixedDeltaTime);
                 //Rigidbody.velocity = _moveVector;
-                Rigidbody.velocity = new Vector3(_moveVector.x, Rigidbody.velocity.y, _moveVector.z); 
+                //_currentMoveVector = Vector3.SmoothDamp(_currentMoveVector, _moveVector, ref _velocity, dampTime);
+                //Rigidbody.velocity = new Vector3(_currentMoveVector.x, Rigidbody.velocity.y, _currentMoveVector.z);
+
+                //Rigidbody.velocity = Vector3.Lerp(Rigidbody.velocity, _moveVector, 0.1f);
                 //Rigidbody.MovePosition(Rigidbody.position + _moveVector * Time.fixedDeltaTime);
+            }
+            else if(Rigidbody.velocity != new Vector3(0, Rigidbody.velocity.y, 0) || Rigidbody.angularVelocity != new Vector3(0, Rigidbody.angularVelocity.y, 0))
+            {
+                Rigidbody.velocity = new Vector3(0, Rigidbody.velocity.y, 0);
+                Rigidbody.angularVelocity = new Vector3(0, Rigidbody.angularVelocity.y, 0);
             }
         }
 

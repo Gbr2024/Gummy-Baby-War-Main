@@ -70,7 +70,7 @@ public class Bullet : MonoBehaviour
         {
             if(Body!=null)Body.SetActive(!DisableBody);
             trail.enabled = false;
-            Invoke(nameof(Sleep), 4f);
+            Invoke(nameof(Sleep), 2f);
             if(TryGetComponent(out AudioSource ad))
                 ad.Play();
             Instantiate(HitEffect, transform.position, Quaternion.identity);

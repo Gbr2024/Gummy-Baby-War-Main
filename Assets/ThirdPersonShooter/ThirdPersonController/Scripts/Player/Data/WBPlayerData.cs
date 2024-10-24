@@ -9,6 +9,9 @@ namespace WeirdBrothers.ThirdPersonController
         [Header("Animation Smoothing")]
         [Range(0, 1f)]
         public float StartAnimTime = 0.3f;
+        
+        [Range(0, 1f)]
+        public float AnimeSmoothTime = 0.3f;
 
         [Range(0, 1f)]
         public float StopAnimTime = 0.15f;

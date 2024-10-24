@@ -104,10 +104,7 @@ public class PlayerController : NetworkBehaviour
         Gizmos.DrawRay(Front.position, rightRayDirection * rayRange);
     }
 
-    private void OnDrawGizmos()
-    {
-        //CalculateFOV();
-    }
+   
 
     bool isAiming = false;
     public NetworkVariable<int> bulletlayer = new NetworkVariable<int>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
