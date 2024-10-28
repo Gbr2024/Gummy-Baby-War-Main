@@ -42,4 +42,14 @@ public class ItemReference :MonoBehaviour
         }
         return null;
     }
+
+    internal Sprite GetSpecialAttackImage(string id)
+    {
+        foreach (var item in colorReference.specialAttacksImages)
+        {
+            if (item.Id == id)
+                return item.Image;
+        }
+        return null;
+    }
 }

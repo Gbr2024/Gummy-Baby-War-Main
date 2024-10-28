@@ -1013,9 +1013,9 @@ MonoBehaviour:
   SyncRotAngleX: 1
   SyncRotAngleY: 1
   SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.005
   ScaleThreshold: 0.01
@@ -1155,9 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7cd570ff7027284d920de43a656d3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speckills:
-  - Granny
-  - Rocket
+  Speckills: []
   DummyActivated:
     m_InternalValue: 0
   DummyRocket: {fileID: 4086651101349043793}

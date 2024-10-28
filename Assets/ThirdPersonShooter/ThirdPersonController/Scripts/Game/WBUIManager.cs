@@ -72,7 +72,8 @@ namespace WeirdBrothers.ThirdPersonController
                 var kill = item;
                 Debug.LogError(g);
                 g.onClick.AddListener(() => { OnSkillInvoked(kill); });
-                g.transform.GetComponentInChildren<TMP_Text>().text = kill;
+                g.transform.GetComponentInChildren<TMP_Text>(true).text = kill;
+                g.transform.GetChild(1).GetComponent<Image>().sprite = ItemReference.Instance.GetSpecialAttackImage(kill);
             }
         }
 
@@ -271,11 +272,12 @@ namespace WeirdBrothers.ThirdPersonController
             Tick.SetActive(false);
         }
 
-        private void SetKillStreakButton(bool obj)
+        private void SetKillStreakButton(bool obj,bool b)
         {
             KillstreakButton.SetActive(obj);
-            SpecialKillButton.SetActive(obj);
-            if(!obj)SkillList.SetActive(false);
+            SpecialKillButton.SetActive(b);
+            if(b && SpecialKillMaster.childCount==0) SpecialKillButton.SetActive(false);
+            if (!obj)SkillList.SetActive(false);
         }
     }
 

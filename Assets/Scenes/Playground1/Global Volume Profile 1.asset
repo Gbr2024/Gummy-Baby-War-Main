@@ -247,13 +247,13 @@ MonoBehaviour:
     m_Value: 1
   saturate:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 1.75
   brightness:
     m_OverrideState: 1
-    m_Value: 1.05
+    m_Value: 1
   contrast:
     m_OverrideState: 1
-    m_Value: 1.02
+    m_Value: 1.03
   daltonize:
     m_OverrideState: 0
     m_Value: 0
@@ -281,10 +281,10 @@ MonoBehaviour:
     dimension: 1
   bloomIntensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.15
   bloomThreshold:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.1
   bloomConservativeThreshold:
     m_OverrideState: 0
     m_Value: 0
@@ -381,11 +381,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   anamorphicFlaresIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.015
   anamorphicFlaresThreshold:
-    m_OverrideState: 0
-    m_Value: 0.75
+    m_OverrideState: 1
+    m_Value: 1.25
   anamorphicFlaresConservativeThreshold:
     m_OverrideState: 0
     m_Value: 0

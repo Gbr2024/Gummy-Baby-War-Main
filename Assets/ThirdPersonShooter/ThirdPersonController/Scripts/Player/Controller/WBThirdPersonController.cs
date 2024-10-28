@@ -668,7 +668,7 @@ namespace WeirdBrothers.ThirdPersonController
                 PlayerCreator.Instance.killstreak = KillStreak;
                 if(PlayerCreator.Instance.killstreak >= 2)
                 {
-                    WBUIActions.EnableKillstreakButton?.Invoke(true);
+                    WBUIActions.EnableKillstreakButton?.Invoke(true, PlayerCreator.Instance.killstreak > 2);
                     WBUIActions.ChangeKillstreak?.Invoke(PlayerCreator.Instance.killstreak.ToString());
                 }
             }

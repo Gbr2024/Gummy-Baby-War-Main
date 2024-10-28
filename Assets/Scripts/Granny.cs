@@ -46,7 +46,7 @@ public class Granny : NetworkBehaviour
         if (!IsServer) return;
         InvokeRepeating(nameof(findnearestPLayer), 2f, 2f);
 
-        Invoke(nameof(DespawnGranny), 119f);
+        Invoke(nameof(DespawnGranny), 90f);
 
 
     }

@@ -116,7 +116,7 @@ public class KillStreakSystem : NetworkBehaviour
                 SetChopperandTargetServerRpc(id, isred);
                 break;
         }
-        WBUIActions.EnableKillstreakButton?.Invoke(false);
+        WBUIActions.EnableKillstreakButton?.Invoke(false,false);
     }
 
     private void SetMap()
@@ -269,7 +269,7 @@ public class KillStreakSystem : NetworkBehaviour
             if (item.isRed.Value == !value) ts.Add(item.transform);
         }
         var t = ts[Random.Range(0, ts.Count)].transform.position;
-        var tmp = new Vector3(t.x, t.y + 50f, t.z);
+        var tmp = new Vector3(t.x, t.y + 100f, t.z);
         teamGranny.transform.position = tmp;
         SuperGranny go = NetworkManager.Instantiate(teamGranny, tmp, Quaternion.identity).GetComponent<SuperGranny>();
         go.NetworkObject.Spawn(true);

@@ -56,7 +56,7 @@ public class SuperGranny : NetworkBehaviour
         findnearestPLayer();
         TargetPos = nearestPlayer.position;
 
-        transform.DOMove(TargetPos, .75f).OnUpdate(() =>
+        transform.DOMove(TargetPos, 1.75f).OnUpdate(() =>
         {
             if (Vector3.Distance(transform.position, TargetPos) < 5f && animator.GetBool("CompleteFall") != true)
             { 

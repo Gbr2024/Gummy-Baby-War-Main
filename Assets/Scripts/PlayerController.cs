@@ -115,7 +115,7 @@ public class PlayerController : NetworkBehaviour
     float smoothingSpeed = 1f;
 
     bool aim = false;
-    private void Update()
+    private void FixedUpdate()
     {
         if (weapon.CurrentAmmo == 0)
         {

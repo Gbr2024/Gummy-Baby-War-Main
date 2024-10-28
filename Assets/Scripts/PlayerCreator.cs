@@ -116,7 +116,7 @@ public class PlayerCreator : NetworkBehaviour
         if (killstreak > 5) killstreak = 5;
         if (killstreak >= 2)
         { 
-            WBUIActions.EnableKillstreakButton?.Invoke(true);
+            WBUIActions.EnableKillstreakButton?.Invoke(true,killstreak>2);
             
             WBUIActions.ChangeKillstreak?.Invoke(killstreak.ToString());
         }
@@ -200,7 +200,7 @@ public class PlayerCreator : NetworkBehaviour
         ItemReference.Instance.characters.Characters[PlayerPrefs.GetInt("CharacterIndex", 0)].transform.forward = tmp.transform.forward;
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId, PlayerPrefs.GetInt("CharacterIndex", 0),index,bulletlayer, CustomProperties.Instance.isRed);
         killstreak = 0;
-        WBUIActions.EnableKillstreakButton?.Invoke(false);
+        WBUIActions.EnableKillstreakButton?.Invoke(false,false);
         WBUIActions.ChangeKillstreak?.Invoke(0.ToString());
 
     }

@@ -53,3 +53,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: befd6e2978c837b458f8e281cba6d63a, type: 2}
   - {fileID: 2100000, guid: d35e56918670cfd49b482828f8c92220, type: 2}
   VideoIndex: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000001000000020000000300000004000000
+  specialAttacksImages:
+  - Id: Granny
+    Image: {fileID: 21300000, guid: 5bd490332a50285478678854821eb7c5, type: 3}
+  - Id: Rocket
+    Image: {fileID: 21300000, guid: bc1506d561bf0734f8cb56ea8051fd41, type: 3}

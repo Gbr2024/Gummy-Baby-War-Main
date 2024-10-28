@@ -10695,7 +10695,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 545908da2dcc92644a1d74efd88e5624, type: 3}
     - target: {fileID: 114361574848870256, guid: 160be82451391f6448834ec65286e007, type: 3}
       propertyPath: wheelPieces.Array.size
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114361574848870256, guid: 160be82451391f6448834ec65286e007, type: 3}
       propertyPath: wheelPiecess.Array.size
