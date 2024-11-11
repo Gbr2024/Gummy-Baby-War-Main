@@ -680,7 +680,9 @@ namespace WeirdBrothers.ThirdPersonController
             if( IsOwner && OwnerClientId==clientID)
             {
                 WBUIActions.EnableBrokenScreen?.Invoke(true);
+                Context.Controller.setisKicked();
                 Context.Controller.Rigidbody.velocity = new Vector3(force.x /9f, force.y / 22f, force.z / 9f);
+
             }
         }
 

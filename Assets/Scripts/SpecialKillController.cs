@@ -30,10 +30,12 @@ public class SpecialKillController : NetworkBehaviour
         //DummyRocket.transform.localPosition = DummyRocketPose;
         animator = GetComponent<Animator>();
         controller = GetComponent<WBThirdPersonController>();
+        
     }
 
     public void SetKills()
     {
+        Speckills = GooglePlayDataManager.Instance.killstreaks;
         WBUIActions.SetSpecialKill(Speckills);
     }
 

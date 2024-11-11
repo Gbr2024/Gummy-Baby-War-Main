@@ -180,6 +180,9 @@ namespace WeirdBrothers.CharacterController
 
         #endregion
 
+        internal bool iskicked = false;
+        DateTime kicktime;
+
         #region Move
 
         float dampTime = 0.15f; // Time to smooth the movement
@@ -221,6 +224,15 @@ namespace WeirdBrothers.CharacterController
                 GetCollider();
             }
 
+            if(iskicked)
+            {
+                if ((DateTime.Now - kicktime).TotalSeconds > 5f)
+                    iskicked = false;
+                else
+                    return;
+            }
+
+
             CheckForGrounded();
             if (_moveVector.magnitude > 0.1f)
             {
@@ -236,7 +248,7 @@ namespace WeirdBrothers.CharacterController
                 //Rigidbody.velocity = Vector3.Lerp(Rigidbody.velocity, _moveVector, 0.1f);
                 //Rigidbody.MovePosition(Rigidbody.position + _moveVector * Time.fixedDeltaTime);
             }
-            else if(Rigidbody.velocity != new Vector3(0, Rigidbody.velocity.y, 0) || Rigidbody.angularVelocity != new Vector3(0, Rigidbody.angularVelocity.y, 0))
+            else if((Rigidbody.velocity != new Vector3(0, Rigidbody.velocity.y, 0) || Rigidbody.angularVelocity != new Vector3(0, Rigidbody.angularVelocity.y, 0)) && !iskicked)
             {
                 Rigidbody.velocity = new Vector3(0, Rigidbody.velocity.y, 0);
                 Rigidbody.angularVelocity = new Vector3(0, Rigidbody.angularVelocity.y, 0);
@@ -297,6 +309,12 @@ namespace WeirdBrothers.CharacterController
                 Handles.DrawWireDisc(Vector3.down * pointOffset, Vector3.up, radius);
             }
 #endif
+        }
+
+        internal void setisKicked()
+        {
+            iskicked = true;
+            kicktime = DateTime.Now;
         }
     }
 }

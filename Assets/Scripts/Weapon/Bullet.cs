@@ -25,10 +25,7 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    private void Start()
-    {
-        
-    }
+   
     public void SetupBullet(float damage, float range)
     {
         this.damage =(int)damage;
@@ -81,6 +78,7 @@ public class Bullet : MonoBehaviour
 
     private void Sleep()
     {
+        rb.isKinematic = true;
         gameObject.SetActive(false);
     }
 
@@ -93,6 +91,7 @@ public class Bullet : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
+        rb.isKinematic = false;
         if (DisableBody) Body.SetActive(true);
         trail.enabled = true;
     }

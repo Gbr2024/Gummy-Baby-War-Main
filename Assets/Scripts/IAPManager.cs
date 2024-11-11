@@ -17,7 +17,6 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     [SerializeField] Image panelImage;
     [SerializeField] TMP_Text PurchaseButtonLabel,NameLabel,DetailLabel;
     [SerializeField] Buyable[] buyables,SpecialAttacks;
-    UnlockedWeapons SetWeapons;
 
     private IStoreController storeController;
     private IExtensionProvider extensionProvider;
@@ -26,7 +25,6 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     void Start()
     {
         setupBuilder();
-        LoadResources();
         //PlayerPrefs.SetInt("WeaponSelected", 4);
     }
 
@@ -59,7 +57,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                                 DetailLabel.gameObject.SetActive(true);
                                 SelectionButton.onClick.RemoveAllListeners();
                                 SelectionButton.onClick.AddListener(() => { SelectWeapon(item.index); });
-                                if (SetWeapons.unlockedWeapons.Contains(item.index))
+                                if (GooglePlayDataManager.Instance.unlockedWeapons.Contains(item.index))
                                 {
 
                                     //if (PlayerPrefs.GetInt("WeaponIndex")==item.index)
@@ -98,7 +96,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                                 DetailLabel.gameObject.SetActive(false);
                                 SelectionButton.onClick.RemoveAllListeners();
                                 SelectionButton.onClick.AddListener(() => { SelectWeapon(item.index); });
-                                if (SetWeapons.unlockedWeapons.Contains(item.index))
+                                if (GooglePlayDataManager.Instance.killstreaks.Contains(item.Name))
                                 {
 
                                     //if (PlayerPrefs.GetInt("WeaponIndex") == item.index)
@@ -205,14 +203,32 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                 //SelectedButton.gameObject.SetActive(false);
                 Purchased.SetActive(true);
             }
-
-
-
         }
-
-        
-
+        foreach (var item in SpecialAttacks)
+        {
+            if (item.Id == purchaseEvent.purchasedProduct.definition.id)
+            {
+                SetKillStreak(item.Name);
+                PurchaseButton.gameObject.SetActive(false);
+                //SelectionButton.gameObject.SetActive(true);
+                //SelectedButton.gameObject.SetActive(false);
+                Purchased.SetActive(true);
+            }
+        }
         return PurchaseProcessingResult.Complete;
+    }
+
+    private void SetWeapon(int index)
+    {
+        GooglePlayDataManager.Instance.unlockedWeapons.Add(index);
+        GooglePlayDataManager.Instance.SaveGame();
+
+    }
+    private void SetKillStreak(string name)
+    {
+        GooglePlayDataManager.Instance.killstreaks.Add(name);
+        GooglePlayDataManager.Instance.SaveGame();
+
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
@@ -231,35 +247,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
 
 
-    public void SetWeapon(int index)
-    {
-        if(!SetWeapons.unlockedWeapons.Contains(index))
-        {
-            SetWeapons.unlockedWeapons.Add(index);
-        }
-        SaveData();
-    }
-
-    private void SaveData()
-    {
-        string jsonData = JsonMapper.ToJson(SetWeapons);
-        File.WriteAllText(Application.persistentDataPath + "/weaponData.json", jsonData);
-        LoadResources();
-    }
-
-    private void LoadResources()
-    {
-        if (File.Exists(Application.persistentDataPath + "/weaponData.json"))
-        {
-            string jsonData = File.ReadAllText(Application.persistentDataPath + "/weaponData.json");
-            SetWeapons = JsonMapper.ToObject<UnlockedWeapons>(jsonData);
-        }
-        else
-        {
-            SetWeapons = new();
-            SetWeapons.unlockedWeapons = new();
-        }
-    }
+   
 
     public void LoadMenu()
     {

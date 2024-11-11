@@ -21,7 +21,17 @@ public class WheelSetter : MonoBehaviour
                     pickerWheel.wheelPieces.Add(item);
                 }
             }
-            
+        }
+
+        foreach (var item in GooglePlayDataManager.Instance.unlockedWeapons)
+        {
+            foreach (var item2 in wheelPieces)
+            {
+                if(item2.Amount==item)
+                {
+                    pickerWheel.wheelPieces.Add(item2);
+                }
+            }
         }
     }
 
