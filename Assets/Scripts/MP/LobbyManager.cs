@@ -259,7 +259,7 @@ public class LobbyManager : NetworkBehaviour
                 GameSceneHasLoaded = true;
                 if (waitCor != null) StopCoroutine(waitCor);
                 Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
-                AdmobAds.Instance.DestroyBannerAd();
+                //AdmobAds.Instance.DestroyBannerAd();
             }
         }
         catch

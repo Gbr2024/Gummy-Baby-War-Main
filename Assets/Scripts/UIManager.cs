@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    [SerializeField] GameObject MainPanel, CreateRoomPanel, JoinRoomPanel, SettingPanel,SelectionPanel,LevelSelection;
+    [SerializeField] GameObject MainPanel, CreateRoomPanel, JoinRoomPanel, SettingPanel,SelectionPanel,LevelSelection,leaderBoardPopup;
     [SerializeField] SelectionManager selectionManager;
     [SerializeField] Image ProfileImage;
     [SerializeField] Sprite[] babyImages;
@@ -31,7 +31,10 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetInt("BabyImage", Random.Range(0, 4));
         }
         PlayerNameLabel.text= PlayerPrefs.GetString("PlayerName");
-        ProfileImage.sprite = babyImages[PlayerPrefs.GetInt("BabyImage")];
+        if (UnityAuth.Instance.profileImage != null)
+            ProfileImage.sprite = UnityAuth.Instance.profileImage;
+        else
+            ProfileImage.sprite = babyImages[PlayerPrefs.GetInt("BabyImage")];
         //AdmobAds.Instance.LoadBannerAd();
         AdmobAds.Instance.LoadInterstitialAd();
         Aim.value = PlayerPrefs.GetFloat("Aim", .75f);
@@ -154,5 +157,16 @@ public class UIManager : MonoBehaviour
     void loadShop()
     {
         SceneManager.LoadSceneAsync("Shop");
-    }    
+    }  
+    
+    public void loadLeaderboard()
+    {
+        if(PlayerPrefs.GetInt("FirstTimeLeaderBoard",0)==0)
+        {
+            PlayerPrefs.SetInt("FirstTimeLeaderBoard", 1);
+            leaderBoardPopup.SetActive(true);
+            return;
+        }
+        UnityAuth.Instance.ShowLeaderboard();
+    }
 }

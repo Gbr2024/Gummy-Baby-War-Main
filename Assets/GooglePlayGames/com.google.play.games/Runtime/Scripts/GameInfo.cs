@@ -39,7 +39,7 @@ namespace GooglePlayGames {
         public const string ApplicationId = "809813050759"; // Filled in automatically
         public const string IosClientId = "__IOS_CLIENTID__"; // Filled in automatically
         public const string WebClientId = "809813050759-ffr3vjonihedm9dg4c8rf6eal7mr04o7.apps.googleusercontent.com"; // Filled in automatically
-        public const string NearbyConnectionServiceId = "";
+        public const string NearbyConnectionServiceId = "com.ArcadezProductions.GummyBabyWar";
 
         public static bool ApplicationIdInitialized() {
             return !string.IsNullOrEmpty(ApplicationId) && !ApplicationId.Equals(ToEscapedToken(UnescapedApplicationId));

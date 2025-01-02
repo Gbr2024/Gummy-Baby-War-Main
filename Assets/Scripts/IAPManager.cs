@@ -120,6 +120,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                                     //SelectedButton.gameObject.SetActive(false);
                                     PurchaseButtonLabel.text = "$" + item.Price;
                                     PurchaseButton.onClick.RemoveAllListeners();
+                                    Debug.LogError(item.Id);
                                     PurchaseButton.onClick.AddListener(() => { SetPurchaseItem(item.Id); });
 
                                 }
@@ -154,11 +155,16 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         {
             builder.AddProduct(item.Id, ProductType.NonConsumable);
         }
+        foreach (var item in SpecialAttacks)
+        {
+            builder.AddProduct(item.Id, ProductType.NonConsumable);
+        }
         UnityPurchasing.Initialize(this, builder);
     }
 
     public void SetPurchaseItem(string id)
     {
+        Debug.LogError(id);
         try
         {
             storeController.InitiatePurchase(id);
@@ -174,7 +180,8 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     {
         Debug.LogError($"Purchase of product {product.definition.id} failed due to {failureDescription.reason}");
         // Implement your logic for handling failed purchases here
-        PopupMessage.SetActive(true);
+        if(failureDescription.reason!=PurchaseFailureReason.UserCancelled)
+            PopupMessage.SetActive(true);
     }
 
     public void OnInitializeFailed(InitializationFailureReason error)

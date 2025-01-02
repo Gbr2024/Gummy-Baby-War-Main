@@ -111,6 +111,7 @@ public class PlayerCreator : NetworkBehaviour
     {
         ScoreManager.Instance.SetTeamScoreScoreServerRpc(1, isRedTeam.Value);
         kills.Value += 1;
+        UnityAuth.Instance.SubmitScore();
         CustomProperties.Instance.kills = kills.Value;
         killstreak++;
         if (killstreak > 5) killstreak = 5;

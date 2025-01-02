@@ -34,6 +34,8 @@ public class UnityAuth : MonoBehaviour
 
     void Start()
     {
+        Debug.LogError("Authenticating------------|||||----------------------");
+        PlayGamesPlatform.Activate();
         AuthenticateUser();
     }
 
@@ -61,7 +63,7 @@ public class UnityAuth : MonoBehaviour
             }
             else
             {
-                Debug.Log("Login Unsuccessful");
+                Debug.Log("Login Unsuccessful" + success);
             }
         });
 
@@ -89,26 +91,38 @@ public class UnityAuth : MonoBehaviour
 #endif
 
     // Submit score to leaderboard
-    public void SubmitScore(int points)
+    public void SubmitScore()
     {
 #if UNITY_ANDROID
-        Social.ReportScore(points, leaderboardID, success =>
+        Social.LoadScores(leaderboardID, result =>
         {
-            if (success)
+            long score = 0;
+            for (int i = 0; i < result.Length; i++)
             {
-                Debug.Log("Score submitted successfully to Google Play Games.");
+                if(result[i].userID== PlayGamesPlatform.Instance.localUser.id)
+                {
+                    score = result[i].value;
+                }
             }
-            else
+            Social.ReportScore(score+1, leaderboardID, success =>
             {
-                Debug.Log("Failed to submit score to Google Play Games.");
-            }
+                if (success)
+                {
+                    Debug.Log("Score submitted successfully to Google Play Games.");
+                }
+                else
+                {
+                    Debug.Log("Failed to submit score to Google Play Games.");
+                }
+            });
         });
+       
 
 #elif UNITY_IOS
         var leaderboardScore = new GKLeaderboardScore
         {
             Context = 0, // Set to any additional context value
-            Value = points // The score to be submitted
+            Value += 1// The score to be submitted
         };
 
         GKLocalPlayer.Local.SubmitScore(leaderboardScore, leaderboardID, (error) =>
@@ -129,6 +143,7 @@ public class UnityAuth : MonoBehaviour
     public void ShowLeaderboard()
     {
 #if UNITY_ANDROID
+        //Social.ShowLeaderboardUI();
         PlayGamesPlatform.Instance.ShowLeaderboardUI(leaderboardID);
 #elif UNITY_IOS
         // Showing Game Center leaderboard

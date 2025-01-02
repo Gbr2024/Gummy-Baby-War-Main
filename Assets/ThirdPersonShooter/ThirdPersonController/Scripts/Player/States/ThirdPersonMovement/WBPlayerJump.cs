@@ -22,6 +22,7 @@ namespace WeirdBrothers.ThirdPersonController
             if (_context.Input.GetButtonDown(WBInputKeys.Jump))
             {
                 _context.jumpindex++;
+                Debug.LogError(_context.jumpindex);
                 _context.Controller.Jump(_context.Data.JumpForce);
                 _context.Animator.OnJump();
             }
