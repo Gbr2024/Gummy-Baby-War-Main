@@ -18,6 +18,7 @@ public class UnityAuth : MonoBehaviour
     private string leaderboardID = "CgkIh4v65MgXEAIQAQ"; // Replace with your actual leaderboard ID
 #elif UNITY_IOS
     private string leaderboardID = "com.gummybabywarleaderboard"; // Replace with your actual leaderboard ID
+#endif
 
     public Sprite profileImage;
 
