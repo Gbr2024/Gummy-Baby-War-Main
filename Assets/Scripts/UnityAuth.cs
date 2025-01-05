@@ -14,8 +14,10 @@ public class UnityAuth : MonoBehaviour
 {
     public static UnityAuth Instance;
 
-
+#if UNITY_ANDROID
     private string leaderboardID = "CgkIh4v65MgXEAIQAQ"; // Replace with your actual leaderboard ID
+#elif UNITY_IOS
+    private string leaderboardID = "com.gummybabywarleaderboard"; // Replace with your actual leaderboard ID
 
     public Sprite profileImage;
 
@@ -36,9 +38,9 @@ public class UnityAuth : MonoBehaviour
     void Start()
     {
         Debug.LogError("Authenticating------------|||||----------------------");
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
         PlayGamesPlatform.Activate();
-        #endif
+#endif
         AuthenticateUser();
     }
 
