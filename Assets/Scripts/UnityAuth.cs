@@ -6,24 +6,23 @@ using UnityEngine.Networking;
 #if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-#elif UNITY_IOS
-using GameKit;
 #endif
 
 public class UnityAuth : MonoBehaviour
 {
     public static UnityAuth Instance;
+    private string leaderboardID;
 
-#if UNITY_ANDROID
-    private string leaderboardID = "CgkIh4v65MgXEAIQAQ"; // Replace with your actual leaderboard ID
-#elif UNITY_IOS
-    private string leaderboardID = "com.gummybabywarleaderboard"; // Replace with your actual leaderboard ID
-#endif
 
     public Sprite profileImage;
 
     void Awake()
     {
+        #if UNITY_ANDROID
+            leaderboardID = "CgkIh4v65MgXEAIQAQ"; // Replace with your actual leaderboard ID
+        #elif UNITY_IOS
+            leaderboardID = "com.gummybabywarleaderboard"; // Replace with your actual leaderboard ID
+        #endif
         // Make this object persistent across scenes
         if (Instance == null)
         {
@@ -74,43 +73,47 @@ public class UnityAuth : MonoBehaviour
         });
 
 #elif UNITY_IOS
-        AuthenticateWithAppleGameCenter();
+        Social.localUser.Authenticate(ProcessAuthentication);
 #endif
     }
 
 #if UNITY_IOS
-    async void AuthenticateWithAppleGameCenter()
+    void ProcessAuthentication(bool success)
     {
-        if (!GKLocalPlayer.Local.IsAuthenticated)
+        if (success)
         {
-            try
+            var PlayerName = Social.localUser.userName;
+            if (!PlayerPrefs.HasKey("PlayerName"))
             {
-                await GKLocalPlayer.Authenticate();
-                Debug.Log("Apple Game Center Authentication Successful");
+                PlayerPrefs.SetString("PlayerName", PlayerName);
             }
-            catch (System.Exception ex)
-            {
-                Debug.LogError("Apple Game Center Authentication Failed: " + ex.Message);
-            }
+            //SignIn();
+            //SignInAndCheck();
+            Debug.Log("Authenticated, checking achievements");
         }
+        else
+        {
+
+            Debug.Log("Unable To Authenticcate");
+        }
+
     }
 #endif
 
     // Submit score to leaderboard
     public void SubmitScore()
     {
-#if UNITY_ANDROID
         Social.LoadScores(leaderboardID, result =>
         {
             long score = 0;
             for (int i = 0; i < result.Length; i++)
             {
-                if(result[i].userID== PlayGamesPlatform.Instance.localUser.id)
+                if (result[i].userID == Social.localUser.id)
                 {
                     score = result[i].value;
                 }
             }
-            Social.ReportScore(score+1, leaderboardID, success =>
+            Social.ReportScore(score + 1, leaderboardID, success =>
             {
                 if (success)
                 {
@@ -122,27 +125,6 @@ public class UnityAuth : MonoBehaviour
                 }
             });
         });
-       
-
-#elif UNITY_IOS
-        var leaderboardScore = new GKLeaderboardScore
-        {
-            Context = 0, // Set to any additional context value
-            Value += 1// The score to be submitted
-        };
-
-        GKLocalPlayer.Local.SubmitScore(leaderboardScore, leaderboardID, (error) =>
-        {
-            if (error == null)
-            {
-                Debug.Log("Score submitted successfully to Apple Game Center.");
-            }
-            else
-            {
-                Debug.LogError("Failed to submit score to Apple Game Center: " + error.LocalizedDescription);
-            }
-        });
-#endif
     }
 
     // Show the leaderboard UI
@@ -153,27 +135,7 @@ public class UnityAuth : MonoBehaviour
         PlayGamesPlatform.Instance.ShowLeaderboardUI(leaderboardID);
 #elif UNITY_IOS
         // Showing Game Center leaderboard
-        var leaderboard = new GKLeaderboard
-        {
-            Identifier = leaderboardID
-        };
-        leaderboard.LoadScores((scores, error) =>
-        {
-            if (error == null)
-            {
-                // Display Game Center UI here
-                GKGameCenterViewController viewController = new GKGameCenterViewController
-                {
-                    ViewState = GKGameCenterViewControllerState.Leaderboards
-                };
-                UnityEngine.iOS.Device.SetNoBackupFlag(viewController.ToString()); // Example to show
-                Debug.Log("Showing Game Center Leaderboard UI");
-            }
-            else
-            {
-                Debug.LogError("Failed to load leaderboard scores: " + error.LocalizedDescription);
-            }
-        });
+        Social.ShowLeaderboardUI();
 #endif
     }
 

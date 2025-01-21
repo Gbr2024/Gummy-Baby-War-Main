@@ -8,7 +8,7 @@ public class VideoController : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
     [SerializeField] VideoClip NextVideo;
-    [SerializeField] GameObject RTObject,SkipButton;
+    [SerializeField] GameObject RTObject,SkipButton,PolicyPanel;
 
     [SerializeField] int index = 1;
     void Start()
@@ -25,6 +25,11 @@ public class VideoController : MonoBehaviour
         {
             //SkipButton.SetActive(PlayerPrefs.GetInt("FirstTime?", 0) == 1);
             PlayerPrefs.SetInt("FirstTime?", 1);
+            if(PlayerPrefs.GetInt("PolicyAccepted",0)==0)
+            {
+                PolicyPanel.SetActive(true);
+                return;
+            }
             videoPlayer.clip = NextVideo;
             videoPlayer.Play();
             index = 1;
@@ -63,5 +68,13 @@ public class VideoController : MonoBehaviour
     {
         videoPlayer.Stop();
         RTObject.SetActive(false);
+    }
+
+    public void PolicyAccepted()
+    {
+
+        PlayerPrefs.SetInt("PolicyAccepted", 1);
+        PolicyPanel.SetActive(false);
+        EndReached(videoPlayer);
     }
 }

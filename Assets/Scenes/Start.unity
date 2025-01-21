@@ -122,6 +122,83 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &43860310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43860311}
+  - component: {fileID: 43860313}
+  - component: {fileID: 43860312}
+  m_Layer: 5
+  m_Name: PolicyPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &43860311
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43860310}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1230589148}
+  - {fileID: 47840211}
+  m_Father: {fileID: 1919144773}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &43860312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43860310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: ff82c10494c2a074fb1cd07b78f469a6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &43860313
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43860310}
+  m_CullTransparentMesh: 1
 --- !u!1 &45691879
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +283,410 @@ MonoBehaviour:
   NextVideo: {fileID: 32900000, guid: 4daad0d1ec39991449e3980156632d9d, type: 3}
   RTObject: {fileID: 1709272468}
   SkipButton: {fileID: 1951017391}
+  PolicyPanel: {fileID: 43860310}
   index: 0
+--- !u!1 &47840210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 47840211}
+  - component: {fileID: 47840214}
+  - component: {fileID: 47840213}
+  - component: {fileID: 47840212}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &47840211
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47840210}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 454012525}
+  m_Father: {fileID: 43860311}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 500, y: 90}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &47840212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47840210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 47840213}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 45691882}
+        m_TargetAssemblyTypeName: VideoController, Assembly-CSharp
+        m_MethodName: PolicyAccepted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &47840213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47840210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 45871b28e1d04c34f843f535166de26b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &47840214
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47840210}
+  m_CullTransparentMesh: 1
+--- !u!1 &52723123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52723124}
+  - component: {fileID: 52723126}
+  - component: {fileID: 52723125}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &52723124
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52723123}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2067648299}
+  m_Father: {fileID: 686971302}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 10, y: 0}
+  m_SizeDelta: {x: -20, y: 10000}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &52723125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52723123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &52723126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52723123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!1 &454012524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 454012525}
+  - component: {fileID: 454012527}
+  - component: {fileID: 454012526}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &454012525
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454012524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 47840211}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &454012526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454012524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Accept And Continue
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 653688ae4f2b4db4e8bd081aef7f2faa, type: 2}
+  m_sharedMaterial: {fileID: -1042110737931134977, guid: 653688ae4f2b4db4e8bd081aef7f2faa, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 47.7
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &454012527
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454012524}
+  m_CullTransparentMesh: 1
+--- !u!1 &461853743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 461853746}
+  - component: {fileID: 461853745}
+  - component: {fileID: 461853744}
+  m_Layer: 0
+  m_Name: ServerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &461853744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461853743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03039ef990c0591449f06936c2627c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &461853745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461853743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c95ed3bc6b63cc4a951188ed00a3695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &461853746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461853743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -83.602875, y: 35.107372, z: 334.20496}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &525072163
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +821,207 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525072163}
   m_CullTransparentMesh: 1
+--- !u!1 &686971301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 686971302}
+  - component: {fileID: 686971305}
+  - component: {fileID: 686971304}
+  - component: {fileID: 686971303}
+  m_Layer: 5
+  m_Name: Viewport
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &686971302
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686971301}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 52723124}
+  m_Father: {fileID: 1230589148}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &686971303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686971301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
+--- !u!114 &686971304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686971301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &686971305
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686971301}
+  m_CullTransparentMesh: 1
+--- !u!1 &728764859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728764860}
+  - component: {fileID: 728764862}
+  - component: {fileID: 728764861}
+  m_Layer: 5
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &728764860
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728764859}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 966466091}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.9225}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &728764861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728764859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &728764862
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728764859}
+  m_CullTransparentMesh: 1
+--- !u!1 &966466090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 966466091}
+  m_Layer: 5
+  m_Name: Sliding Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &966466091
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966466090}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 728764860}
+  m_Father: {fileID: 1352025951}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: -20}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1016853969
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +1302,114 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1230589147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1230589148}
+  - component: {fileID: 1230589151}
+  - component: {fileID: 1230589150}
+  - component: {fileID: 1230589149}
+  m_Layer: 5
+  m_Name: Scroll View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1230589148
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230589147}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 686971302}
+  - {fileID: 1352025951}
+  m_Father: {fileID: 43860311}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 37.5}
+  m_SizeDelta: {x: 1600, y: -125}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1230589149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230589147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Content: {fileID: 52723124}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 1
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 686971302}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 1352025952}
+  m_HorizontalScrollbarVisibility: 2
+  m_VerticalScrollbarVisibility: 2
+  m_HorizontalScrollbarSpacing: -3
+  m_VerticalScrollbarSpacing: -3
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1230589150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230589147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7607843}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1230589151
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230589147}
+  m_CullTransparentMesh: 1
 --- !u!1 &1314648790
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,6 +1484,132 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314648790}
+  m_CullTransparentMesh: 1
+--- !u!1 &1352025950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1352025951}
+  - component: {fileID: 1352025954}
+  - component: {fileID: 1352025953}
+  - component: {fileID: 1352025952}
+  m_Layer: 5
+  m_Name: Scrollbar Vertical
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1352025951
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352025950}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 966466091}
+  m_Father: {fileID: 1230589148}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: -17}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &1352025952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352025950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 728764861}
+  m_HandleRect: {fileID: 728764860}
+  m_Direction: 2
+  m_Value: 1
+  m_Size: 0.07750001
+  m_NumberOfSteps: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1352025953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352025950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1352025954
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352025950}
   m_CullTransparentMesh: 1
 --- !u!1 &1625894818
 GameObject:
@@ -919,6 +1834,118 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709272468}
   m_CullTransparentMesh: 1
+--- !u!1 &1725898322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1725898326}
+  - component: {fileID: 1725898325}
+  - component: {fileID: 1725898324}
+  - component: {fileID: 1725898323}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1725898323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725898322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7225585b8e81684e94109a488849d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRed: 0
+  MyCode: 
+--- !u!114 &1725898324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725898322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProtocolType: 1
+  m_MaxPacketQueueSize: 128
+  m_MaxPayloadSize: 6144
+  m_HeartbeatTimeoutMS: 500
+  m_ConnectTimeoutMS: 1000
+  m_MaxConnectAttempts: 60
+  m_DisconnectTimeoutMS: 20000
+  ConnectionData:
+    Address: 0.0.0.0
+    Port: 7777
+    ServerListenAddress: 0.0.0.0
+  DebugSimulator:
+    PacketDelayMS: 0
+    PacketJitterMS: 0
+    PacketDropRate: 0
+--- !u!114 &1725898325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725898322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkConfig:
+    ProtocolVersion: 0
+    NetworkTransport: {fileID: 1725898324}
+    PlayerPrefab: {fileID: 2106144128352826578, guid: ef7fe5899d3ed2049ba4cdb1ee8c2ad8, type: 3}
+    Prefabs:
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 001b5817aaabd2e479d70404e547aab7, type: 2}
+    TickRate: 30
+    ClientConnectionBufferTimeout: 10
+    ConnectionApproval: 0
+    ConnectionData: 
+    EnableTimeResync: 0
+    TimeResyncInterval: 30
+    EnsureNetworkVariableLengthSafety: 0
+    EnableSceneManagement: 1
+    ForceSamePrefabs: 0
+    RecycleNetworkIds: 1
+    NetworkIdRecycleDelay: 120
+    RpcHashSize: 0
+    LoadSceneTimeOut: 120
+    SpawnTimeout: 1
+    EnableNetworkLogs: 1
+    OldPrefabList: []
+  RunInBackground: 1
+  LogLevel: 1
+--- !u!4 &1725898326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725898322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795587914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,6 +2118,7 @@ RectTransform:
   - {fileID: 1032367919}
   - {fileID: 1795587915}
   - {fileID: 1709272469}
+  - {fileID: 43860311}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1463,6 +2491,493 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985547900}
   m_CullTransparentMesh: 1
+--- !u!1 &2067648298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2067648299}
+  - component: {fileID: 2067648301}
+  - component: {fileID: 2067648300}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2067648299
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067648298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 52723124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 781.5, y: 0}
+  m_SizeDelta: {x: 1563, y: 10000}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &2067648300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067648298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\nA.I Systems (''A.I Systems, ''we,'' or ''us'') are committed to protecting
+    your privacy. This Privacy Policy explains our practices regarding the collection,
+    use, disclosure, and protection of information that is collected through our
+    mobile app and our website (collectively, our ''Service''), as well as your choices
+    regarding the collection and use of information. Capitalized terms that are not
+    defined in this Privacy Policy have the meaning given them in our Terms of Use.\r\n\r\n
+    \r\n\r\n1. How We Collect and Use Information\r\n\r\nWe collect the following
+    types of information about you:\r\n\r\nRegistration and Profile Information.
+    When you create an account, we may collect your personal information such as
+    your username, first and last name, email address, mobile phone number and a
+    photo, if you chose to have a photo associated with your account. If you want
+    to add a family member's name to your account, we collect the family member's
+    name, email address, and mobile phone number. We may also collect billing information
+    when you sign up for Premium service.\r\n\r\nData collected through use of the
+    Service. After you set up your account, we may ask for other profile and demographic
+    information, such as personal emergency instructions and information, and nickname.\r\n\r\n\r\n\r\nGeolocation.
+    We collect your unique device identifier and your location through GPS, WiFi,
+    or wireless network triangulation in order to obtain your location for the purposes
+    of providing our Service. We collect the location of your designated ''Places''.
+    If you turn off location sharing in one or more of your circles, we will not
+    share your location with such circles; however, we will continue to collect your
+    location information in order to provide the Service (for example, to provide
+    our emergency services or to share your location with the other circles you continue
+    to allow to see your location, or to provide advertising). We maintain location
+    information only so long as is reasonable to provide the Service and then delete
+    location data tied to your personal \r\n\r\ninformation. We may maintain de-identified
+    location data for a longer period of time in order to analyze aggregate trends
+    and metrics. We may also share location information with third parties for advertising,
+    research, and analytic purposes. Please see ''Your Choices About Your Information''
+    below to learn more.\r\n\r\n \r\n\r\nDriving Event Data. We collect, and may
+    use a third party to collect, sensory and motion data from your smartphone or
+    mobile device, including information from the gyroscope, accelerometer, compass
+    and Bluetooth, in order to calculate and detect driving events such as speeding,
+    hard braking, crash detection and other events. We maintain sensory and motion
+    data as long as is reasonable to provide \r\n\r\nthe Service and then delete
+    or anonymize this data. If you want to opt-out of the collection of your sensory
+    and motion, please adjust your settings in your mobile device to limit the app's
+    access to your sensory and motion data.\r\n\r\n \r\n\r\nMessages and User Content.
+    We collect information when you message other members through use of the service.
+    We may also retain any messages you send to us.\r\n\r\nWe use this information
+    to operate, maintain, and provide to you the features and functionality of the
+    Service and to communicate directly with you, such as to send you alerts on the
+    movements of your Family members, crime alerts in your \r\n\r\nneighborhood,
+    etc. You can control your receipt of email and text alerts by visiting ''Settings''
+    and ''Alert Options'' within the mobile app. We may also send you Service-related
+    emails (e.g., account verification, parental consent notification, order confirmations,
+    change or updates to features of the Service, technical and security notices).
+    You may not opt-out of Service-related e-mails.\r\n\r\n \r\n\r\nInformation we
+    receive about you from others:\r\n\r\nSocial Media. When you interact with our
+    site through various social media, such as when you Like us on Facebook or post
+    a comment to our Facebook page, we may receive information from the social \r\n\r\nnetwork
+    such as your profile information, profile picture, gender, user name, user ID
+    associated with your social media account, age range, language, country, friends
+    list, and any other information you permit the social network to share with third
+    parties. The data we receive is dependent upon your privacy settings with the
+    social network. You should always review, and if necessary, adjust your privacy
+    settings on third-party websites and services.\r\n\r\n \r\n\r\nInformation we
+    collect automatically through the use of technology. When you visit our website
+    or use our mobile app, we and our business partners may collect certain information
+    about your computer or device through technology such as \r\n\r\ncookies, web
+    beacons, log files, or other tracking/recording tools. The information we collect
+    through the use of tracking technologies includes, but is not limited to, IP
+    address, browser information, referring/exit pages and URLs, click stream data
+    and information about how you interact with links on the website, mobile app,
+    or Service, domain names, landing pages, page views, cookie data that allows
+    us to uniquely identify your browser and track your browsing behavior on our
+    site, mobile device type, mobile device IDs or other persistent identifiers,
+    and location data collected from your mobile device. Some or all of this data
+    may be combined with other personally identifying information described above.
+    When you access our Service by or through a mobile device, we may receive or
+    collect and store a unique identification numbers associated with \r\n\r\nyour
+    device or our mobile application (including, for example, a UDID, Unique ID for
+    Advertisers (''IDFA''), Google Ad ID, or Windows Advertising ID or other identifier),
+    mobile carrier, device type, model and manufacturer, mobile device operating
+    system brand and model, phone number, and, depending on your mobile device settings,
+    your geographical location data, including GPS coordinates (e.g. latitude and/or
+    longitude), WiFi location or similar information regarding the location of your
+    mobile device. We use this information to:\r\n\r\n \r\n\r\n\u25CF     Remember
+    information so that you will not have to re-enter it during your visit or the
+    next time you visit the site or mobile app\r\n\r\n\u25CF     Provide custom,
+    personalized content and information, including advertising\r\n\r\n\u25CF    
+    Track your location and movements\r\n\r\n\u25CF     Monitor the effectiveness
+    of our Service and our marketing campaigns\r\n\r\n\u25CF     Monitor aggregate
+    metrics such as total number of visitors, users, traffic, and demographic patterns\r\n\r\n\u25CF    
+    Diagnose or fix technology problems reported by our Users or engineers that are
+    associated with certain IP addresses or User IDs, and Automatically update our
+    mobile application on your system and related devices.\r\n\r\nWe may also collect
+    analytics data, or use third-party analytics tools, to help us \r\n\r\nmeasure
+    traffic and usage trends for the Service. These tools collect information sent
+    by your browser or mobile device, including the pages you visit, your use of
+    third party applications, and other information that assists us in analyzing
+    and improving the Service. Although we do our best to honor the privacy preferences
+    of our Users, we are not able to respond to Do Not Track signals from your browser
+    at this time.\r\n\r\n2. Sharing of Your Information\r\n\r\nPersonal Information:We
+    may share your personal information with third parties outside the Company and
+    its controlled subsidiaries and affiliates in some circumstances, including:\r\n\r\n
+    \r\n\r\n\r\n\u25CF     We share your personal information, including name, email,
+    location and driving event data, with others within the \"A.I Systems\" company.\r\n\r\n\u25CF    
+    We may share your personal information with our third-party business partners,
+    vendors and consultants who perform services on our behalf or who help us provide
+    our Services, such as accounting, managerial, technical, marketing or analytic
+    services.\r\n\r\n\u25CF     We may share your personal information, including
+    your location data, with third parties for marketing purposes\r\n\r\n\u25CF    
+    Any information or content that you voluntarily post to the website or to our
+    Facebook page will automatically be \r\n\r\navailable to the public. We may publicly
+    post your reviews and comments online on our website or mobile app, or link your
+    reviews to third party websites.\r\n\r\n\u25CF     We may aggregate or otherwise
+    strip data of all personally identifying characteristics of our data and may
+    share that anonymized and/or aggregated data with third parties. For example,
+    we may share de-identified location data with third parties that analyze location
+    and movement trends.\r\n\r\n\u25CF     We may at any time buy or sell/divest
+    the company, or any combination of its products, services, assets and/or businesses.
+    Personal information such as customer names and email addresses, and other user
+    information related to the Service will likely be one of the items \r\n\r\ntransferred
+    in these types of transactions. We may also share, transfer or assign such information
+    in the course of corporate divestitures, mergers, acquisitions, bankruptcies,
+    dissolutions or similar transactions or proceedings.\r\n\r\n\u25CF     Except
+    as described above, we will not disclose personal information to third parties
+    (including law enforcement, other government entity, or civil litigant; excluding
+    our subcontractors) unless required to do so by law or subpoena or if in our
+    sole discretion, we determine it is necessary to (a) conform to the law, comply
+    with legal process, or investigate, prevent, or take action regarding suspected
+    or actual illegal activities; (b) to enforce our Terms of Use, take precautions
+    against liability, to investigate and defend ourselves against any claims \r\n\r\nor
+    allegations, or to protect the security or integrity of our site; and/or (c)
+    to exercise or protect the rights, property, or personal safety of ''PinCom'',
+    our Users or others.\r\n\r\n\r\n\r\n3. Google\r\n\r\nGoogle's advertising requirements
+    can be summed up by Google's Advertising Principles. They are put in place to
+    provide a positive experience for users. https://support.google.com/adwordspolicy/answer/1316548?hl=en\r\n\r\nWe
+    use Google AdMob Advertising on our app.\r\n\r\nGoogle, as a third-party vendor,
+    uses cookies to serve ads on our site. Google's \r\n\r\nuse of the DART cookie
+    enables it to serve ads to our users based on previous visits to our site and
+    other sites on the Internet. Users may opt-out of the use of the DART cookie
+    by visiting the Google Ad and Content Network privacy policy.\r\n\r\nWe have
+    implemented the following:\r\n\r\n \r\n\r\n\xC2\u2022 Demographics and Interests
+    Reporting\r\n\r\n \r\n\r\nWe, along with third-party vendors such as Google use
+    first-party cookies (such as the Google Analytics cookies) and third-party cookies
+    (such as the DoubleClick cookie) or other third-party identifiers together to
+    compile data regarding user interactions \r\n\r\nwith ad impressions and other
+    ad service functions as they relate to our app\r\n\r\nOpting out:\r\n\r\nUsers
+    can set preferences for how Google advertises to you using the Google Ad Settings
+    page. Alternatively, you can opt out by visiting the Network Advertising Initiative
+    Opt Out page or by using the Google Analytics Opt Out Browser add on.\r\n\r\nCOPPA
+    (Children Online Privacy Protection Act)\r\n\r\nWhen it comes to the collection
+    of personal information from children under the age of 13 years old, the Children's
+    Online Privacy Protection Act (COPPA) puts parents in control. The Federal Trade
+    Commission, United States' consumer \r\n\r\nprotection agency, enforces the COPPA
+    Rule, which spells out what operators of websites and online services must do
+    to protect children's privacy and safety online.\r\n\r\nWe do not specifically
+    market to children under the age of 13 years old.\r\n\r\n \r\n\r\n \r\n\r\n4.
+    How We Protect Your Information.\xC2  ''A.I Systems'' cares about the security
+    of your information and uses commercially reasonable physical, administrative,
+    and technological safeguards to preserve the integrity and security of all information
+    we collect and that we share with our service providers. However, no security
+    system is impenetrable and we cannot guarantee the \r\n\r\nsecurity of our systems
+    100%. In the event that any information under our control is compromised as a
+    result of a breach of security, we will take reasonable steps to investigate
+    the situation and where appropriate, notify those individuals whose information
+    may have been compromised and take other steps, in accordance with any applicable
+    laws and regulations.\r\n\r\n \r\n\r\n5. Your Choices About Your Information\r\n\r\nYou
+    may, of course, decline to submit any personal information through the Service,
+    in which case ''A.I Systems''may not be able to provide its Services to you.\r\n\r\nModifying
+    Your Account Information and Settings: You may modify your account \r\n\r\ninformation,
+    update or amend your personal information, or change your password at any time
+    by logging in to your account. You can also stop receiving promotional email
+    communications from us by clicking on the ''unsubscribe link'' provided in such
+    communications. We make every effort to promptly process all unsubscribe requests.
+    As noted above, you may not opt out of Service-related communications (e.g.,
+    account verification, parental consent notification, order confirmations, change
+    or updates to features of the Service, technical and security notices). If you
+    have any questions about reviewing or modifying your account information, you
+    can contact us directly at deflectwear@gmail.com.\r\n\r\n \r\n\r\nThird Party
+    Tracking and Advertising: We may share, or we may permit third party ad networks,
+    social media companies, and other third party services to collect, information
+    about the browsing behavior of our users of Service through cookies, social plug-ins,
+    or other tracking technology. We may permit third party online advertising networks
+    to collect information about your use of our Services over time, including location
+    information, so that they may play or display ads that may be relevant to your
+    interests on our Service as well as on other websites or services, or on other
+    devices you may use. Typically, the information is collected through cookies
+    or similar tracking technologies. You may be able to ''opt out'' of the collection
+    of information through cookies or other tracking technology by actively managing
+    the settings on your \r\n\r\nbrowser or mobile device. Please refer to your browser's
+    or mobile device's technical information for instructions on how to delete, disable,
+    and/or limit the use of cookies or other tracking/recording tools. Depending
+    on your mobile device, you may not be able to control all tracking technologies
+    through your device settings but you can uninstall the app if you do not want
+    to have tracking information automatically collected.\xC2  You may also be able
+    to limit interest-based advertising through the settings on your browser or device.
+    For example, you may be able to opt-out of some interest-based advertising on
+    your mobile device by selecting ''limit ad tracking'' (iOS) or ''opt-out of interest
+    based ads'' (Android). To learn more about interest-based advertising and how
+    you may opt-out of some of this tracking, you may wish to visit the Network Advertising
+    \r\n\r\nInitiative's online resources, at http://www.networkadvertising.org/choices
+    and/or the DAA's resources at www.aboutads.info/choices. You may also be able
+    to opt-out of some \xC2\u2013 but not all \xC2\u2013 interest-based ads served
+    by mobile ad networks\r\n\r\nby visiting http://youradchoices.com/appchoices
+    and downloading the mobile AppChoices app.\xC2  If you have any questions about
+    third party tracking and advertising, you can contact us directly at deflectwear@gmail.com.\r\n\r\n
+    \r\n\r\nThird Party Location Sharing: We may share your personal information,
+    including location data, with third parties so that they may play or display
+    ads that may be \r\n\r\nrelevant to your interests, for example by sending you
+    an ad for a local business, or so that they may conduct research, analyze trends
+    and perform other analytics or reporting functions. We do not share your personal
+    information and location data with third parties for advertising purposes if
+    you have selected ''Remove Ads'' option on your mobile device.\r\n\r\n \r\n\r\n6.
+    Links to Other Web Sites and Services\r\n\r\nWe are not responsible for the practices
+    employed by websites or services linked to or from the Service, nor the information
+    or content contained therein. Please remember that when you use a link to go
+    from the Service to another website, our Privacy Policy does not apply to third-party
+    \r\n\r\nwebsites or services. Your browsing and interaction on any third-party
+    website or service, including those that have a link on our website, are subject
+    to that third party's own rules and policies. Please read over those rules and
+    policies before proceeding.\r\n\r\n \r\n\r\n7. Changes to Our Privacy Policy\r\n\r\n''A.I
+    Systems'' may, in its sole discretion, modify or update this Privacy Policy from
+    time to time, and so you should review this page periodically. When we change
+    the policy, we will update the 'last modified' date at the top of this page.
+    If there are material changes to this Privacy Policy or in how ''A.I Systems''
+    will use your personal information, we will notify you either by \r\n\r\nprominently
+    posting a notice of such changes prior to implementing the change or by directly
+    sending you a notification.\r\n\r\n8. How to Contact Us\r\n\r\nIf you have any
+    questions about this Privacy Policy or the Service, please contact us deflectwear@gmail.com\r\n\r\n\r\n\r\n
+    \r\n\r\nTERMS OF SERVICE\r\n\r\n\r\n\r\nWhen you submit Content to be published
+    by the Service, you must make sure it is lawful. For example, you may not submit
+    \r\n\r\nContent that:\r\n\r\n\u25CF is diminishing or infringing proprietary
+    rights of others, including but not limited to copyright and trade marks;\r\n\r\n\u25CF
+    poses a risk to a person's safety, security or health;\r\n\r\n\u25CF identifies
+    other persons without obtaining such person's express written consent to the
+    disclosure of their personal information, or pertains to minors and identifies
+    minors or their personal information, including their full name, age, address
+    or contact information;\r\n\r\n\u25CF is unlawful, defamatory, libelous or invades
+    the privacy of others;\r\n\r\n\u25CF is harassing, offensive, threatening or
+    \r\n\r\nvulgar;\r\n\r\n\u25CF is characterized by, or that encourages racism
+    or unlawfully discriminates on the basis of race, origin, ethnicity, nationality,
+    religion, gender, occupation, sexual orientation, illness, physical or mental
+    disability, faith, political view or socio-economical class;\r\n\r\n\u25CF encourages
+    criminal behavior or conduct that would constitute a criminal offense under any
+    law, or could give rise to civil liability or other lawsuit;\r\n\r\n\u25CF promotes
+    pyramid schemes, chain letters or disruptive commercial messages or advertisements,
+    or anything else prohibited by law or under these Terms;\r\n\r\n\u25CF falsely
+    expresses or implies that such \r\n\r\ncontent is sponsored or endorsed by ''A.I
+    Systems''.\r\n\r\n\u25CF Try in any way, to hack into the app, game, or servers\r\n\r\n\u25CF
+    Try to submit malicious code to hack into an app, game, or servers\r\n\r\n\r\nThe
+    foregoing examples of unlawful Content are made solely for illustrative purposes
+    and do not constitute an exhaustive list of restricted Content.\r\n\r\n''A.I
+    Systems'' may decline to publish, or immediately delete any Content you submit
+    if you or the Content have violated these Terms or if you engaged in a commission
+    or omission that is harmful or may be harmful to the Service, its users, \r\n\r\n''A.I
+    Systems'' or any of its agents or affiliates. In such cases, ''A.I Systems''
+    may also terminate your access to the Service or prevent you from posting additional
+    Content on the Service. The provisions of this clause are made in addition to
+    any rights afforded to ''A.I Systems'' by any law.\r\n\r\n\r\n\r\nLIMITATION
+    OF LIABILITY AND WARRANTY\r\n\r\n''A.I SYSTEMS'' PROVIDES THE SERVICE AND CONTENT
+    INCLUDED THEREIN FOR USE ON AN ''AS IS'' AND ''AS AVAILABLE'' BASIS. THEY CANNOT
+    BE CUSTOMIZED TO FULFILL THE NEEDS OF EACH AND EVERY USER. WE HEREBY DISCLAIM
+    ALL WARRANTIES AND REPRESENTATIONS, EITHER EXPRESS OR IMPLIED, WITH RESPECT TO
+    THE SERVICE, INCLUDING, \r\n\r\nWITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+    AND FITNESS FOR A PARTICULAR PURPOSE, FEATURES, QUALITY, NON-INFRINGEMENT, TITLE,
+    COMPATIBILITY, PERFORMANCE, SECURITY OR ACCURACY.\r\n\r\n \r\n\r\nAdditionally
+    and without derogating from the above clause, ''A.I Systems'' disclaims any warranties
+    relating to the accuracy of the maps, Content, road conditions, driving directions,
+    or navigation routes presented or displayed in or by the Service. For instance,
+    traffic may be congested in roads depicted by the Service as uncongested; existing
+    roads may be missing from the map; users may submit faulty or inaccurate Content
+    or reports. Such errors and omissions are inherent to \r\n\r\nany community-based
+    service that operates on users' posts and on the information provided by them.\r\n\r\nYou
+    agree and acknowledge that you assume full, exclusive and sole responsibility
+    for the use of and reliance on the Service, and you further agree and acknowledge
+    that your use of or reliance on the Service is made entirely at your own risk.
+    You further acknowledge that it is your responsibility to comply with all applicable
+    laws (including traffic laws) while using the Service.\r\n\r\n \r\n\r\nTHE INFORMATION
+    PROVIDED BY THE SERVICE IS NOT INTENDED TO REPLACE THE INFORMATION PRESENTED
+    ON THE ROAD. IN THE EVENT THAT THE \r\n\r\nINFORMATION PRESENTED ON THE ROAD
+    (TRAFFIC LIGHTS, TRAFFIC SIGNS, POLICE PERSON, ETC.) INSTRUCTS DIFFERENTLY THAN
+    THE SERVICE, YOU MUST NOT RELY ON THE SERVICE.\r\n\r\n''A.I Systems'' exerts
+    efforts to provide you with a high quality and satisfactory service. However,
+    We do not warrant that the Service will operate in an uninterrupted or error-free
+    manner, or that it will always be available or free from all harmful components,
+    or that it is safe, secured from unauthorized access to ''A.I System's'' computers,
+    immune from damages, free of malfunctions, bugs or failures, including, but not
+    limited to hardware failures, Software failures and Software communication failures,
+    originating either in ''A.I Systems'' or any of its providers.\r\n\r\n \r\n\r\n''A.I
+    SYSTEMS'', INCLUDING ITS OFFICERS, DIRECTORS, SHAREHOLDERS, EMPLOYEES, SUB-CONTRACTORS
+    AND AGENTS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL OR CONSEQUENTIAL
+    DAMAGE, OR ANY OTHER DAMAGE, AND LOSS (INCLUDING LOSS OF PROFIT AND LOSS OF DATA),
+    COSTS, EXPENSES AND PAYMENTS, EITHER IN TORT, CONTRACTUAL, OR IN ANY OTHER FORM
+    OF LIABILITY, ARISING FROM, OR IN CONNECTION WITH THE USE OF, OR THE INABILITY
+    TO USE THE SERVICE, OR FROM ANY FAILURE, ERROR, OR BREAKDOWN IN THE FUNCTION
+    OF THE SERVICE, OR FROM ANY FAULT, OR ERROR MADE BY OUR STAFF OR ANYONE ACTING
+    ON ITS BEHALF, OR FROM YOUR RELIANCE ON THE CONTENT OF THE \r\n\r\nSERVICE, INCLUDING,
+    WITHOUT LIMITATION, CONTENT ORIGINATING FROM THIRD PARTIES, OR FROM ANY COMMUNICATION
+    WITH THE SERVICE, OR WITH OTHER USERS ON OR THROUGH THE SERVICE, OR FROM ANY
+    DENIAL OR CANCELLATION OF YOUR USER ACCOUNT, OR FROM RETENTION, DELETION, DISCLOSURE
+    AND ANY OTHER USE OR LOSS OF YOUR CONTENT ON THE SERVICE. IN ANY EVENT, YOUR
+    SOLE REMEDY WILL BE LIMITED TO CORRECTING SUCH ERRORS, OR MALFUNCTIONS, AND IN
+    LIGHT OF THE RELEVANT CIRCUMSTANCES.\r\n\r\n \r\n\r\nLINKS AND COMMERCIAL INFORMATION
+    IN THE SOFTWARE\r\n\r\nThe Service may include commercial information or advertisements
+    (for example, pins indicating the locations of certain establishments, their
+    commercial offers, coupons, etc. (''Ads''). The Ads may pop up or be displayed
+    on the Service maps and games from time to time. ''A.I Systems'' may post Ads
+    on the Service but more often than not, the source of such Ads is third parties,
+    and as such, ''A.I Systems'' cannot and does not guarantee the reliability or
+    accuracy of third party Ads. ''A.I Systems'' does not endorse the content of
+    third party Ads. Additionally and without derogating from the previous sentence,
+    ''A.I Systems'' will not be liable for any form of liability arising from your
+    reliance on, or in connection with, the use of the content of Ads posted on the
+    Service.\r\n\r\nIt is underscored that the advertising of commercial content
+    by ''A.I Systems'' does not constitute a recommendation or encouragement to procure
+    the goods or services advertised.\r\n\r\nInsofar as the Software includes links
+    to services or applications not operated or managed by ''A.I Systems'', ''A.I
+    Systems'' will not be liable for any form of liability arising from your reliance
+    on, or in connection with, the content of such services and applications or any
+    information provided by them, including but not limited to its completeness,
+    accuracy, correctness or it being up-to-date. ''A.I Systems'' will not be liable
+    for any direct or indirect damage, monetary or otherwise, arising from your use
+    of or your reliance on the content of goods or services you have accessed via
+    Ads or \r\n\r\nother links on the Software.\r\n\r\n \r\n\r\nYOU MUST NOT ATTEMPT
+    TO PLAY A GAME, VIEW OR CLICK ON ANY ADS OR OTHER APP FEATURES WHILE OPERATING
+    A VEHICLE. YOU ALONE ARE RESPONSIBLE FOR DRIVING RESPONSIBLY, AND YOU ACKNOWLEDGE
+    AND AGREE THAT IN THE EVENT THAT YOU VIOLATE THE FOREOING PROVISION, THE THIRD
+    PARTY ADVERTISERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL OR
+    CONSEQUENTIAL DAMAGE, OR ANY OTHER DAMAGE, AND LOSS (INCLUDING LOSS OF PROFIT
+    AND LOSS OF DATA), COSTS, EXPENSES AND PAYMENTS, EITHER IN TORT, CONTRACTUAL,
+    OR IN ANY OTHER FORM OF LIABILITY, ARISING \r\n\r\nFROM, OR IN CONNECTION WITH
+    THE DISPLAY OF THE ADS ON THE SERVICE OR YOUR VIEWING OF THE ADS ON THE SERVICE.\r\n\r\n
+    \r\n\r\nBREACH AND INDEMNITY\r\n\r\nWithout derogating from any applicable law,
+    you agree to indemnify and hold harmless ''A.I Systems'' and its employees, officers,
+    directors and agents, as well as all third party advertisers of Ads from and
+    against all claims, damages, expenses, losses and liabilities that arise as a
+    result of your violation of these Terms. In view of the fact that the Service
+    is provided to you free-of-charge, this indemnity is intended to cover all expenses,
+    payments, loss, loss of profits or any other damage, direct or \r\n\r\nindirect,
+    monetary or non-monetary, incurred by ''A.I Systems'', its employees, officers,
+    directors or agents as a result of your violation of the Terms, including but
+    not limited to legal expenses and attorney fees.\r\n\r\n \r\n\r\nPRIVACY\r\n\r\n''A.I
+    Systems'' respects your privacy during your use of the Software and the Service.
+    Since the privacy policy is subject to periodic updates, it is recommended that
+    you periodically review the policy for updates.\r\n\r\n \r\n\r\nMODIFICATIONS
+    TO THE SERVICE AND \r\n\r\nSOFTWARE\r\n\r\n''A.I Systems'' may, either partially
+    or in its entirety and without being obligated to provide prior notice \xC2\u2013
+    modify, adapt or change the Software, the Service's features, the user interface
+    and design, the extent and availability of the contents in the Service and any
+    other aspect related to the Service. You will have no claim, complaint or demand
+    against ''A.I Systems'' for applying such changes or for failures incidental
+    to such changes.\r\n\r\n \r\n\r\nTERMINATION OF SERVICE\r\n\r\n''A.I Systems''
+    may, at any time, terminate the provision of the Service in its entirety or any
+    part thereof, temporarily or \r\n\r\npermanently, at its sole discretion.\r\n\r\n
+    \r\n\r\nMODIFICATIONS OF THESE TERMS\r\n\r\n''A.I Systems'' may modify these
+    Terms from time to time. If fundamental changes are introduced, a notice will
+    be posted in the updated version of the Software as well as on the Service's
+    home page on the Site. Your continued use of the Service after the Terms have
+    been modified signifies your assent to the updated Terms. If you dissent to the
+    updated Terms or to any term within them, you must discontinue all further use
+    of the Software.\r\n"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19.85
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2067648301
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067648298}
+  m_CullTransparentMesh: 1
 --- !u!1 &2088320147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,3 +3106,5 @@ SceneRoots:
   - {fileID: 1016853972}
   - {fileID: 45691881}
   - {fileID: 1049319755}
+  - {fileID: 1725898326}
+  - {fileID: 461853746}

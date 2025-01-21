@@ -31,7 +31,9 @@ public static class Loader {
         SceneManager.LoadScene(i);
     }
 
-    public static void LoadNetwork(string targetScene) {
+    [ServerRpc (RequireOwnership =false)]
+    public static void LoadNetworkServerRpc(string targetScene) {
+
         NetworkManager.Singleton.SceneManager.LoadScene(targetScene, LoadSceneMode.Single);
     }
 

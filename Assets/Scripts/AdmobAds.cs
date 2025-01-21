@@ -11,20 +11,21 @@ public class AdmobAds : MonoBehaviour
     public static AdmobAds Instance;
 
 
-    string appId = "ca-app-pub-2031320272583360~3513970721";// "ca-app-pub-3940256099942544~3347511713";
-
-
-
 #if UNITY_ANDROID
+    string appId = "ca-app-pub-2031320272583360~3513970721";// "ca-app-pub-3940256099942544~3347511713";
     //string bannerId = "ca-app-pub-3940256099942544/6300978111";
     string interId = "ca-app-pub-2031320272583360/5840751163";
     //string rewardedId = "ca-app-pub-3940256099942544/5224354917";
 
 #elif UNITY_IPHONE
+    string appId = "ca-app-pub-2031320272583360~9697933217";
     //string bannerId = "ca-app-pub-3940256099942544/2934735716";
-    string interId = "ca-app-pub-3940256099942544/4411468910";
+    string interId = "ca-app-pub-2031320272583360/1829088031";
     //string rewardedId = "ca-app-pub-3940256099942544/1712485313";
 
+#elif UNITY_SERVER
+    string appId = "ca-app-pub-2031320272583360~3513970721";
+    string interId = "ca-app-pub-2031320272583360/5840751163";
 #endif
 
     BannerView bannerView;
@@ -42,7 +43,6 @@ public class AdmobAds : MonoBehaviour
         else
         { Destroy(gameObject); }
     }
-
     private void Start()
     {
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
@@ -334,5 +334,5 @@ public class AdmobAds : MonoBehaviour
     //}
 
     #endregion
-   
+
 }

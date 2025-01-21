@@ -846,7 +846,7 @@ MonoBehaviour:
     m_Value: 0
   sharpenIntensity:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 3
   sharpenDepthThreshold:
     m_OverrideState: 0
     m_Value: 0.035
@@ -899,13 +899,13 @@ MonoBehaviour:
     m_Value: 1
   saturate:
     m_OverrideState: 1
-    m_Value: 1.75
+    m_Value: 1.5
   brightness:
     m_OverrideState: 1
-    m_Value: 1.05
+    m_Value: 1
   contrast:
     m_OverrideState: 1
-    m_Value: 1.075
+    m_Value: 1.05
   daltonize:
     m_OverrideState: 0
     m_Value: 0
@@ -1366,7 +1366,7 @@ MonoBehaviour:
     m_Value: 0.325
   vignettingInnerRing:
     m_OverrideState: 1
-    m_Value: 0.925
+    m_Value: 0.7
   vignettingFade:
     m_OverrideState: 0
     m_Value: 0

@@ -131,7 +131,7 @@ public class PlayerCreator : NetworkBehaviour
         //Debug.LogError("Being Called " + NetworkManager.Singleton.ConnectedClients.Count );
         if(!LobbyManager.Instance.GameSceneHasLoaded && NetworkManager.Singleton.ConnectedClients.Count>=2)
         {
-            Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
+            LobbyManager.Instance.LoadNetworkServerRpc(PlayerPrefs.GetString("Level"));
         }
     }
 

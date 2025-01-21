@@ -149,8 +149,8 @@ public class UIManager : MonoBehaviour
 
     public void LeadShop()
     {
-        AdmobAds.Instance.ShowInterstitialAd(loadShop);
-        
+        //AdmobAds.Instance.ShowInterstitialAd(loadShop);
+        loadShop();
     }
     
 

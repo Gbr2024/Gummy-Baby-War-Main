@@ -4082,118 +4082,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488036787}
   m_CullTransparentMesh: 1
---- !u!1 &505986198
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 505986200}
-  - component: {fileID: 505986202}
-  - component: {fileID: 505986201}
-  - component: {fileID: 505986203}
-  m_Layer: 0
-  m_Name: NetworkManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &505986200
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505986198}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &505986201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505986198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ProtocolType: 1
-  m_MaxPacketQueueSize: 128
-  m_MaxPayloadSize: 6144
-  m_HeartbeatTimeoutMS: 500
-  m_ConnectTimeoutMS: 1000
-  m_MaxConnectAttempts: 60
-  m_DisconnectTimeoutMS: 20000
-  ConnectionData:
-    Address: 0.0.0.0
-    Port: 7777
-    ServerListenAddress: 0.0.0.0
-  DebugSimulator:
-    PacketDelayMS: 0
-    PacketJitterMS: 0
-    PacketDropRate: 0
---- !u!114 &505986202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505986198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NetworkConfig:
-    ProtocolVersion: 0
-    NetworkTransport: {fileID: 505986201}
-    PlayerPrefab: {fileID: 2106144128352826578, guid: ef7fe5899d3ed2049ba4cdb1ee8c2ad8, type: 3}
-    Prefabs:
-      NetworkPrefabsLists:
-      - {fileID: 11400000, guid: 001b5817aaabd2e479d70404e547aab7, type: 2}
-    TickRate: 30
-    ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
-    ConnectionData: 
-    EnableTimeResync: 0
-    TimeResyncInterval: 30
-    EnsureNetworkVariableLengthSafety: 0
-    EnableSceneManagement: 1
-    ForceSamePrefabs: 0
-    RecycleNetworkIds: 1
-    NetworkIdRecycleDelay: 120
-    RpcHashSize: 0
-    LoadSceneTimeOut: 120
-    SpawnTimeout: 1
-    EnableNetworkLogs: 1
-    OldPrefabList: []
-  RunInBackground: 1
-  LogLevel: 1
---- !u!114 &505986203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505986198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7225585b8e81684e94109a488849d26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRed: 0
-  MyCode: 
 --- !u!1 &511566807
 GameObject:
   m_ObjectHideFlags: 0
@@ -9307,18 +9195,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1868995630}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ShowInterstialAd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1868995630}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OpenPanel
         m_Mode: 3
         m_Arguments:
@@ -12123,7 +11999,6 @@ GameObject:
   - component: {fileID: 1704165589}
   - component: {fileID: 1704165590}
   - component: {fileID: 1704165588}
-  - component: {fileID: 1704165591}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -12143,6 +12018,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abc1092970a96e478e4d595fa8389d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectId: 0d4b8421-0e5a-4ea2-8b25-cc8f01bd8722
+  environmentId: c59fdc5a-bc26-4521-9729-dd27573a6737
+  apiKey: 20f7e2bf-16a5-4738-87c3-5de53dfada33
 --- !u!4 &1704165589
 Transform:
   m_ObjectHideFlags: 0
@@ -12179,18 +12057,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1704165591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1704165587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f3e3396a4ba9874eb2180ef89906f1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1738116055
 GameObject:
   m_ObjectHideFlags: 0
@@ -13900,7 +13766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7c223765b5f884b814980560f5f55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameLink: www.google.com
+  GameLink: https://play.google.com/store/apps/details?id=com.ArcadezProductions.GummyBabyWar&pcampaignid=web_share
   Times: {fileID: 1238516102}
 --- !u!114 &1932891917
 MonoBehaviour:
@@ -15618,7 +15484,6 @@ SceneRoots:
   - {fileID: 1919144773}
   - {fileID: 1016853972}
   - {fileID: 1868995629}
-  - {fileID: 505986200}
   - {fileID: 1471623334}
   - {fileID: 2029661332}
   - {fileID: 449610243}

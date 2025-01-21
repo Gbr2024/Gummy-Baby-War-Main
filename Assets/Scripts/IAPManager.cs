@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 public class IAPManager : MonoBehaviour, IDetailedStoreListener
 {
     [SerializeField] Button PurchaseButton,SelectionButton,SelectedButton;
-    [SerializeField] GameObject PurchasePanel,PopupMessage,Purchased;
+    [SerializeField] GameObject PurchasePanel,PopupMessage,Purchased,RestoreButton;
     [SerializeField] Image panelImage;
     [SerializeField] TMP_Text PurchaseButtonLabel,NameLabel,DetailLabel;
     [SerializeField] Buyable[] buyables,SpecialAttacks;
@@ -26,6 +26,9 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     {
         setupBuilder();
         //PlayerPrefs.SetInt("WeaponSelected", 4);
+#if UNITY_IOS
+        RestoreButton.SetActive(true);
+#endif
     }
 
     private void Update()
@@ -131,6 +134,9 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
             }
         }
     }
+
+    
+
 
     private void SelectWeapon(int index)
     {
@@ -253,8 +259,47 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     }
 
 
+    public void RestorePurchases()
+    {
+        if (storeController == null)
+        {
+            Debug.LogError("StoreController not initialized. Cannot restore purchases.");
+            return;
+        }
 
-   
+
+
+        foreach (var product in storeController.products.all)
+        {
+            if (product.hasReceipt && product.definition.type == ProductType.NonConsumable)
+            {
+                Debug.Log($"Restoring purchase for product: {product.definition.id}");
+
+                // Check if it's a weapon
+                foreach (var item in buyables)
+                {
+                    if (item.Id == product.definition.id)
+                    {
+                        SetWeapon(item.index); // Unlock the weapon
+                        Purchased.SetActive(true); // Update UI if needed
+                    }
+                }
+
+                // Check if it's a killstreak
+                foreach (var item in SpecialAttacks)
+                {
+                    if (item.Id == product.definition.id)
+                    {
+                        SetKillStreak(item.Name); // Unlock the killstreak
+                        Purchased.SetActive(true); // Update UI if needed
+                    }
+                }
+            }
+        }
+
+        Debug.Log("Restore purchases completed.");
+    }
+
 
     public void LoadMenu()
     {

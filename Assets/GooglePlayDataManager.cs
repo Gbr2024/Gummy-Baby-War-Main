@@ -1,10 +1,12 @@
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-using GooglePlayGames.BasicApi.SavedGame;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+
+#if UNITY_ANDROID
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
+#endif
 
 public class GooglePlayDataManager : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class GooglePlayDataManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance==null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this);
@@ -28,13 +30,32 @@ public class GooglePlayDataManager : MonoBehaviour
 
     private void Start()
     {
-        if(Social.localUser.authenticated)
+        if (Social.localUser.authenticated)
         {
             LoadGame();
         }
     }
 
     internal void SaveGame()
+    {
+#if UNITY_ANDROID
+        SaveGameAndroid();
+#elif UNITY_IOS
+        SaveGameIOS();
+#endif
+    }
+
+    internal void LoadGame()
+    {
+#if UNITY_ANDROID
+        LoadGameAndroid();
+#elif UNITY_IOS
+        LoadGameIOS();
+#endif
+    }
+
+#if UNITY_ANDROID
+    private void SaveGameAndroid()
     {
         GameData gameData = new GameData
         {
@@ -59,22 +80,22 @@ public class GooglePlayDataManager : MonoBehaviour
                     {
                         if (commitStatus == SavedGameRequestStatus.Success)
                         {
-                            Debug.Log("Game data saved successfully!");
+                            Debug.Log("Game data saved successfully (Android)!");
                         }
                         else
                         {
-                            Debug.Log("Failed to save game data");
+                            Debug.Log("Failed to save game data (Android)");
                         }
                     });
                 }
                 else
                 {
-                    Debug.Log("Failed to open saved game");
+                    Debug.Log("Failed to open saved game (Android)");
                 }
             });
     }
 
-    internal void LoadGame()
+    private void LoadGameAndroid()
     {
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
         savedGameClient.OpenWithAutomaticConflictResolution(
@@ -97,26 +118,70 @@ public class GooglePlayDataManager : MonoBehaviour
                                 unlockedWeapons = loadedData.unlockedWeapons;
                                 killstreaks = loadedData.killstreaks;
 
-                                Debug.Log("Game data loaded successfully!");
-                            // You can now use `unlockedWeapons` and `killstreaks` as needed.
-                        }
+                                Debug.Log("Game data loaded successfully (Android)!");
+                            }
                             else
                             {
-                                Debug.Log("Failed to parse game data");
+                                Debug.Log("Failed to parse game data (Android)");
                             }
                         }
                         else
                         {
-                            Debug.Log("Failed to read game data");
+                            Debug.Log("Failed to read game data (Android)");
                         }
                     });
                 }
                 else
                 {
-                    Debug.Log("Failed to open saved game for loading");
+                    Debug.Log("Failed to open saved game for loading (Android)");
                 }
             });
     }
+#endif
+
+#if UNITY_IOS
+    private void SaveGameIOS()
+    {
+        GameData gameData = new GameData
+        {
+            unlockedWeapons = unlockedWeapons,
+            killstreaks = killstreaks
+        };
+
+        string dataToSave = JsonUtility.ToJson(gameData);
+        PlayerPrefs.SetString("game_save_data", dataToSave);
+        PlayerPrefs.Save();
+
+        Debug.Log("Game data saved successfully (iOS)!");
+    }
+
+    private void LoadGameIOS()
+    {
+
+
+        if (PlayerPrefs.HasKey("game_save_data"))
+        {
+            string jsonData = PlayerPrefs.GetString("game_save_data");
+            GameData loadedData = JsonUtility.FromJson<GameData>(jsonData);
+
+            if (loadedData != null)
+            {
+                unlockedWeapons = loadedData.unlockedWeapons;
+                killstreaks = loadedData.killstreaks;
+
+                Debug.Log("Game data loaded successfully (iOS)!");
+            }
+            else
+            {
+                Debug.Log("Failed to parse game data (iOS)");
+            }
+        }
+        else
+        {
+            Debug.Log("No saved game data found (iOS)");
+        }
+    }
+#endif
 }
 
 [System.Serializable]

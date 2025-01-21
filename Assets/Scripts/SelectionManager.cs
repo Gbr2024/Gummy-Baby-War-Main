@@ -61,7 +61,8 @@ public class SelectionManager : MonoBehaviour
 
     public void ShowAndCloseSelection()
     {
-        AdmobAds.Instance.ShowInterstitialAd(CloseSelection);
+        //AdmobAds.Instance.ShowInterstitialAd(CloseSelection);
+        CloseSelection();
     }
 
     void CloseSelection()
