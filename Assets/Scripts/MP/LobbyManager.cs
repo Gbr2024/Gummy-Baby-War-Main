@@ -143,7 +143,7 @@ public class LobbyManager : NetworkBehaviour
 
     async void InitAuth()
     {
-        UIManager.instance?.SetMessage("Connecting...");
+        UIManager.instance?.SetMessage("Loading...");
         if(UnityServices.State!=ServicesInitializationState.Initialized)
         {
             string profile = "GummyBaby" + Random.Range(0, 100000).ToString();
@@ -174,7 +174,7 @@ public class LobbyManager : NetworkBehaviour
         try
         {
             UIManager.instance.Blocker.SetActive(true);
-            UIManager.instance.LobbyName.text = "Connecting...";
+            UIManager.instance.LobbyName.text = "Loading...";
             JoinedLobby = await LobbyService.Instance.CreateLobbyAsync("Lobby_"+CustomProperties.Instance.MyCode, MaxPlayers, new CreateLobbyOptions
             {
                 IsPrivate = false,
@@ -217,10 +217,10 @@ public class LobbyManager : NetworkBehaviour
 
     private IEnumerator StartWaitTimer()
     {
-        int Timre = 35;
+        int Timre = 0;
 
         START:
-        UIManager.instance.LobbyName.text = "Waiting for Game to start...\n" + Timre.ToString() ;
+        //UIManager.instance.LobbyName.text = "Waiting for Game to start...\n" + Timre.ToString() ;
         yield return new WaitForSeconds(1f);
         Timre--;
         if (Timre > 0)
@@ -283,7 +283,7 @@ public class LobbyManager : NetworkBehaviour
         try
         {
             UIManager.instance.Blocker.SetActive(true);
-            UIManager.instance.LobbyName.text = "Connecting...";
+            UIManager.instance.LobbyName.text = "Loading...";
             List<Lobby> lobbies = (await LobbyService.Instance.QueryLobbiesAsync()).Results;
             foreach (Lobby lobby2 in lobbies)
             {

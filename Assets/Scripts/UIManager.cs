@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetInt("BabyImage", Random.Range(0, 4));
         }
         PlayerNameLabel.text= PlayerPrefs.GetString("PlayerName");
-        if (UnityAuth.Instance.profileImage != null)
+        if (UnityAuth.Instance?.profileImage != null)
             ProfileImage.sprite = UnityAuth.Instance.profileImage;
         else
             ProfileImage.sprite = babyImages[PlayerPrefs.GetInt("BabyImage")];
