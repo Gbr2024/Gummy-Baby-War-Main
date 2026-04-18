@@ -360,7 +360,7 @@ namespace WeirdBrothers.ThirdPersonController
         {
             GameObject ejectedCase = Instantiate(Data.BulletShell, _shellSpawnPoint.position, _shellSpawnPoint.rotation);
             Rigidbody caseRigidbody = ejectedCase.GetComponent<Rigidbody>();
-            caseRigidbody.velocity = _shellSpawnPoint.TransformDirection(-Vector3.left * Data.BulletEjectingSpeed);
+            caseRigidbody.linearVelocity = _shellSpawnPoint.TransformDirection(-Vector3.left * Data.BulletEjectingSpeed);
             caseRigidbody.AddTorque(Random.Range(-0.5f, 0.5f), Random.Range(0.2f, 0.3f), Random.Range(-0.5f, 0.5f));
             caseRigidbody.AddForce(0, Random.Range(2f, 4f), 0, ForceMode.Impulse);
             Destroy(ejectedCase, 5f);

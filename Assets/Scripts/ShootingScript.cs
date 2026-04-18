@@ -29,6 +29,6 @@ public class ShootingScript : MonoBehaviour
         Vector3 direction = ray.direction;
 
         // Set the initial velocity of the projectile
-        projectile.GetComponent<Rigidbody>().velocity = direction * projectileSpeed;
+        projectile.GetComponent<Rigidbody>().linearVelocity = direction * projectileSpeed;
     }
 }

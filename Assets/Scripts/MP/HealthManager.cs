@@ -87,7 +87,7 @@ public class HealthManager : NetworkBehaviour
     {
         if (OwnerClientId== id)
         {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(force, ForceMode.VelocityChange);
             WBUIActions.EnableBrokenScreen?.Invoke(true);
 

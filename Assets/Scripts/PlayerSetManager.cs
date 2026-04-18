@@ -27,7 +27,6 @@ public class PlayerSetManager : MonoBehaviour
     {
         instance = this;
         //Debug.LogError("instance Set");
-        //AdmobAds.Instance?.DestroyBannerAd();
     }
 
     

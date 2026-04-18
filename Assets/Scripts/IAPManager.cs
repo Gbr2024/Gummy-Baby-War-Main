@@ -258,7 +258,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
     public void LoadMenu()
     {
-        AdmobAds.Instance.ShowInterstitialAd(Loadmenu);
+        Loadmenu();
     }
 
     public void Loadmenu()

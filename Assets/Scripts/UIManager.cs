@@ -35,8 +35,6 @@ public class UIManager : MonoBehaviour
             ProfileImage.sprite = UnityAuth.Instance.profileImage;
         else
             ProfileImage.sprite = babyImages[PlayerPrefs.GetInt("BabyImage")];
-        //AdmobAds.Instance.LoadBannerAd();
-        AdmobAds.Instance.LoadInterstitialAd();
         Aim.value = PlayerPrefs.GetFloat("Aim", .75f);
         if (PlayerPrefs.GetInt("Music", 1) == 1) Music.Play();
         Aim.onValueChanged.AddListener((float val) => { ChangeAim(val); });
@@ -102,7 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowInterstialAd()
     {
-        AdmobAds.Instance.ShowInterstitialAd();
+
     }
 
     public void OpenPanel(int i)
@@ -149,7 +147,7 @@ public class UIManager : MonoBehaviour
 
     public void LeadShop()
     {
-        AdmobAds.Instance.ShowInterstitialAd(loadShop);
+        loadShop();
         
     }
     

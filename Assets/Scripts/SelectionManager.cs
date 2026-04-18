@@ -55,13 +55,12 @@ public class SelectionManager : MonoBehaviour
 
     public void Save()
     {
-        //AdmobAds.Instance.ShowInterstitialAd(SaveTheData);
         SaveTheData();
     }
 
     public void ShowAndCloseSelection()
     {
-        AdmobAds.Instance.ShowInterstitialAd(CloseSelection);
+        CloseSelection();
     }
 
     void CloseSelection()

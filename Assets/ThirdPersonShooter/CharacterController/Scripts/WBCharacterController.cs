@@ -199,7 +199,7 @@ namespace WeirdBrothers.CharacterController
         public void Jump(float force)
         {
             //Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, force, Rigidbody.velocity.z);
-            Rigidbody.velocity = Vector3.zero;
+            Rigidbody.linearVelocity = Vector3.zero;
             Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.AddForce(Vector3.up * force, ForceMode.VelocityChange);
             
@@ -236,9 +236,9 @@ namespace WeirdBrothers.CharacterController
             CheckForGrounded();
             if (_moveVector.magnitude > 0.1f)
             {
-                Rigidbody.velocity = new Vector3(0,Rigidbody.velocity.y,0);
+                Rigidbody.linearVelocity = new Vector3(0,Rigidbody.linearVelocity.y,0);
                 Rigidbody.angularVelocity = new Vector3(0,Rigidbody.angularVelocity.y,0);
-                Rigidbody.velocity = new Vector3(_moveVector.x, Rigidbody.velocity.y, _moveVector.z);
+                Rigidbody.linearVelocity = new Vector3(_moveVector.x, Rigidbody.linearVelocity.y, _moveVector.z);
 
                 //Rigidbody.MovePosition(Rigidbody.position + new Vector3(_moveVector.x, Rigidbody.velocity.y, _moveVector.z) * Time.fixedDeltaTime);
                 //Rigidbody.velocity = _moveVector;
@@ -248,9 +248,9 @@ namespace WeirdBrothers.CharacterController
                 //Rigidbody.velocity = Vector3.Lerp(Rigidbody.velocity, _moveVector, 0.1f);
                 //Rigidbody.MovePosition(Rigidbody.position + _moveVector * Time.fixedDeltaTime);
             }
-            else if((Rigidbody.velocity != new Vector3(0, Rigidbody.velocity.y, 0) || Rigidbody.angularVelocity != new Vector3(0, Rigidbody.angularVelocity.y, 0)) && !iskicked)
+            else if((Rigidbody.linearVelocity != new Vector3(0, Rigidbody.linearVelocity.y, 0) || Rigidbody.angularVelocity != new Vector3(0, Rigidbody.angularVelocity.y, 0)) && !iskicked)
             {
-                Rigidbody.velocity = new Vector3(0, Rigidbody.velocity.y, 0);
+                Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
                 Rigidbody.angularVelocity = new Vector3(0, Rigidbody.angularVelocity.y, 0);
             }
         }

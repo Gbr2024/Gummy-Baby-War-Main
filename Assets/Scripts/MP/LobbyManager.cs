@@ -143,7 +143,7 @@ public class LobbyManager : NetworkBehaviour
 
     async void InitAuth()
     {
-        UIManager.instance?.SetMessage("Loading...");
+        UIManager.instance?.SetMessage("Matching Players"); 
         if(UnityServices.State!=ServicesInitializationState.Initialized)
         {
             string profile = "GummyBaby" + Random.Range(0, 100000).ToString();
@@ -174,7 +174,7 @@ public class LobbyManager : NetworkBehaviour
         try
         {
             UIManager.instance.Blocker.SetActive(true);
-            UIManager.instance.LobbyName.text = "Loading...";
+            UIManager.instance.LobbyName.text = "Matching Players";
             JoinedLobby = await LobbyService.Instance.CreateLobbyAsync("Lobby_"+CustomProperties.Instance.MyCode, MaxPlayers, new CreateLobbyOptions
             {
                 IsPrivate = false,
@@ -259,7 +259,6 @@ public class LobbyManager : NetworkBehaviour
                 GameSceneHasLoaded = true;
                 if (waitCor != null) StopCoroutine(waitCor);
                 Loader.LoadNetwork(PlayerPrefs.GetString("Level"));
-                //AdmobAds.Instance.DestroyBannerAd();
             }
         }
         catch
@@ -283,7 +282,7 @@ public class LobbyManager : NetworkBehaviour
         try
         {
             UIManager.instance.Blocker.SetActive(true);
-            UIManager.instance.LobbyName.text = "Loading...";
+            UIManager.instance.LobbyName.text = "Matching Players";
             List<Lobby> lobbies = (await LobbyService.Instance.QueryLobbiesAsync()).Results;
             foreach (Lobby lobby2 in lobbies)
             {

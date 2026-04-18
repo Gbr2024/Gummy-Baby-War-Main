@@ -427,9 +427,9 @@ public class Granny : NetworkBehaviour
         rb.AddForce(force, ForceMode.Impulse);
 
         yield return new WaitForFixedUpdate();
-        yield return new WaitUntil(() => rb.velocity.magnitude < 0.1f);
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < 0.1f);
         yield return new WaitForSeconds(0.25f);
-        yield return new WaitUntil(() => rb.velocity.magnitude < 0.05f);
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < 0.05f);
 
         rb.isKinematic = true;
         player.GetEnemyAi.enabled = true;

@@ -106,7 +106,6 @@ public class ScoreManager : NetworkBehaviour
         SetPlayerScores();
         WBUIActions.EnableBlackPanel?.Invoke(false);
         WBUIActions.EnableBrokenScreen?.Invoke(false);
-        AdmobAds.Instance.ShowInterstitialAd();
     }
 
     private void SetPlayerScores()
@@ -258,7 +257,6 @@ public class ScoreManager : NetworkBehaviour
         GameHasFinished = true;
         WinnerAnnouncementPanel.SetActive(true);
         WinnerTitle.text = "DRAW";
-        AdmobAds.Instance.ShowInterstitialAd();
     }
 
     public List<PlayerCreator> BubbleSort(List<PlayerCreator> list)
@@ -526,7 +524,6 @@ public class ScoreManager : NetworkBehaviour
         AnotherTeamWinnerPanelScore.text = "";
         MyTeamRow[0].SetData(new PlayerData(PlayerPrefs.GetString("PlayerName"), CustomProperties.Instance.kills), true);
         WBUIActions.EnableBlackPanel?.Invoke(false);
-        AdmobAds.Instance.ShowInterstitialAd();
     }
 
 

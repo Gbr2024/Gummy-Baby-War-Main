@@ -86,9 +86,9 @@ public class Bullet : MonoBehaviour
     {
         trail.Clear();
         if (rb == null) rb = GetComponent<Rigidbody>();
-        rb.angularDrag = 0;
-        rb.drag = 0;
-        rb.velocity = Vector3.zero;
+        rb.angularDamping = 0;
+        rb.linearDamping = 0;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
         rb.isKinematic = false;

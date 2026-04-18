@@ -75,8 +75,8 @@ namespace WeirdBrothers.CharacterController
         public static void SetRigidBodyData(this Rigidbody rb,RigidBodyData data) 
         {
             rb.mass = data.Mass;
-            rb.drag = data.Drag;
-            rb.angularDrag = data.AngularDrag;
+            rb.linearDamping = data.Drag;
+            rb.angularDamping = data.AngularDrag;
             rb.freezeRotation = true;
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
@@ -85,9 +85,9 @@ namespace WeirdBrothers.CharacterController
         {
             if (rigidbody.mass != data.Mass)
                 return false;
-            if (rigidbody.drag != data.Drag)
+            if (rigidbody.linearDamping != data.Drag)
                 return false;
-            if (rigidbody.angularDrag != data.AngularDrag)
+            if (rigidbody.angularDamping != data.AngularDrag)
                 return false;
 
             return true;
